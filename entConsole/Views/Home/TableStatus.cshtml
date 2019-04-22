@@ -1,0 +1,103 @@
+﻿@model entConsole.Models.TableStatusViewModel
+
+@{
+    ViewData["userName"] = Model.paraDic.ContainsKey("userName") == true ? Model.paraDic["userName"] : "";
+    ViewData["tableName"] = Model.paraDic.ContainsKey("tableName") == true ? Model.paraDic["tableName"] : "";
+    ViewData["Status"] = Model.paraDic.ContainsKey("Status") == true ? Model.paraDic["Status"] : "";
+}
+<form asp-controller="Movies" asp-action="Index" method="get">
+    <div style="margin-top :5px">
+        <p>
+            @*<select asp-for="MovieGenre" asp-items="Model.Genres">
+                    <option value="">All</option>
+                </select>*@
+
+            用户名: <input type="text" name="userName" value="@ViewData["userName"]">
+            表名: <input type="text" name="tableName" value="@ViewData["tableName"]">
+            状态: <input type="text" name="Status" value="@ViewData["Status"]">
+            <input type="submit" value="查询" />
+        </p>
+    </div>
+</form>
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">表状态信息</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    用户名
+                </th>
+                <th>
+                    表名
+                </th>
+                <th>
+                    上次运行时间
+                </th>
+                <th>
+                    总数
+                </th>
+                <th>
+                    成功数量
+                </th>
+                <th>
+                    状态
+                </th>
+                <th>
+                    描述
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                try
+                {
+                    foreach (var item in Model.table)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.userName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tableName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.lastStartTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.finishDataPacketNum)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.finishDataPacketNum)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.finishDataPacketNum)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.finishDataPacketNum)
+                            </td>
+                        </tr>
+                    }
+                }
+                catch (Exception ex)
+                {
+                    @Html.ActionLink("点击查看详细错误信息", "Index", "Error", new { Msg = ex.ToString() })
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+@*生成分页样式*@
+@*@CommonMethod.PaginationPager(@Model.clickpagenow, @Model.PageNum, @Model.allowPageNum, "TableStatus", Model.paraDic)*@
+@*@CommonMethod.PaginationPager(Convert.ToInt32(Model.paraDic["clickpagenow"]), Convert.ToInt32(Model.paraDic["PageNum"]), Convert.ToInt32(Model.paraDic["allowPageNum"]), "TableStatus", Model.paraDic)*@
+
+@*@section Scripts{
+        <script>
+        function myrefresh() {
+        window.location.reload();
+        }
+        setTimeout('myrefresh()', 3000);
+        </script>
+    }*@

@@ -1,0 +1,190 @@
+﻿@model entConsole.Models.TableStatusViewModel
+
+@{
+    ViewData["userName"] = Model.paraDic.ContainsKey("userName") == true ? Model.paraDic["userName"] : "";
+    ViewData["taskId"] = Model.paraDic.ContainsKey("tableName") == true ? Model.paraDic["taskId"] : "";
+    ViewData["taskStatus"] = Model.paraDic.ContainsKey("taskStatus") == true ? Model.paraDic["taskStatus"] : "";
+}
+
+<div class="col-lg-11">
+    <div class="card">
+
+        @*<div class="card-header d-flex align-items-center">
+                <h3 class="h4">数据列表</h3>
+            </div>*@
+        <div class="card-body">
+            <div class="table-responsive">
+
+
+                <form asp-controller="TableStatus" asp-action="Index" method="get">
+                    <div style="margin-top :5px">
+                        <p>
+                            @*<select asp-for="MovieGenre" asp-items="Model.Genres">
+                                    <option value="">All</option>
+                                </select>*@
+
+                            任务ID: <input type="text" name="taskId" value="@ViewData["taskId"]">
+                            用户名: <input type="text" name="userName" value="@ViewData["userName"]">
+                            状态: <input type="text" name="taskStatus" value="@ViewData["taskStatus"]">
+                            <input type="submit" value="查询" />
+                        </p>
+                    </div>
+                </form>
+
+
+
+
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading"></div>
+                    <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+                        @*<thead>*@
+                        <tr>
+                            <th>
+                                任务ID
+                            </th>
+                            <th>
+                                用户名
+                            </th>
+                            <th>
+                                最后运行时间
+                            </th>
+                            <th>
+                                数据包完成数量
+                            </th>
+                            <th>
+                                数据包入库数量
+                            </th>
+                            <th>
+                                状态
+                            </th>
+                        </tr>
+                        @*</thead>*@
+                        <tbody id="test">
+                            @{
+                                try
+                                {
+                                    foreach (var item in Model.table)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.taskId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.userName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.lastStartTime)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.finishDataPacketNum)/@Html.DisplayFor(modelItem => item.totalDataPacketNum)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.finishRecordNum)/@Html.DisplayFor(modelItem => item.totalRecordNum)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.taskStatus)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    @Html.ActionLink("点击查看详细错误信息", "Index", "Error", new { Msg = ex.ToString() })
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+                @CommonMethod.PaginationPager(Convert.ToInt32(Model.paraDic["clickpagenow"]), Convert.ToInt32(Model.paraDic["PageNum"]), Convert.ToInt32(Model.paraDic["allowPageNum"]), "TableStatus", "Index", Model.paraDic)
+
+            </div>
+        </div>
+    </div>
+</div>
+@*生成分页样式*@
+
+
+@section Scripts{
+    <script>
+        var getstr = "";
+        function myrefresh() {
+        var str ="";
+        for (var i = 0; i < 5; i++)
+        {
+            str +="<tr><td>" +i+"</td><td>"+i+"</td><td>"+i+"</td><td>"+i+"</td><td>"+i+"</td><td>"+i+"</td></tr>"
+        }
+            //getstr = str;
+            $("#test").html(str);
+    }
+        
+    //setInterval('myrefresh()',3000);
+    
+    </script>
+}
+
+    <script type="text/javascript">
+        var u = 8;
+        /** 检测房源房号是否存在并提交form  **/
+        function checkFyFhSent() {
+            // 分别获取小区编号、栋号、层号、房号
+            //var fyID = $('#fyID').val();
+            //var fyXqCode = $("#fyXq").val();
+            //var fyDh = $("#fyDh").val();
+            //var fyCh = $("#fyCh").val();
+            //var fyFh = $("#fyFh").val();
+            //if (fyXqCode != "" && fyDh != "" && fyCh != "" && fyFh != "") {
+                // 给房屋坐落地址赋值
+                //alert("1");
+                //$("#fyZldz").val($('#fyDh option:selected').text() + fyCh + "-" + fyFh);
+                //alert("31");
+                //$("#submitForm").attr("action", "InsertInTo").submit();//这一句延后提交
+                //alert("32");
+                // 异步判断该房室是否存在，如果已存在，给用户已提示
+                $.ajax({
+                    type: "GET",
+                    url: "/TableStatus/Index",
+                    data: { "id": "1" },
+                    dataType: "text",
+                    success: function (data) {
+                        //alert(data);
+                        // 如果返回数据不为空，更改“房源信息”
+
+                        if (data == "1") {
+                            //art.dialog({ icon: 'error', title: '友情提示', drag: false, resize: false, content: '该房室在系统中已经存在哦，\n请维护其他房室数据', ok: true, });
+                            $("#fyFh").css("background", "#EEE");
+                            $("#fyFh").focus();
+                            return false;
+                        } else
+                        {
+                            //alert("ttt");
+                            
+                            var str = "";
+                            if (u > 0)
+                            { u--; }
+                            for (var i = 0; i < u; i++) {
+                                str += "<tr><td>" + i + "</td><td>" + i + "</td><td>" + i + "</td><td>" + i + "</td><td>" + i + "</td><td>" + i + "</td></tr>"
+                            }
+                            //getstr = str;
+                            $("#test").html(str);
+                            //$("#submitForm").attr("action", InsertInTo).submit();
+                        }
+                    }
+                });
+            //}
+            //alert("2");
+            return true;
+        }
+
+        setInterval('checkFyFhSent()', 4000);
+    </script>
+<script type="text/javascript" src="~/TableJs/scripts/jquery/jquery-1.7.1.js"></script>
+<link href="~/TableJs/style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="~/TableJs/style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="~/TableJs/scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="~/TableJs/scripts/fancybox/jquery.fancybox-1.3.4.js"></script>
+<script type="text/javascript" src="~/TableJs/scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="~/TableJs/style/authority/jquery.fancybox-1.3.4.css" media="screen">
+<script type="text/javascript" src="~/TableJs/scripts/artDialog/artDialog.js?skin=default"></script>

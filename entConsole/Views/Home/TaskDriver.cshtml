@@ -1,0 +1,93 @@
+﻿@{
+}
+@model entConsole.Models.TaskDriverViewModel
+<form asp-controller="Home" asp-action="TaskDriver" method="get">
+    @*<p>
+            <select asp-for="MovieGenre" asp-items="Model.Genres">
+                <option value="">All</option>
+            </select>
+
+            Title: <input type="text" name="SearchString">
+            <input type="submit" value="Filter" />
+        </p>*@
+</form>
+
+<div class="panel panel-default">
+    <div class="panel-heading"></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    任务ID
+                </th>
+                <th>
+                    用户
+                </th>
+                <th>
+                    任务名
+                </th>
+                <th>
+                    表名
+                </th>
+                <th>
+                    任务状态
+                </th>
+                <th>
+                    时间戳
+                </th>
+                <th>
+                    是否初始化
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                try
+                {
+                    foreach (var item in Model.dataList)
+                    {
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.taskId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.userName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TaskName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tables)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.taskStatus)
+                            </td>
+                            <td>
+                                @*<input type="text" name="TMSP">*@
+                            </td>
+                            <td>
+                                @*@Html.CheckBox("slide", false)*@
+                            </td>
+                            <td>
+                                <a asp-action="index" asp-route-id="@item.taskId">提交</a>
+                                @*<input type="submit" value="Filter" />*@
+                            </td>
+                        </tr>
+                    }
+                }
+                catch (Exception e)
+                {
+                    @Html.ActionLink("点击查看详细错误信息", "Index", "Error", new { Msg = e.ToString() })
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@*生成分页样式*@
+@CommonMethod.PaginationPager(Convert.ToInt32(Model.paraDic["clickpagenow"]), Convert.ToInt32(Model.paraDic["PageNum"]), Convert.ToInt32(Model.paraDic["allowPageNum"]), "Home", "TaskDriver", Model.paraDic)

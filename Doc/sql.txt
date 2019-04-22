@@ -1,0 +1,24 @@
+CREATE TABLE TableStatus (
+    ID                 INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL,
+    UserName           TEXT     UNIQUE NOT NULL,
+    TableName          TEXT     UNIQUE NOT NULL,
+    LastRunTime        TEXT ,
+    TotalNum           TEXT ,
+    SuccessNum         TEXT ,
+    Status             TEXT ,
+    Describe           TEXT
+);
+
+
+
+
+
+
+
+CREATE TABLE DataInfo (
+    ID                 INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL,
+    UserName           TEXT     NOT NULL,
+    level              TEXT ,
+    InfoTime           TEXT ,
+    Info               TEXT
+);

@@ -1,0 +1,195 @@
+﻿@model entConsole.Models.DataInfoViewModel
+
+@{
+    ViewData["RecordTime"] = Model.paraDic.ContainsKey("RecordTime") == true ? Model.paraDic["RecordTime"] : "";
+    ViewData["userName"] = Model.paraDic.ContainsKey("userName") == true ? Model.paraDic["userName"] : "";
+    ViewData["Level"] = Model.paraDic.ContainsKey("Level") == true ? Model.paraDic["Level"] : "";
+}
+
+
+
+<div class="col-lg-11">
+    <div class="card">
+
+        @*<div class="card-header d-flex align-items-center">
+            <h3 class="h4">数据列表</h3>
+        </div>*@
+        <div class="card-body">
+            <div class="table-responsive">
+
+
+
+                <form asp-controller="DataInfo" asp-action="Index" method="get">
+                    <div style="margin-top :5px">
+                        <p>
+                            @*<select asp-for="MovieGenre" asp-items="Model.Genres">
+                                    <option value="">All</option>
+                                </select>*@
+                            起始时间: <input type="text" name="RecordTime" value="@ViewData["RecordTime"]">
+                            用户名: <input type="text" name="userName" value="@ViewData["userName"]">
+                            级别: <input type="text" name="Level" value="@ViewData["Level"]">
+                            <input type="submit" value="查询" />
+
+                        </p>
+                    </div>
+                </form>
+
+
+
+                <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+                    @*<thead>*@
+                    <tr>
+                        <th>
+                            时间
+                        </th>
+                        <th>
+                            用户
+                        </th>
+                        <th>
+                            任务ID
+                        </th>
+                        <th>
+                            级别
+                        </th>
+                        <th>
+                            信息
+                        </th>
+                    </tr>
+                    @*</thead>*@
+                    <tbody>
+                        @{
+                            try
+                            {
+                                foreach (var item in Model.dataInfo)
+                                {
+                                    <tr>
+                                        <td style="width:20%;">
+                                            @Html.DisplayFor(modelItem => item.RecordTime)
+                                        </td>
+                                        <td style="width:20%;">
+                                            @Html.DisplayFor(modelItem => item.userName)
+                                        </td>
+                                        <td style="width:20%;">
+                                            @Html.DisplayFor(modelItem => item.TaskID)
+                                        </td>
+                                        <td style="width:20%;">
+                                            @Html.DisplayFor(modelItem => item.Level)
+                                        </td>
+                                        <td style="width:20%">
+                                            <div style="height:20px; text-overflow:ellipsis;overflow: hidden;" title="@item.Info">
+                                                @Html.DisplayFor(modelItem => item.Info)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                @Html.ActionLink("数据异常，点击查看详细错误信息", "Index", "Error", new { Msg = e.ToString() })
+                            }
+                        }
+                    </tbody>
+                </table>
+
+
+                @CommonMethod.PaginationPager(Convert.ToInt32(Model.paraDic["clickpagenow"]), Convert.ToInt32(Model.paraDic["PageNum"]), Convert.ToInt32(Model.paraDic["allowPageNum"]), "DataInfo", "Index", Model.paraDic)
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*生成分页*@
+
+
+<div>
+    @*<div>
+            <div >
+            <nav aria-label="Page navigation">
+                <ul class="pagination" style="float:right">
+                    <li style="float:left;margin-right:30px;margin-top:5px">
+                        <form asp-controller="Home" asp-action="DataInfo" method="get">
+                            当前第 @Model.clickpagenow 页，共 @Model.PageNum 页，<input type="text" style="width:50px" name="pageclick">
+                            <input type="submit" value="跳转" />
+                        </form>
+                    </li>
+                    <li>
+                        @{
+                            if (Model.clickpagenow - 1 > 0)
+                            {
+                                int Previous = Model.clickpagenow - 1;
+                                <a href="~/Home/DataInfo/id=1?pageclick=@Previous" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            }
+                        }
+                    </li>
+                    @{
+                        if (Model.PageNum > Model.allowPageNum)
+                        {
+                            if (Model.clickpagenow >= (int)Math.Ceiling(Convert.ToDouble(Model.allowPageNum) / 2) && Model.PageNum >= Model.clickpagenow + 2)
+                            {
+                                for (int i = Model.clickpagenow - 2; i <= Model.clickpagenow + 2; i++)
+                                {
+                                    <li><a href="~/Home/DataInfo/id=1?pageclick=@i ">@i</a></li>
+                                }
+                            }
+                            else if (Model.clickpagenow >= (int)Math.Ceiling(Convert.ToDouble(Model.allowPageNum) / 2) && Model.PageNum < Model.clickpagenow + 2)
+                            {
+                                for (int i = Model.PageNum - Model.allowPageNum + 1; i <= Model.PageNum; i++)
+                                {
+                                    <li><a href="~/Home/DataInfo/id=1?pageclick=@i ">@i</a></li>
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 1; i <= Model.allowPageNum; i++)
+                                {
+                                    <li><a href="~/Home/DataInfo/id=1?pageclick=@i">@i</a></li>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 1; i <= Model.PageNum; i++)
+                            {
+                                <li><a href="~/Home/DataInfo/id=1?pageclick=@i">@i</a></li>
+                            }
+                        }
+
+                    }
+                    <li>
+                        @{
+                            if (Model.clickpagenow + 1 <= Model.PageNum)
+                            {
+                                int next = Model.clickpagenow + 1;
+                                <a href="~/Home/DataInfo/id=1?pageclick=@next" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            }
+                        }
+                    </li>
+                </ul>
+            </nav>
+                </div>
+        </div>*@
+</div>
+
+
+@*@section Scripts{
+        <script>
+            ///dingshi
+            function refresh() {
+                window.location.reload();
+            }
+            setTimeout('refresh()', 110000);
+        </script>
+    }*@
+<script type="text/javascript" src="~/TableJs/scripts/jquery/jquery-1.7.1.js"></script>
+<link href="~/TableJs/style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="~/TableJs/style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="~/TableJs/scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="~/TableJs/scripts/fancybox/jquery.fancybox-1.3.4.js"></script>
+<script type="text/javascript" src="~/TableJs/scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="~/TableJs/style/authority/jquery.fancybox-1.3.4.css" media="screen">
+<script type="text/javascript" src="~/TableJs/scripts/artDialog/artDialog.js?skin=default"></script>

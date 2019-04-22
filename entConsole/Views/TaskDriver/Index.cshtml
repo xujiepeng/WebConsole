@@ -1,0 +1,175 @@
+﻿
+@model entConsole.Models.TaskDriverViewModel
+<form asp-controller="TaskDriver" asp-action="Index" method="get">
+    @*<p>
+            <select asp-for="MovieGenre" asp-items="Model.Genres">
+                <option value="">All</option>
+            </select>
+
+            Title: <input type="text" name="SearchString">
+            <input type="submit" value="Filter" />
+        </p>*@
+</form>
+
+<div class="col-lg-11">
+    <div class="card">
+
+        @*<div class="card-header d-flex align-items-center">
+            <h3 class="h4">数据列表</h3>
+        </div>*@
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading"></div>
+
+
+
+                    <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+                        @*<thead>*@
+                            <tr>
+                                <th>
+                                    任务ID
+                                </th>
+                                <th>
+                                    用户
+                                </th>
+                                <th>
+                                    任务名
+                                </th>
+                                <th>
+                                    表名
+                                </th>
+                                <th>
+                                    任务状态
+                                </th>
+                                <th>
+                                    时间戳
+                                </th>
+                                <th>
+                                    是否初始化
+                                </th>
+                                <th>
+                                    操作
+                                </th>
+                            </tr>
+                        @*</thead>*@
+
+                        <tbody>
+                            @{
+                                try
+                                {
+                                    foreach (var item in Model.dataList)
+                                    {
+
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.taskId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.userName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TaskName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Tables)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.taskStatus)
+                                            </td>
+                                            <td>
+                                                @*<input type="text" name="TMSP">*@
+                                            </td>
+                                            <td>
+                                                @*@Html.CheckBox("slide", false)*@
+                                            </td>
+                                            <td>
+                                                <a asp-action="edit" asp-route-id="@item.taskId" class="edit">新增</a>
+                                                @*<input type="submit" value="Filter" />*@
+                                                <a asp-action="edit" asp-route-id="@item.taskId" class="edit">编辑</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    @Html.ActionLink("点击查看详细错误信息", "Index", "Error", new { Msg = e.ToString() })
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+
+
+                        @CommonMethod.PaginationPager(Convert.ToInt32(Model.paraDic["clickpagenow"]), Convert.ToInt32(Model.paraDic["PageNum"]), Convert.ToInt32(Model.paraDic["allowPageNum"]), "TaskDriver", "Index", Model.paraDic)
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .alt td {
+        background: black !important;
+    }
+</style>
+<script type="text/javascript" src="~/TableJs/scripts/jquery/jquery-1.7.1.js"></script>
+<link href="~/TableJs/style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="~/TableJs/style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="~/TableJs/scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="~/TableJs/scripts/fancybox/jquery.fancybox-1.3.4.js"></script>
+<script type="text/javascript" src="~/TableJs/scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="~/TableJs/style/authority/jquery.fancybox-1.3.4.css" media="screen">
+<script type="text/javascript" src="~/TableJs/scripts/artDialog/artDialog.js?skin=default"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        /** 新增   **/
+        $("a.addBtn").fancybox({
+            'href': '~/TaskDriver/Edit',
+            'width': 733,
+            'height': 530,
+            'type': 'iframe',
+            'hideOnOverlayClick': false,
+            'showCloseButton': false,
+            'onClosed': function () {
+                window.location.href = '';
+            }
+        });
+
+        /** 导入  **/
+        $("#importBtn").fancybox({
+            'href': '/xngzf/archives/importFangyuan.action',
+            'width': 633,
+            'height': 260,
+            'type': 'iframe',
+            'hideOnOverlayClick': false,
+            'showCloseButton': false,
+            'onClosed': function () {
+                window.location.href = 'house_list.html';
+            }
+        });
+
+        /**编辑   **/
+        $("a.edit").fancybox({
+            'width': 733,
+            'height': 530,
+            'type': 'iframe',
+            'hideOnOverlayClick': false,
+            'showCloseButton': false,
+            'onClosed': function () {
+                window.location.href = '';
+            }
+        });
+    });
+
+
+</script>
+
+

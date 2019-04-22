@@ -1,0 +1,147 @@
+﻿
+@model entConsole.Models.DbTableColConfigViewModel
+<form asp-controller="DbTableColConfig" asp-action="Index" method="get">
+    @*<p>
+            <select asp-for="MovieGenre" asp-items="Model.Genres">
+                <option value="">All</option>
+            </select>
+
+            Title: <input type="text" name="SearchString">
+            <input type="submit" value="Filter" />
+        </p>*@
+</form>
+
+<div class="col-lg-11">
+    <div class="card">
+
+        @*<div class="card-header d-flex align-items-center">
+                <h3 class="h4">数据列表</h3>
+            </div>*@
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading"></div>
+
+
+
+                    <table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+                        <tr>
+                            <th>
+                                表ID
+                            </th>
+                            <th>
+                                列名称
+                            </th>
+                            <th>
+                                I列名称
+                            </th>
+                            <th>
+                                列名称中文
+                            </th>
+                            <th>
+                                isPk
+                            </th>
+                            <th>
+                                isIgnore
+                            </th>
+                            <th>
+                                isKey
+                            </th>
+                            <th>
+                                sortCol
+                            </th>
+                            <th>
+                                isNotNull
+                            </th>
+                            <th>
+                                Ver
+                            </th>
+                            <th>
+                                isEnable
+                            </th>
+                            <th>
+                                entryDate
+                            </th>
+                        </tr>
+
+                        <tbody>
+                            @{
+                                try
+                                {
+                                    foreach (var item in Model.dataInfo)
+                                    {
+
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.tableId)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.colName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.iColName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ColName_CN)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.isPk)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.isIgnore)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.isKey)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.sortCol)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.isNotNull)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Ver)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.isEnable)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.entryDate)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    @Html.ActionLink("点击查看详细错误信息", "Index", "Error", new { Msg = e.ToString() })
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+
+                @*分页标签*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .alt td {
+        background: black !important;
+    }
+</style>
+<script type="text/javascript" src="~/TableJs/scripts/jquery/jquery-1.7.1.js"></script>
+<link href="~/TableJs/style/authority/basic_layout.css" rel="stylesheet" type="text/css">
+<link href="~/TableJs/style/authority/common_style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="~/TableJs/scripts/authority/commonAll.js"></script>
+<script type="text/javascript" src="~/TableJs/scripts/fancybox/jquery.fancybox-1.3.4.js"></script>
+<script type="text/javascript" src="~/TableJs/scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<link rel="stylesheet" type="text/css" href="~/TableJs/style/authority/jquery.fancybox-1.3.4.css" media="screen">
+<script type="text/javascript" src="~/TableJs/scripts/artDialog/artDialog.js?skin=default"></script>
+
