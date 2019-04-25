@@ -151,5 +151,15 @@ namespace entConsole.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public string back(string id, string str1, string str2)
+        {
+            return "back message";
+        }
+
+        public IActionResult Test(string id, string str1, string str2)
+        {
+            return RedirectToAction("Index", "Error", new { Msg = "经测试网页站点部署正常，站点与企业库服务端通信异常，请检查服务端" });
+        }
     }
 }

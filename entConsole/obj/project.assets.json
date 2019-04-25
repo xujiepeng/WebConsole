@@ -15190,11 +15190,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Project\\临时测试\\entConsole20190402\\entConsole\\entConsole\\entConsole.csproj",
+      "projectUniqueName": "E:\\MyGit\\WebConsole\\entConsole\\entConsole.csproj",
       "projectName": "entConsole",
-      "projectPath": "E:\\Project\\临时测试\\entConsole20190402\\entConsole\\entConsole\\entConsole.csproj",
+      "projectPath": "E:\\MyGit\\WebConsole\\entConsole\\entConsole.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "E:\\Project\\临时测试\\entConsole20190402\\entConsole\\entConsole\\obj\\",
+      "outputPath": "E:\\MyGit\\WebConsole\\entConsole\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
