@@ -12082,11 +12082,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\临时测试程序\\WebConsole\\WebConsole\\WebConsole\\WebConsole.csproj",
+      "projectUniqueName": "E:\\MyGit\\WebConsole\\myConsole\\WebConsole\\WebConsole\\WebConsole.csproj",
       "projectName": "WebConsole",
-      "projectPath": "E:\\临时测试程序\\WebConsole\\WebConsole\\WebConsole\\WebConsole.csproj",
+      "projectPath": "E:\\MyGit\\WebConsole\\myConsole\\WebConsole\\WebConsole\\WebConsole.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "E:\\临时测试程序\\WebConsole\\WebConsole\\WebConsole\\obj\\",
+      "outputPath": "E:\\MyGit\\WebConsole\\myConsole\\WebConsole\\WebConsole\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
