@@ -32,3 +32,6 @@ E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebC
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebConsole.RazorTargetAssemblyInfo.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebConsole.Views.pdb
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebConsole.csproj.CopyComplete
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebConsole.csprojAssemblyReference.cache
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\OrderList\Index.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\OrderList_Search\Index.g.cshtml.cs
