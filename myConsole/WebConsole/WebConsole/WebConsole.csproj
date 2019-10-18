@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Views\Shared\welcome.html" />
+    <None Remove="Views\Shared\welcome1.html" />
+  </ItemGroup>
 </Project>
