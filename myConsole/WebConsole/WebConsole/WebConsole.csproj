@@ -15,4 +15,5 @@
     <None Remove="Views\Shared\welcome.html" />
     <None Remove="Views\Shared\welcome1.html" />
   </ItemGroup>
+
 </Project>
