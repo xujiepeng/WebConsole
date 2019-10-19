@@ -115,3 +115,6 @@ E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razo
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\AdminCate\AdminEdit.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\AdminRule\AdminEdit.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Classification\AdminEdit.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\MemberList_Static\MemberAdd.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\MemberList_Static\MemberPassword.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\MemberList_Static\MemberEdit.g.cshtml.cs

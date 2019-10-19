@@ -15,5 +15,20 @@ namespace WebConsole.Controllers
         {
             return View();
         }
+
+        public IActionResult MemberAdd()
+        {
+            return View();
+        }
+
+        public IActionResult MemberEdit()
+        {
+            return View();
+        }
+
+        public IActionResult MemberPassword()
+        {
+            return View();
+        }
     }
 }
