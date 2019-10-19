@@ -15,5 +15,10 @@ namespace WebConsole.Controllers
         {
             return View();
         }
+
+        public IActionResult RoleAdd()
+        {
+            return View();
+        }
     }
 }

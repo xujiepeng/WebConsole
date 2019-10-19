@@ -32,7 +32,6 @@ E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebC
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebConsole.RazorTargetAssemblyInfo.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebConsole.Views.pdb
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebConsole.csproj.CopyComplete
-E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebConsole.csprojAssemblyReference.cache
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\OrderList\Index.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\OrderList_Search\Index.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\City\Index.g.cshtml.cs
@@ -111,3 +110,8 @@ E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razo
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Login\Index.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Log\Index.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Demo\Index.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\AdminRole\RoleAdd.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\AdminList\AdminEdit.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\AdminCate\AdminEdit.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\AdminRule\AdminEdit.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Classification\AdminEdit.g.cshtml.cs

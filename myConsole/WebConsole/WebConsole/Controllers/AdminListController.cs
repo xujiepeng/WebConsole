@@ -20,5 +20,10 @@ namespace WebConsole.Controllers
         {
             return View();
         }
+
+        public IActionResult AdminEdit()
+        {
+            return View();
+        }
     }
 }
