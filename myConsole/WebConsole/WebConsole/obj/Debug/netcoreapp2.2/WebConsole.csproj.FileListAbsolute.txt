@@ -106,3 +106,4 @@ E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razo
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Map\Index.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Pie\Index.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Radar\Index.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Unicode\Index.g.cshtml.cs
