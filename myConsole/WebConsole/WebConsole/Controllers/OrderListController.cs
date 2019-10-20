@@ -14,5 +14,10 @@ namespace WebConsole.Controllers
         {
             return View();
         }
+
+        public IActionResult OrderListAdd()
+        {
+            return View();
+        }
     }
 }
