@@ -1,7 +1,0 @@
-D:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.1\WebConsole.csprojAssemblyReference.cache
-D:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.1\WebConsole.dll.config
-D:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.1\WebConsole.csproj.CoreCompileInputs.cache
-D:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.1\WebConsole.RazorAssemblyInfo.cache
-D:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.1\WebConsole.RazorAssemblyInfo.cs
-D:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.1\WebConsole.AssemblyInfoInputs.cache
-D:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.1\WebConsole.AssemblyInfo.cs
