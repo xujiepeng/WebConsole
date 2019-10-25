@@ -78,7 +78,7 @@
 
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="id" value="1" lay-skin="primary">
+                                                    <input type="checkbox" name="id" data-del_id="@item.ID" value="1" lay-skin="primary">
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.ID)
@@ -207,10 +207,9 @@
         });
     }
 
-    /*用户-删除*/
+    /*单条删除功能*/
     function member_del(obj, nowid) {
         layer.confirm('确认要删除吗？', function (index) {
-            //发异步删除数据
             $.ajax({
                 type: "POST",
                 url: "/MemberList_Static/Delete",
@@ -233,19 +232,36 @@
     }
 
 
-
+    /*批量删除功能*/
     function delAll(argument) {
+        debugger
         var ids = [];
-
-        // 获取选中的id
+        // 循环获取选中的id
         $('tbody input').each(function (index, el) {
             if ($(this).prop('checked')) {
-                ids.push($(this).val())
+                ids.push($(this).data("del_id"))
             }
         });
 
         layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
-            //捉到所有被选中的，发异步进行删除
+            //捕捉到所有被选中的id，发异步进行删除
+            $.ajax({
+                type: "POST",
+                url: "/MemberList_Static/DeleteAll",
+                data: { "ids": ids },
+                dataType: "text",
+                success: function (data) {
+                    if (data == "false") {
+                        layer.alert("删除失败或数据不存在", { icon: 5 })
+                        return false;
+                    }
+                    else {
+                        //界面样式删除效果
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', { icon: 1, time: 1000 });
+                    }
+                }
+            });
             layer.msg('删除成功', { icon: 1 });
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });

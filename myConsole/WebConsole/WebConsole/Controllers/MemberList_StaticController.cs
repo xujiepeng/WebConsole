@@ -130,5 +130,21 @@ namespace WebConsole.Controllers
             else
                 return false;
         }
+
+        /// <summary>
+        /// 批量删除数据，delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public bool DeleteAll(string[] ids)
+        {
+            MemberList_StaticViewModel dataInfo = new MemberList_StaticViewModel();
+
+            if (dataInfo.DeleteDataAll(ids))
+                return true;
+            else
+                return false;
+        }
     }
 }
