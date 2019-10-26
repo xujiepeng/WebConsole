@@ -136,3 +136,4 @@ E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razo
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\OrderList_Search\OrderListAdd.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index2.g.cshtml.cs
 E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\Razor\Views\MemberList_Static\Index1.g.cshtml.cs
+E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\obj\Debug\netcoreapp2.2\WebConsole.csprojAssemblyReference.cache

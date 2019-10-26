@@ -98,6 +98,35 @@ namespace WebConsole.Models
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 批量删除数据
+        /// </summary>
+        /// <returns></returns>
+        public bool DeleteDataAll(string[] ids)
+        {
+            string errorMsg;
+            string deleteNom = "";
+            foreach (var id in ids)
+            {
+                deleteNom += "'" + id + "',";
+            }
+            if (deleteNom.Length > 0)
+            {
+                deleteNom = deleteNom.Substring(0, deleteNom.Length - 1);
+            }
+            SqliteAccess conn = new SqliteAccess(@"E:\MyGit\WebConsole\myConsole\doc\ConsoleData.db3");
+            string str = string.Format("delete from MemberList_Static where id in ({0})", deleteNom);
+            int count = conn.Execute(str, out errorMsg);
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
         }
     }

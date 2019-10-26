@@ -44,6 +44,14 @@
                             <div class="layui-inline layui-show-xs-block">
                                 <input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                             </div>
+                            <div class="layui-input-inline layui-show-xs-block">
+                                <select name="optionEvent" placeholder="事件选择" >
+                                    <option value="1">111</option>
+                                    <option value="2">222</option>
+                                    <option value="3">333</option>
+                                    <option value="4">444</option>
+                                </select>
+                            </div>
                             <div class="layui-inline layui-show-xs-block">
                                 <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
                             </div>
@@ -78,7 +86,7 @@
 
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="id" value="1" lay-skin="primary">
+                                                    <input type="checkbox" name="id" data-del_id="@item.ID" value="1" lay-skin="primary">
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.ID)
@@ -207,14 +215,52 @@
         });
     }
 
-    /*用户-删除*/
+    /*单条删除功能*/
     function member_del(obj, nowid) {
         layer.confirm('确认要删除吗？', function (index) {
-            //发异步删除数据
             $.ajax({
                 type: "POST",
                 url: "/MemberList_Static/Delete",
                 data: { "id": nowid },
+                dataType: "text",
+                success: function (data) {
+                    if (data == "false") {
+                        layer.alert("删除失败或数据不存在", { icon: 5 })
+                        return false;
+                    }
+                    else {
+                        //界面样式:单条删除效果
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!', { icon: 1, time: 1000 });
+                    }
+                }
+            });
+            
+        });
+    }
+
+
+    /*批量删除功能*/
+    function delAll(argument) {
+        debugger
+        var ids = [];
+        // 循环获取选中的id
+        $('tbody input').each(function (index, el) {
+            if ($(this).prop('checked')) {
+                ids.push($(this).data("del_id"))
+            }
+        });
+
+        layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
+            if (ids.length == 0) {
+                layer.alert("未选中数据", { icon: 5 })
+                return false;
+            }
+            //捕捉到所有被选中的id，发异步进行删除
+            $.ajax({
+                type: "POST",
+                url: "/MemberList_Static/DeleteAll",
+                data: { "ids": ids },
                 dataType: "text",
                 success: function (data) {
                     if (data == "false") {
@@ -228,24 +274,6 @@
                     }
                 }
             });
-            
-        });
-    }
-
-
-
-    function delAll(argument) {
-        var ids = [];
-
-        // 获取选中的id
-        $('tbody input').each(function (index, el) {
-            if ($(this).prop('checked')) {
-                ids.push($(this).val())
-            }
-        });
-
-        layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
-            //捉到所有被选中的，发异步进行删除
             layer.msg('删除成功', { icon: 1 });
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
