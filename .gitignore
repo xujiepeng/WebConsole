@@ -1,2 +1,5 @@
 *.vs
 /myConsole/WebConsole/WebConsole/bin
+/myConsole/WebConsole/WebConsole/obj
+/entConsole/entConsole/bin
+/entConsole/entConsole/obj
