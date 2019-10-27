@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebConsole.Models.Model.Conf;
 
 namespace WebConsole
 {
@@ -31,7 +32,8 @@ namespace WebConsole
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            //注册配置
+            services.Configure<CommConf>(Configuration.GetSection("CommConf"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

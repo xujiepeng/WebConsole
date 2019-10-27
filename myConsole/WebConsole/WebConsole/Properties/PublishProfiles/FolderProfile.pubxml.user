@@ -6,6 +6,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>E:\临时测试程序\WebConsole\WebConsole\WebConsole\bin\Release\netcoreapp2.2\publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\bin\Release\netcoreapp2.2\publish\</_PublishTargetUrl>
   </PropertyGroup>
 </Project>

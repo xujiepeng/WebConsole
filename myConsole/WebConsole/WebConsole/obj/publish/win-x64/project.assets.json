@@ -3118,6 +3118,33 @@
           }
         }
       },
+      "System.Data.SQLite.Core/1.0.111": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/System.Data.SQLite.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Data.SQLite.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/netstandard2.0/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx-x64/native/netstandard2.0/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-x64/native/netstandard2.0/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/netstandard2.0/SQLite.Interop.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
       "System.Diagnostics.Contracts/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -7697,6 +7724,18 @@
         },
         "runtime": {
           "runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll": {}
+        }
+      },
+      "System.Data.SQLite.Core/1.0.111": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/System.Data.SQLite.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Data.SQLite.dll": {}
+        },
+        "native": {
+          "runtimes/win-x64/native/netstandard2.0/SQLite.Interop.dll": {}
         }
       },
       "System.Diagnostics.Contracts/4.3.0": {
@@ -12928,6 +12967,54 @@
         "version.txt"
       ]
     },
+    "System.Data.SQLite.Core/1.0.111": {
+      "sha512": "HfCHIp+Pyvoy81BPmH/9FTTe8HSf4A6LibGDmTT5O4NZVo6g9LitcxHEx31F20dglPhTPb1smuFc2j5CC/7uBw==",
+      "type": "package",
+      "path": "system.data.sqlite.core/1.0.111",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/net20/System.Data.SQLite.Core.targets",
+        "build/net20/x64/SQLite.Interop.dll",
+        "build/net20/x86/SQLite.Interop.dll",
+        "build/net40/System.Data.SQLite.Core.targets",
+        "build/net40/x64/SQLite.Interop.dll",
+        "build/net40/x86/SQLite.Interop.dll",
+        "build/net45/System.Data.SQLite.Core.targets",
+        "build/net45/x64/SQLite.Interop.dll",
+        "build/net45/x86/SQLite.Interop.dll",
+        "build/net451/System.Data.SQLite.Core.targets",
+        "build/net451/x64/SQLite.Interop.dll",
+        "build/net451/x86/SQLite.Interop.dll",
+        "build/net46/System.Data.SQLite.Core.targets",
+        "build/net46/x64/SQLite.Interop.dll",
+        "build/net46/x86/SQLite.Interop.dll",
+        "lib/net20/System.Data.SQLite.dll",
+        "lib/net20/System.Data.SQLite.dll.config",
+        "lib/net20/System.Data.SQLite.xml",
+        "lib/net40/System.Data.SQLite.dll",
+        "lib/net40/System.Data.SQLite.dll.config",
+        "lib/net40/System.Data.SQLite.xml",
+        "lib/net45/System.Data.SQLite.dll",
+        "lib/net45/System.Data.SQLite.dll.config",
+        "lib/net45/System.Data.SQLite.xml",
+        "lib/net451/System.Data.SQLite.dll",
+        "lib/net451/System.Data.SQLite.dll.config",
+        "lib/net451/System.Data.SQLite.xml",
+        "lib/net46/System.Data.SQLite.dll",
+        "lib/net46/System.Data.SQLite.dll.config",
+        "lib/net46/System.Data.SQLite.xml",
+        "lib/netstandard2.0/System.Data.SQLite.dll",
+        "lib/netstandard2.0/System.Data.SQLite.dll.config",
+        "lib/netstandard2.0/System.Data.SQLite.xml",
+        "runtimes/linux-x64/native/netstandard2.0/SQLite.Interop.dll",
+        "runtimes/osx-x64/native/netstandard2.0/SQLite.Interop.dll",
+        "runtimes/win-x64/native/netstandard2.0/SQLite.Interop.dll",
+        "runtimes/win-x86/native/netstandard2.0/SQLite.Interop.dll",
+        "system.data.sqlite.core.1.0.111.nupkg.sha512",
+        "system.data.sqlite.core.nuspec"
+      ]
+    },
     "System.Diagnostics.Contracts/4.3.0": {
       "sha512": "iBJGN/qpw/DEwPcPR+UYEnqoNCR6/ipSJNUS6agLUvoaSB78k5oLprImY110c4SklLNzm2VpMQjhUu9kbdP7xA==",
       "type": "package",
@@ -16815,7 +16902,8 @@
     ".NETCoreApp,Version=v2.2": [
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
-      "Microsoft.NETCore.App >= 2.2.0"
+      "Microsoft.NETCore.App >= 2.2.0",
+      "System.Data.SQLite.Core >= 1.0.111"
     ]
   },
   "packageFolders": {
@@ -16825,11 +16913,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\临时测试程序\\WebConsole\\WebConsole\\WebConsole\\WebConsole.csproj",
+      "projectUniqueName": "E:\\MyGit\\WebConsole\\myConsole\\WebConsole\\WebConsole\\WebConsole.csproj",
       "projectName": "WebConsole",
-      "projectPath": "E:\\临时测试程序\\WebConsole\\WebConsole\\WebConsole\\WebConsole.csproj",
+      "projectPath": "E:\\MyGit\\WebConsole\\myConsole\\WebConsole\\WebConsole\\WebConsole.csproj",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "E:\\临时测试程序\\WebConsole\\WebConsole\\WebConsole\\obj\\publish\\win-x64\\",
+      "outputPath": "E:\\MyGit\\WebConsole\\myConsole\\WebConsole\\WebConsole\\obj\\publish\\win-x64\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -16875,6 +16963,10 @@
             "target": "Package",
             "version": "[2.2.0, )",
             "autoReferenced": true
+          },
+          "System.Data.SQLite.Core": {
+            "target": "Package",
+            "version": "[1.0.111, )"
           }
         },
         "imports": [

@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using WebConsole.Models;
 using WebConsole.Models.Model;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using WebConsole.Models.Model.Conf;
 
 namespace WebConsole.Controllers
 {
     public class MemberList_StaticController : Controller
     {
+        private readonly CommConf _appConf;
+        public MemberList_StaticController(IOptions<CommConf> options)        {            _appConf = options.Value;        }
+
         public IActionResult Index()
         {
             MemberList_StaticViewModel Static = new MemberList_StaticViewModel();
@@ -20,7 +23,7 @@ namespace WebConsole.Controllers
             var resultModel = new MemberList_StaticViewModel
             {
                 a = Static.a,
-                staticstru = Static.GetDate(),
+                staticstru = Static.GetDate(_appConf),
                 c = "c"
             };
 
