@@ -1,0 +1,264 @@
+﻿
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-X-admin2.2</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="~/css/font.css">
+    <link rel="stylesheet" href="~/css/xadmin.css">
+    <script src="~/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="~/js/xadmin.js"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    
+</head>
+<body class="index">
+    <!-- 顶部开始 -->
+    <div class="container">
+        <div class="logo">
+            <a href="~/Home/Index">X-admin v2.2</a>
+        </div>
+        <div class="left_open">
+            <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+        </div>
+        <ul class="layui-nav left fast-add" lay-filter="">
+            <li class="layui-nav-item">
+                <a href="javascript:;">+新增</a>
+                <dl class="layui-nav-child">
+                    <!-- 二级菜单 -->
+                    <dd>
+                        <a onclick="xadmin.open('最大化','http://www.baidu.com','','',true)">
+                            <i class="iconfont">&#xe6a2;</i>弹出最大化
+                        </a>
+                    </dd>
+                    <dd>
+                        <a onclick="xadmin.open('弹出自动宽高','http://www.baidu.com')">
+                            <i class="iconfont">&#xe6a8;</i>弹出自动宽高
+                        </a>
+                    </dd>
+                    <dd>
+                        <a onclick="xadmin.open('弹出指定宽高','http://www.baidu.com',500,300)">
+                            <i class="iconfont">&#xe6a8;</i>弹出指定宽高
+                        </a>
+                    </dd>
+                    <dd>
+                        <a onclick="xadmin.add_tab('在tab打开','member-list.html')">
+                            <i class="iconfont">&#xe6b8;</i>在tab打开
+                        </a>
+                    </dd>
+                    <dd>
+                        <a onclick="xadmin.add_tab('在tab打开刷新','member-del.html',true)">
+                            <i class="iconfont">&#xe6b8;</i>在tab打开刷新
+                        </a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav right" lay-filter="">
+            <li class="layui-nav-item">
+                <a href="javascript:;">admin</a>
+                <dl class="layui-nav-child">
+                    <!-- 二级菜单 -->
+                    <dd>
+                        <a onclick="xadmin.open('个人信息','http://www.baidu.com')">个人信息</a>
+                    </dd>
+                    <dd>
+                        <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a>
+                    </dd>
+                    <dd>
+                        <a href="~/Login/index">退出</a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item to-index">
+                <a href="/">前台首页</a>
+            </li>
+        </ul>
+    </div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+    <!-- 左侧菜单开始 -->
+
+    <ul id="nav" class="layui-nav layui-nav-tree layui-nav-side">
+        @*<ul class="layui-nav layui-nav-tree" lay-filter="test">*@
+        <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+        <li id="p1" class="layui-nav-item">
+            <a>会员管理</a>
+            <dl class="layui-nav-child">
+                <dd><a id="link" href="~/MemberList_Static/Index">会员列表(静态表格)</a></dd>
+                <dd><a id="link" href="~/MemberList_Dynamic/index">会员列表(动态表格)</a></dd>
+                <dd><a id="link" href="~/StatisticsPage/Index">统计页面</a></dd>
+            </dl>
+        </li>
+        <li id="p2" class="layui-nav-item ">
+            <a>解决方案</a>
+            <dl class="layui-nav-child">
+                <dd><a id="link" href="">移动模块</a></dd>
+                <dd><a id="link" href="">后台模版</a></dd>
+                <dd><a id="link" href="">电商平台</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">产品</a></li>
+        <li class="layui-nav-item"><a href="">大数据</a></li>
+    </ul>
+
+
+    <!-- <div class="x-slide_left"></div> -->
+    <!-- 左侧菜单结束 -->
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+            <ul class="layui-tab-title">
+                <a href="~/Home/index">
+                    <li class="home">
+                        <i class="layui-icon">&#xe68e;</i>我的桌面
+                    </li>
+                </a>
+            </ul>
+            <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
+                <dl>
+                    <dd data-type="this">关闭当前</dd>
+                    <dd data-type="other">关闭其它</dd>
+                    <dd data-type="all">关闭全部</dd>
+                </dl>
+            </div>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show" style="overflow-y:scroll;overflow-x:scroll">
+                    @*<iframe src='Privacy' frameborder="0" scrolling="yes" class="x-iframe"></iframe>*@
+                    @RenderBody()
+
+                </div>
+            </div>
+            <div id="tab_show"></div>
+        </div>
+    </div>
+    <div class="page-content-bg"></div>
+    <style id="theme_style"></style>
+    <!-- 右侧主体结束 -->
+    <!-- 中部结束 -->
+    @*<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>*@
+    <script type="text/javascript">
+        //遍历所有指定class，得到需要的标签Id
+        $('dd').click(
+            function () {
+                var strs = "";
+                debugger
+                //每次点击标签，获取所有展开的节点.layui-nav-itemed表示该节点展开
+                $(document.getElementsByClassName("layui-nav-itemed")).each(
+                    function () {
+                        strs = strs + $(this).attr("id") + ",";
+                    })
+                strs = strs.substr(0, strs.length - 1);
+                //如果节点存在，将节点记录到cookie里
+                if (typeof (strs) != "undefined")
+                    setCookie("selectBarId", strs, "1");
+            });
+
+        //加载页面完成后，读取cookie
+        $(document).ready(function () {
+            //每次加载之前从cookie中取出要展开的节点的Id列表
+            debugger
+            var showid = getCookie("selectBarId");
+            var strs = new Array();
+            strs = showid.split(",");
+            //根据节点Id名称，给节点添加class，从而展开对应的节点
+            for (i = 0; i < strs.length; i++) {
+                $(document.getElementById(strs[i])).addClass("layui-nav-itemed");
+            }
+
+            //调整左侧导航栏高度
+            $("#nav").css("margin-top", $(".container").height() - 1)
+        })
+
+        //根据单个点击标签，获取上级Id，存入cookie
+        //$('dd1').click(
+        //    function () {
+        //        var $this = $(this);
+        //        //向上取两个层级的父节点id
+        //        var id = $this.parent().parent().attr("id");
+        //        //将Id存入cookie
+        //        if (typeof (id) != "undefined")
+        //            setCookie("selectBarId", id, "1");
+        //        //取出存入的id
+        //        alert(getCookie("selectBarId"));
+        //        //向这个id对应的标签上添加class
+        //        $(this).parent().addClass("layui-nav-itemed");
+        //    });
+
+        ////获取所有li的节点
+        //var list = document.getElementsByTagName("li");
+        ////给每个li绑定事件
+        //debugger;
+        //for (var i = 0; i < list.length; i++) {
+        //    list[i].onclick = function () {
+        //        //弹出对应的li节点里面的内容
+        //        alert(this.innerHTML);
+        //        //将节点的颜色变成红色
+        //        this.style.color = "red";
+        //    }
+        //}
+
+        //////cookie相关方法//////
+        //获取cookie
+        function getCookie(c_name) {
+            if (document.cookie.length > 0) {
+                c_start = document.cookie.indexOf(c_name + "=");
+                if (c_start !== -1) {
+                    c_start = c_start + c_name.length + 1;
+                    c_end = document.cookie.indexOf(";", c_start);
+                    if (c_end === -1) c_end = document.cookie.length;
+                    return unescape(document.cookie.substring(c_start, c_end));
+                }
+            }
+            return "";
+        }
+
+        //设置cookie
+        function setCookie(c_name, value, expiredays) {
+            var exdate = new Date();
+            exdate.setDate(exdate.getDate() + expiredays);
+            document.cookie = c_name + "=" + escape(value) +
+                ((expiredays === null) ? "" : ";expires=" + exdate.toGMTString());
+        }
+
+        //删除cookie
+        function deleteCookie(c_name) {
+            document.cookie = c_name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        }
+
+        /*
+         * 将信息附加到cookie中，
+         * 例如：cookie: name=bob ; 
+         * 执行appendToCookie("name", "hood"); 
+         * 结果： cookie: name=bob,hood
+         */
+        function appendToCookie(c_name, value) {
+            var cookieValue = getCookie(c_name);
+            setCookie(c_name, cookieValue + value + ",", 3);
+        }
+
+        /*
+         * 将信息从cookie中删除，
+         * 例如：cookie: name=bob,hood ; 
+         * 执行removeInCookie("name", "hood"); 
+         * 结果： cookie: name = bob
+         */
+        function removeInCookie(c_name, value) {
+            var cookieValue = getCookie(c_name);
+            v_start = cookieValue.indexOf(value);
+            if (v_start !== -1) {
+                v_end = v_start + value.length + 1;
+                cookieValue = cookieValue.substring(0, v_start) + cookieValue.substring(v_end);
+                setCookie(c_name, cookieValue, 3);
+            }
+        }
+    </script>
+    <style>
+        .layui-nav .layui-nav-child a {
+            color: rgba(255,255,255,.7);
+        }
+    </style>
+</body>
+</html>

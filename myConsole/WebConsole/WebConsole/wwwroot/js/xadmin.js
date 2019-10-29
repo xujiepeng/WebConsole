@@ -242,19 +242,20 @@ layui.use(['layer','element','jquery'],function() {
             $('.page-content-bg').show();
         }
 
+        /*左侧菜单滑动打开关闭效果*/
         $('.left-nav').find('a').removeClass('active');
         $(this).children('a').addClass('active');
         if($(this).children('.sub-menu').length){
             if($(this).hasClass('open')){
                 $(this).removeClass('open');
                 $(this).find('.nav_right').html('&#xe697;');
-                $(this).children('.sub-menu').stop(true,true).slideUp();
-                $(this).siblings().children('.sub-menu').slideUp();
+                $(this).children('.sub-menu').stop(true,true).slideUp(1);
+                $(this).siblings().children('.sub-menu').slideUp(1);
             }else{
                 $(this).addClass('open');
                 $(this).children('a').find('.nav_right').html('&#xe6a6;');
-                $(this).children('.sub-menu').stop(true,true).slideDown();
-                $(this).siblings().children('.sub-menu').stop(true,true).slideUp();
+                $(this).children('.sub-menu').stop(true,true).slideDown(1);
+                $(this).siblings().children('.sub-menu').stop(true,true).slideUp(1);
                 $(this).siblings().find('.nav_right').html('&#xe697;');
                 $(this).siblings().removeClass('open');
             }
