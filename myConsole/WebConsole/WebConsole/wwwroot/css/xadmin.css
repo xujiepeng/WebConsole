@@ -173,9 +173,9 @@ body{
     width: 220px;
 }
 
-.left-nav #nav li:hover > a{
-    /*color: blue;*/
-}
+/*.left-nav #nav li:hover > a{
+    color: blue;
+}*/
 .left-nav #nav .current{
     background-color: rgba(0, 0, 0, 0.3);
 }
@@ -207,16 +207,16 @@ body{
 .left-nav #nav li .opened{
     display: block;
 }
-.left-nav #nav li .opened:hover{
-    /*background: #fff ;*/
-}
-.left-nav #nav li .opened .current{
+/*.left-nav #nav li .opened:hover{
+    background: #fff ;
+}*/
+/*.left-nav #nav li .opened .current{
     
-}
-.left-nav #nav li .sub-menu li:hover{
-    /*color: blue;*/
-     /*background: #fff ;*/
-}
+}*/
+/*.left-nav #nav li .sub-menu li:hover{
+    color: blue;
+     background: #fff ;
+}*/
 .left-nav #nav li .sub-menu li a{
     padding: 12px 15px 12px 30px;
     font-size: 14px;
@@ -418,9 +418,9 @@ table th, table td {
     .container .logo a{
         width: 140px;
     }
-    .container .left_open {
-        /*float: right;*/
-    }
+    /*.container .left_open {
+        float: right;
+    }*/
     .left-nav{
         width: 60px;
     }

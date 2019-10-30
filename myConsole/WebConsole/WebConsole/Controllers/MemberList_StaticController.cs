@@ -17,13 +17,13 @@ namespace WebConsole.Controllers
 
         public IActionResult Index()
         {
-            MemberList_StaticViewModel Static = new MemberList_StaticViewModel();
-            Static.a = "a";
+            MemberList_StaticViewModel viewModelData = new MemberList_StaticViewModel();
+            viewModelData.a = "a";
             
             var resultModel = new MemberList_StaticViewModel
             {
-                a = Static.a,
-                staticstru = Static.GetDate(_appConf),
+                a = viewModelData.a,
+                dataInfoList = viewModelData.GetDate(_appConf),
                 c = "c"
             };
 
@@ -36,7 +36,7 @@ namespace WebConsole.Controllers
         }
 
         /// <summary>
-        /// 接收前端传递来的，待修改页面数据
+        /// 接收前端传递来的，待修改页面数据,原样返回
         /// </summary>
         /// <param name="username"></param>
         /// <param name="sex"></param>
@@ -44,26 +44,21 @@ namespace WebConsole.Controllers
         /// <param name="addr"></param>
         /// <param name="Static"></param>
         /// <returns></returns>
-        public IActionResult MemberEdit(string username,string sex,string tel,string addr,string Static)
+        public IActionResult MemberEdit(string username,string sex,string tel,string addr,string states)
         {
             MemberList_StaticStru MemberList_Static = new MemberList_StaticStru();
             MemberList_Static.username = username;
             MemberList_Static.sex = sex;
             MemberList_Static.tel = tel;
             MemberList_Static.addr = addr;
-            MemberList_Static.Static = Static;
-            MemberList_StaticViewModel dataInfo = new MemberList_StaticViewModel();
+            MemberList_Static.states = states;
             var resultModel = new MemberList_StaticViewModel
             {
                 memberlist_static = MemberList_Static
             };
             return View(resultModel);
         }
-
-        public IActionResult MemberPassword()
-        {
-            return View();
-        }
+        
 
         /// <summary>
         /// 新增数据，add
@@ -74,14 +69,14 @@ namespace WebConsole.Controllers
         /// <param name="addr"></param>
         /// <param name="Static"></param>
         /// <returns></returns>
-        public bool Add(string username, string sex, string tel, string addr, string Static)
+        public bool Add(string username, string sex, string tel, string addr, string states)
         {
             MemberList_StaticStru MemberList_StaticStru = new MemberList_StaticStru();
             MemberList_StaticStru.username = username;
             MemberList_StaticStru.sex = sex;
             MemberList_StaticStru.tel = tel;
             MemberList_StaticStru.addr = addr;
-            MemberList_StaticStru.Static = Static;
+            MemberList_StaticStru.states = states;
             MemberList_StaticViewModel dataInfo = new MemberList_StaticViewModel();
 
             if (dataInfo.AddData(MemberList_StaticStru))
@@ -91,7 +86,7 @@ namespace WebConsole.Controllers
         }
 
         /// <summary>
-        /// 修改数据，update
+        /// 修改数据，Edit/Update
         /// </summary>
         /// <param name="username"></param>
         /// <param name="sex"></param>
@@ -99,14 +94,14 @@ namespace WebConsole.Controllers
         /// <param name="addr"></param>
         /// <param name="Static"></param>
         /// <returns></returns>
-        public bool Update(string username, string sex, string tel, string addr, string Static)
+        public bool Update(string username, string sex, string tel, string addr, string states)
         {
             MemberList_StaticStru MemberList_StaticStru = new MemberList_StaticStru();
             MemberList_StaticStru.username = username;
             MemberList_StaticStru.sex = sex;
             MemberList_StaticStru.tel = tel;
             MemberList_StaticStru.addr = addr;
-            MemberList_StaticStru.Static = Static;
+            MemberList_StaticStru.states = states;
             MemberList_StaticViewModel dataInfo = new MemberList_StaticViewModel();
 
             if (dataInfo.UpdateData(MemberList_StaticStru))
@@ -148,6 +143,51 @@ namespace WebConsole.Controllers
                 return true;
             else
                 return false;
+        }
+
+        /// <summary>
+        /// 按条件搜索
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pageclick"></param>
+        /// <param name="RecordTime"></param>
+        /// <param name="userName"></param>
+        /// <param name="Static"></param>
+        /// <param name="begintime"></param>
+        /// <param name="endtime"></param>
+        /// <returns></returns>
+        public MemberList_StaticViewModel Sreach(string id, string pageclick, string RecordTime, string userName, string states, string begintime, string endtime)
+        {
+            Dictionary<string, string> paraDic = new Dictionary<string, string>();
+            if (!string.IsNullOrEmpty(userName))
+            {
+                paraDic.Add("userName", userName);
+            }
+            if (!string.IsNullOrEmpty(RecordTime))
+            {
+                paraDic.Add("RecordTime", RecordTime);
+            }
+            if (!string.IsNullOrEmpty(states))
+            {
+                paraDic.Add("States", states.Trim());
+            }
+            if (!string.IsNullOrEmpty(begintime))
+            {
+                paraDic.Add("begintime", begintime.Trim());
+            }
+            if (!string.IsNullOrEmpty(endtime))
+            {
+                paraDic.Add("endtime", endtime.Trim());
+            }
+            MemberList_StaticViewModel viewModelData = new MemberList_StaticViewModel();
+
+            var resultModel = new MemberList_StaticViewModel
+            {
+                dataInfoList = viewModelData.GetDateSreach(_appConf, ref paraDic)
+            };
+            return resultModel;
+
+            
         }
     }
 }

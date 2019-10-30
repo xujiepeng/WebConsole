@@ -36,24 +36,24 @@
                     <div class="layui-card-body ">
                         <form class="layui-form layui-col-space5">
                             <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start">
+                                <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="begintime">
                             </div>
                             <div class="layui-inline layui-show-xs-block">
-                                <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end">
+                                <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="endtime">
                             </div>
                             <div class="layui-inline layui-show-xs-block">
-                                <input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                                <input type="text" name="username" placeholder="请输入用户名" id="username" autocomplete="off" class="layui-input">
                             </div>
                             <div class="layui-input-inline layui-show-xs-block">
-                                <select name="optionEvent" placeholder="事件选择" >
-                                    <option value="1">111</option>
-                                    <option value="2">222</option>
-                                    <option value="3">333</option>
-                                    <option value="4">444</option>
+                                <select name="optionEvent" placeholder="状态" id="states">
+                                    <option value="已停用">已停用</option>
+                                    <option value="已启用">已启用</option>
+                                    <option value="ALL">ALL</option>
                                 </select>
                             </div>
                             <div class="layui-inline layui-show-xs-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+                                <button class=""  onclick="Refresh();"><i class="layui-icon">&#xe615;</i></button>
+                                <input type="button" style="height:30px" value="查询" class="ui_input_btn01" onclick="Refresh1(); " />
                             </div>
                         </form>
                     </div>
@@ -77,11 +77,11 @@
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tableText">
                                 @{
                                     try
                                     {
-                                        foreach (var item in Model.staticstru)
+                                        foreach (var item in Model.dataInfoList)
                                         {
 
                                             <tr>
@@ -104,16 +104,16 @@
                                                     @Html.DisplayFor(modelItem => item.addr)
                                                 </td>
                                                 <td class="td-status">
-                                                    @if (item.Static.ToString() == "已启用")
+                                                    @if (item.states.ToString() == "已启用")
                                                     {
                                                         <span class="layui-btn layui-btn-normal layui-btn-mini" >
-                                                            @Html.DisplayFor(modelItem => item.Static)
+                                                            @Html.DisplayFor(modelItem => item.states)
                                                         </span>
                                                     }
                                                     else
                                                     {
                                                         <span class="layui-btn layui-btn-normal layui-btn-mini" style="color:#C9C9C9;border:1px solid #e6e6e6;background-color:#FBFBFB">
-                                                            @Html.DisplayFor(modelItem => item.Static)
+                                                            @Html.DisplayFor(modelItem => item.states)
                                                         </span>
                                                     }
 
@@ -122,7 +122,7 @@
                                                     @*<a onclick="member_stop(this,'10001')" href="javascript:;" title="启用">
                                                         <i class="layui-icon">&#xe601;</i>
                                                     </a>*@
-                                                    <a title="编辑" onclick="xadmin.open('编辑','MemberEdit/id=1?ID=1&username=@item.username&sex=@item.sex&tel=@item.tel&addr=@item.addr&static=@item.Static',600,400)" href="javascript:;">
+                                                    <a title="编辑" onclick="xadmin.open('编辑','MemberEdit/id=1?ID=1&username=@item.username&sex=@item.sex&tel=@item.tel&addr=@item.addr&static=@item.states',600,400)" href="javascript:;">
                                                         <i class="layui-icon">&#xe642;</i>
                                                     </a>
                                                     <a onclick="xadmin.open('修改密码','MemberPassword',600,400)" title="修改密码" href="javascript:;">
@@ -180,12 +180,12 @@
 
         //执行一个laydate实例
         laydate.render({
-            elem: '#start' //指定元素
+            elem: '#begintime' //指定元素
         });
 
         //执行一个laydate实例
         laydate.render({
-            elem: '#end' //指定元素
+            elem: '#endtime' //指定元素
         });
 
 
@@ -211,7 +211,6 @@
                 $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
                 layer.msg('已启用!', { icon: 6, time: 1000 });
             }
-
         });
     }
 
@@ -242,7 +241,7 @@
 
     /*批量删除功能*/
     function delAll(argument) {
-        debugger
+        //debugger
         var ids = [];
         // 循环获取选中的id
         $('tbody input').each(function (index, el) {
@@ -278,4 +277,92 @@
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
     }</script>
+
+
 </html>
+<script>
+    function Refresh1() {
+        //获取筛选条件
+        //var id = $("#id").val();
+        var username = $("#username").val();
+        var states = $("#states").val();
+        var begintime = $("#begintime").val();
+        var endtime = $("#endtime").val();
+        //每页显示条数
+        var everypage = "12"@ViewData["PageShowNum"];
+        if (begintime > endtime) {
+            alert("日期选择有误，请重新选择！");
+        }
+        $.ajax({
+            type: "GET",
+            url: "/MemberList_Static/Sreach",
+            data: { "username": username, "states": states, "endtime": endtime, "begintime": begintime },
+            dataType: "text",
+            success: function (data) {
+                //debugger;
+                if (data == "") {
+                    $("#alert").html("数据刷新异常");
+                } else {
+                    //debugger
+                    var str = "";
+                    newdata = JSON.parse(data);
+                    //数据量大于一页时分页
+                    if (newdata.dataInfoList.length != 0 && newdata.dataInfoList.length >= everypage) {
+                        for (var i = 0; i < everypage; i++) {
+                            str += "<tr><td><input type=\"checkbox\" name=\"id\" data-del_id=\"" +
+                                newdata.dataInfoList[i].id +
+                                "\" value=\"1\"  lay-skin=\"primary\"/><div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\"><i class=\"layui-icon layui-icon-ok\"></i></div>" +
+                                "</td><td>" + newdata.dataInfoList[i].id +
+                                "</td><td>" + newdata.dataInfoList[i].username +
+                                "</td><td>" + newdata.dataInfoList[i].sex +
+                                "</td><td>" + newdata.dataInfoList[i].tel +
+                                "</td><td>" + newdata.dataInfoList[i].addr +
+                                "</td><td>" + newdata.dataInfoList[i].states +
+                                "</td><td style=\"text-align: left;\">" + "11"+ "</td></tr>";
+                        }
+                    }
+                    //数据量小于一页时，直接显示
+                    else if (newdata.dataInfoList.length != 0 && newdata.dataInfoList.length < everypage) {
+                        for (var i = 0; i < newdata.dataInfoList.length; i++) {
+                            str += "<tr><td><input type=\"checkbox\" name=\"id\" data-del_id=\"" +
+                                newdata.dataInfoList[i].id +
+                                "\"  value=\"1\" lay-skin=\"primary\"/><div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\"><i class=\"layui-icon layui-icon-ok\"></i></div>" +
+                                "</td><td>" + newdata.dataInfoList[i].id +
+                                "</td><td>" + newdata.dataInfoList[i].username +
+                                "</td><td>" + newdata.dataInfoList[i].sex +
+                                "</td><td>" + newdata.dataInfoList[i].tel +
+                                "</td><td>" + newdata.dataInfoList[i].addr +
+                                "</td><td>" + newdata.dataInfoList[i].states +
+                                "</td><td style=\"text-align: left;\">" + "11" + "</td></tr>";
+                        }
+                    }
+
+                    $("#tableText").html(str);
+                    //总页数
+                    //var pagenum = Math.ceil(newdata.dataInfoList.length / everypage);
+                    //ShowPageFloot("1", pagenum);
+                    layui.use([ 'form'], function () {
+                  
+                        var form = layui.form;
+
+
+                        // 监听全选
+                        form.on('checkbox(checkall)', function (data) {
+
+                            if (data.elem.checked) {
+                                $('tbody input').prop('checked', true);
+                            } else {
+                                $('tbody input').prop('checked', false);
+                            }
+                            form.render('checkbox');
+                        });
+
+                    });
+                }
+            }
+        });
+
+        return true;
+    }
+
+</script>

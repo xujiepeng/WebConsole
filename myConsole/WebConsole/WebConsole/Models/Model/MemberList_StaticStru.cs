@@ -35,7 +35,7 @@ namespace WebConsole.Models.Model
             get;
             set;
         }
-        public string Static
+        public string states
         {
             get;
             set;
