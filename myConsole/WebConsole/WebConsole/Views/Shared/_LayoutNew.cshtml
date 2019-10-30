@@ -5,14 +5,15 @@
     <title>后台登录-X-admin2.2</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8" />
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <link rel="stylesheet" href="~/css/font.css">
     <link rel="stylesheet" href="~/css/xadmin.css">
     <script src="~/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="~/js/xadmin.js"></script>
-    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-    
+    <script type="text/javascript" src="~/js/jquery.min.js"></script>
+    @*<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>*@
+
 </head>
 <body class="index">
     <!-- 顶部开始 -->
@@ -89,15 +90,15 @@
             <dl class="layui-nav-child">
                 <dd><a id="link" href="~/MemberList_Static/Index">会员列表(静态表格)</a></dd>
                 <dd><a id="link" href="~/MemberList_Dynamic/index">会员列表(动态表格)</a></dd>
-                <dd><a id="link" href="~/StatisticsPage/Index">统计页面</a></dd>
+                <dd><a id="link" href="~/MemberList_Del/index">统计页面</a></dd>
             </dl>
         </li>
         <li id="p2" class="layui-nav-item ">
-            <a>解决方案</a>
+            <a>管理员管理</a>
             <dl class="layui-nav-child">
-                <dd><a id="link" href="">移动模块</a></dd>
-                <dd><a id="link" href="">后台模版</a></dd>
-                <dd><a id="link" href="">电商平台</a></dd>
+                <dd><a id="link" href="~/MemberList_Del/index">移动模块</a></dd>
+                <dd><a id="link" href="~/AdminList/index">后台模版</a></dd>
+                <dd><a id="link" href="~/AdminRole/index">电商平台</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item"><a href="">产品</a></li>
@@ -126,7 +127,7 @@
             </div>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show" style="overflow-y:scroll;overflow-x:scroll">
-                    @*<iframe src='Privacy' frameborder="0" scrolling="yes" class="x-iframe"></iframe>*@
+
                     @RenderBody()
 
                 </div>
@@ -138,28 +139,44 @@
     <style id="theme_style"></style>
     <!-- 右侧主体结束 -->
     <!-- 中部结束 -->
-    @*<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>*@
+
     <script type="text/javascript">
-        //遍历所有指定class，得到需要的标签Id
+        //点击dd标签时，保存当前导航栏状态
         $('dd').click(
+            function (e) {
+                savestates();
+                e.stopPropagation();
+        });
+
+        //点击当前导航，获取cookie，来判断 打开/收起 当前导航
+        $('li').click(
             function () {
-                var strs = "";
-                debugger
-                //每次点击标签，获取所有展开的节点.layui-nav-itemed表示该节点展开
-                $(document.getElementsByClassName("layui-nav-itemed")).each(
-                    function () {
-                        strs = strs + $(this).attr("id") + ",";
-                    })
-                strs = strs.substr(0, strs.length - 1);
-                //如果节点存在，将节点记录到cookie里
-                if (typeof (strs) != "undefined")
-                    setCookie("selectBarId", strs, "1");
+                var showid = getCookie("selectBarId");
+                var strs = new Array();
+                strs = showid.split(",");
+                var isOpen = false;
+                //获取cookie记录，判断当前导航是否已经打开
+                for (i = 0; i < strs.length; i++) {
+                    //如果cookie中哟记录，说明导航是打开状态
+                    if ($(this).attr("id") == strs[i]) {
+                        isOpen = true;
+                        break;
+                    }
+                }
+                //反向操作导航栏
+                if (isOpen) {
+                    $(this).removeClass("layui-nav-itemed");
+                }
+                else {
+                    $(this).addClass("layui-nav-itemed");
+                }
+                savestates();
             });
 
         //加载页面完成后，读取cookie
         $(document).ready(function () {
             //每次加载之前从cookie中取出要展开的节点的Id列表
-            debugger
+            //debugger
             var showid = getCookie("selectBarId");
             var strs = new Array();
             strs = showid.split(",");
@@ -171,6 +188,21 @@
             //调整左侧导航栏高度
             $("#nav").css("margin-top", $(".container").height() - 1)
         })
+
+        //保存当前导航栏li打开状态到cookie
+        function savestates() {
+            var strs = "";
+            debugger
+            //每次点击标签，获取所有展开的节点.layui-nav-itemed表示该节点展开
+            $(document.getElementsByClassName("layui-nav-itemed")).each(
+                function () {
+                    strs = strs + $(this).attr("id") + ",";
+                })
+            strs = strs.substr(0, strs.length - 1);
+            //如果节点存在，将节点记录到cookie里
+            if (typeof (strs) != "undefined")
+                setCookie("selectBarId", strs, "1");
+        }
 
         //根据单个点击标签，获取上级Id，存入cookie
         //$('dd1').click(
@@ -219,7 +251,7 @@
         function setCookie(c_name, value, expiredays) {
             var exdate = new Date();
             exdate.setDate(exdate.getDate() + expiredays);
-            document.cookie = c_name + "=" + escape(value) +
+            document.cookie = c_name + "=" + escape(value) +";path=/;"+
                 ((expiredays === null) ? "" : ";expires=" + exdate.toGMTString());
         }
 
@@ -260,5 +292,6 @@
             color: rgba(255,255,255,.7);
         }
     </style>
+
 </body>
 </html>
