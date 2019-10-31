@@ -67,7 +67,7 @@
                     </label>
                     <div class="layui-input-inline">
                         @*<input type="text" id="L_repass" name="repass" required="" lay-verify="repass" autocomplete="off" class="layui-input" value="@Model.memberlist_static.Static">*@
-                        <select name="static" id="L_repass" class="form-control mb-3">
+                        <select name="states" id="L_repass" class="form-control mb-3">
                                 <option value="已启用">已启用</option>
                                 <option value="已停用" selected="selected">已停用</option>
                         </select>
@@ -110,12 +110,12 @@
                         var sex = $("input[name='sex']").val()
                         var tel = $("input[name='tel']").val()
                         var addr = $("input[name='addr']").val()
-                        var static = $("select[name='static']").val()
-                        debugger
+                        var states = $("select[name='states']").val()
+                        
                         $.ajax({
                             type: "POST",
                             url: "/MemberList_Static/Add",
-                            data: { "username": username, "sex": sex, "tel": tel, "addr": addr, "static": static },
+                            data: { "username": username, "sex": sex, "tel": tel, "addr": addr, "states": states },
                             dataType: "text",
                             success: function (data) {
                                 if (data == "false") {
@@ -126,7 +126,7 @@
                                     layer.alert("增加成功", { icon: 6 },
                                         function () {
                                             // 获得frame索引
-                                            debugger
+                                            //debugger
                                             var index = parent.layer.getFrameIndex(window.name);
                                             //关闭当前frame
                                             parent.layer.close(index);

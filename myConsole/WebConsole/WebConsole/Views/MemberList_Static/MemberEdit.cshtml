@@ -119,7 +119,7 @@
                         var tel = $("input[name='tel']").val()
                         var addr = $("input[name='addr']").val()
                         var states = $("select[name='states']").val()
-                        debugger
+                        
                         $.ajax({
                             type: "POST",
                             url: "/MemberList_Static/Update",
@@ -134,7 +134,7 @@
                                     layer.alert("修改成功", { icon: 6 },
                                         function () {
                                             // 获得frame索引
-                                            debugger
+                                            //debugger
                                             var index = parent.layer.getFrameIndex(window.name);
                                             //关闭当前frame
                                             parent.layer.close(index);

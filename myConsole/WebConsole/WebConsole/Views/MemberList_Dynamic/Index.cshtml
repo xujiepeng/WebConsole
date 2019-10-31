@@ -58,7 +58,7 @@
 
                     <!--表1，从controller获取数据-->
                     <div class="layui-card-body ">
-                        <table class="layui-table" lay-data="{url:'/MemberList_Dynamic/GetData',page:true,toolbar: '#toolbarDemo',id:'test'}" lay-filter="test">
+                        <table class="layui-table" lay-data="{url:'/MemberList_Dynamic/GetData',page:true,toolbar: '#toolbarDemo',id:'test',limit:10,}" lay-filter="test">
                             <thead>
                                 <tr>
                                     <th lay-data="{type:'checkbox'}">123</th>
@@ -79,6 +79,11 @@
                     <!--表2，从script获取数据-->
                     <div class="layui-card-body ">
                         <table id="demo" lay-filter="test"></table>
+                    </div>
+
+                    <!--表3，从script获取数据-->
+                    <div class="layui-card-body ">
+                        <table id="demo1"  lay-filter="test"></table>
                     </div>
 
                 </div>
@@ -108,6 +113,34 @@
             , height: 312
             , url: '/MemberList_Dynamic/GetData' //数据接口
             , page: true //开启分页
+            , cols: [[ //表头
+                { type: 'checkbox', title: '123', width: 80 }
+                , { field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left' }
+                , { field: 'username', title: '用户名', width: 80 }
+                , { field: 'sex', title: '性别', width: 80 }
+                , { field: 'city', title: '城市', width: 80, sort: true }
+                , { field: 'sign', title: '签名', width: 177 }
+                , { field: 'experience', title: '积分', width: 80, sort: true }
+                , { field: 'score', title: '评分', width: 80, sort: true }
+                , { field: 'classify', title: '职业', width: 80 }
+                , { field: 'wealth', title: '财产', width: 135, sort: true }
+            ]]
+        });
+    });
+</script>
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo1'
+            , height: 312
+            , url: '/MemberList_Dynamic/GetData' //数据接口
+            , page: true //开启分页
+            , limit: 5
+            , limits: [3, 5, 10]
             , cols: [[ //表头
                 { type: 'checkbox', title: '123', width: 80 }
                 , { field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left' }

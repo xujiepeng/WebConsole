@@ -44,7 +44,7 @@
                             <div class="layui-inline layui-show-xs-block">
                                 <input type="text" name="username" placeholder="请输入用户名" id="username" autocomplete="off" class="layui-input">
                             </div>
-                            <div class="layui-input-inline layui-show-xs-block">
+                            <div class="layui-inline layui-show-xs-block">
                                 <select name="optionEvent" placeholder="状态" id="states">
                                     <option value="已停用">已停用</option>
                                     <option value="已启用">已启用</option>
@@ -52,8 +52,8 @@
                                 </select>
                             </div>
                             <div class="layui-inline layui-show-xs-block">
-                                <button class=""  onclick="Refresh();"><i class="layui-icon">&#xe615;</i></button>
-                                <input type="button" style="height:30px" value="查询" class="ui_input_btn01" onclick="Refresh1(); " />
+                                <button class="" onclick="Refresh();"><i class="layui-icon">&#xe615;</i></button>
+                                <input type="button" style="height:27px;width:60px" value="查询" class="ui_input_btn01" onclick="Refresh1(); " />
                             </div>
                         </form>
                     </div>
@@ -62,11 +62,11 @@
                         <button class="layui-btn" onclick="xadmin.open('添加用户','MemberAdd',600,400)"><i class="layui-icon"></i>添加</button>
                     </div>
                     <div class="layui-card-body layui-table-body layui-table-main">
-                        <table class="layui-table layui-form">
+                        <table class="layui-table layui-form" lay-filter="test">
                             <thead>
                                 <tr>
                                     <th>
-                                        <input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">
+                                        <input type="checkbox" id="tt1" lay-filter="checkall" name="" lay-skin="primary">
                                     </th>
                                     <th>ID</th>
                                     <th>用户名</th>
@@ -86,7 +86,7 @@
 
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="id" data-del_id="@item.ID" value="1" lay-skin="primary">
+                                                    <input type="checkbox" lay-filter="" name="id" id="checkitem" data-del_id="@item.ID" lay-skin="">
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.ID)
@@ -106,7 +106,7 @@
                                                 <td class="td-status">
                                                     @if (item.states.ToString() == "已启用")
                                                     {
-                                                        <span class="layui-btn layui-btn-normal layui-btn-mini" >
+                                                        <span class="layui-btn layui-btn-normal layui-btn-mini">
                                                             @Html.DisplayFor(modelItem => item.states)
                                                         </span>
                                                     }
@@ -120,9 +120,9 @@
                                                 </td>
                                                 <td class="td-manage">
                                                     @*<a onclick="member_stop(this,'10001')" href="javascript:;" title="启用">
-                                                        <i class="layui-icon">&#xe601;</i>
-                                                    </a>*@
-                                                    <a title="编辑" onclick="xadmin.open('编辑','MemberEdit/id=1?ID=1&username=@item.username&sex=@item.sex&tel=@item.tel&addr=@item.addr&static=@item.states',600,400)" href="javascript:;">
+                                                            <i class="layui-icon">&#xe601;</i>
+                                                        </a>*@
+                                                    <a title="编辑" onclick="xadmin.open('编辑','MemberEdit/id=1?ID=1&username=@item.username&sex=@item.sex&tel=@item.tel&addr=@item.addr&states=@item.states',600,400)" href="javascript:;">
                                                         <i class="layui-icon">&#xe642;</i>
                                                     </a>
                                                     <a onclick="xadmin.open('修改密码','MemberPassword',600,400)" title="修改密码" href="javascript:;">
@@ -140,7 +140,7 @@
                                         @Html.ActionLink("点击查看详细错误信息", "Index", "Error", new { Msg = e.ToString() })
                                     }
                                 }
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -165,7 +165,7 @@
     layui.use(['laydate', 'form'], function () {
         var laydate = layui.laydate;
         var form = layui.form;
-
+        var table = layui.table;
 
         // 监听全选
         form.on('checkbox(checkall)', function (data) {
@@ -177,6 +177,18 @@
             }
             form.render('checkbox');
         });
+
+        //table.on('checkbox(test)', function (data) {
+        //    debugger;
+        //    if (data.checked) {
+        //        $('tbody input').prop('checked', true);
+        //    } else {
+        //        $('tbody input').prop('checked', false);
+        //    }
+        //    form.render('checkbox');
+        //});
+
+
 
         //执行一个laydate实例
         laydate.render({
@@ -190,6 +202,7 @@
 
 
     });
+
 
     /*用户-停用*/
     function member_stop(obj, id) {
@@ -234,7 +247,7 @@
                     }
                 }
             });
-            
+
         });
     }
 
@@ -280,7 +293,21 @@
 
 
 </html>
+<script type="text/javascript" src="~/js/jquery.min.js"></script>
 <script>
+
+    /** 实现全选按钮功能 **/
+    //function getALLCheck() {
+    //    debugger;
+    //    $("#select_all_checkBox").click(() => {    //        if ($("#select_all_checkBox").is(":checked")) {    //            $("[name='selectAllOption']").prop("checked", true);    //        } else {    //            $("[name='selectAllOption']").prop("checked", false);    //        }    //    })    //}
+
+    $(".layui-unselect").click(
+        function () {
+            debugger;
+            
+            
+        });
+
     function Refresh1() {
         //获取筛选条件
         //var id = $("#id").val();
@@ -309,60 +336,146 @@
                     //数据量大于一页时分页
                     if (newdata.dataInfoList.length != 0 && newdata.dataInfoList.length >= everypage) {
                         for (var i = 0; i < everypage; i++) {
-                            str += "<tr><td><input type=\"checkbox\" name=\"id\" data-del_id=\"" +
-                                newdata.dataInfoList[i].id +
-                                "\" value=\"1\"  lay-skin=\"primary\"/><div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\"><i class=\"layui-icon layui-icon-ok\"></i></div>" +
-                                "</td><td>" + newdata.dataInfoList[i].id +
-                                "</td><td>" + newdata.dataInfoList[i].username +
-                                "</td><td>" + newdata.dataInfoList[i].sex +
-                                "</td><td>" + newdata.dataInfoList[i].tel +
-                                "</td><td>" + newdata.dataInfoList[i].addr +
-                                "</td><td>" + newdata.dataInfoList[i].states +
-                                "</td><td style=\"text-align: left;\">" + "11"+ "</td></tr>";
+                            if (newdata.dataInfoList[i].states == "已启用") {
+                                str += "<tr><td><input type=\"checkbox\" lay-filter=\"test\" name=\"id\" data-del_id=\"" +
+                                    newdata.dataInfoList[i].id +
+                                    "\" value=\"1\"  lay-skin=\"primary\"><div class=\"layui-unselect layui-form-checkbox \" lay-skin=\"primary\"><i class=\"layui-icon layui-icon-ok\"></i></div>" +
+                                    "</td><td>" + newdata.dataInfoList[i].id +
+                                    "</td><td>" + newdata.dataInfoList[i].username +
+                                    "</td><td>" + newdata.dataInfoList[i].sex +
+                                    "</td><td>" + newdata.dataInfoList[i].tel +
+                                    "</td><td>" + newdata.dataInfoList[i].addr +
+                                    "</td><td class=\"td-status\"><span class=\"layui-btn layui-btn-normal layui-btn-mini\">" + newdata.dataInfoList[i].states+"</span>"+
+                                    
+                                    "</td><td class=\"td-manage\">" +
+                                    "<a title=\"编辑\" onclick=\"xadmin.open('编辑','MemberEdit/id=1?ID=1&username=" +
+                                    newdata.dataInfoList[i].username +
+                                    "&sex=" + newdata.dataInfoList[i].sex +
+                                    "&tel=" + newdata.dataInfoList[i].tel +
+                                    "&addr=" + newdata.dataInfoList[i].addr +
+                                    "&states=" + newdata.dataInfoList[i].states + "',600,400)\" href=\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe642;</i></a>" +
+                                    "<a onclick=\"xadmin.open('修改密码','MemberPassword',600,400)\" title =\"修改密码\" href =\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe631;</i></a>" +
+                                    "<a title=\"删除\" onclick=\"member_del(this,'" + newdata.dataInfoList[i].id + "')\" href=\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe640;</i></a></td></tr>";
+                            }
+                            else {
+                                str += "<tr><td><input type=\"checkbox\" lay-filter=\"test\" name=\"id\" data-del_id=\"" +
+                                    newdata.dataInfoList[i].id +
+                                    "\" value=\"1\"  lay-skin=\"primary\"><div class=\"layui-unselect layui-form-checkbox \" lay-skin=\"primary\"><i class=\"layui-icon layui-icon-ok\"></i></div>" +
+                                    "</td><td>" + newdata.dataInfoList[i].id +
+                                    "</td><td>" + newdata.dataInfoList[i].username +
+                                    "</td><td>" + newdata.dataInfoList[i].sex +
+                                    "</td><td>" + newdata.dataInfoList[i].tel +
+                                    "</td><td>" + newdata.dataInfoList[i].addr +
+                                    "</td><td class=\"td-status\"><span class=\"layui-btn layui-btn-normal layui-btn-mini\" style=\"color: #C9C9C9; border: 1px solid #e6e6e6; background-color: #FBFBFB\">" + newdata.dataInfoList[i].states + "</span>" +
+                                    
+                                    "</td><td class=\"td-manage\">" +
+                                    "<a title=\"编辑\" onclick=\"xadmin.open('编辑','MemberEdit/id=1?ID=1&username=" +
+                                    newdata.dataInfoList[i].username +
+                                    "&sex=" + newdata.dataInfoList[i].sex +
+                                    "&tel=" + newdata.dataInfoList[i].tel +
+                                    "&addr=" + newdata.dataInfoList[i].addr +
+                                    "&states=" + newdata.dataInfoList[i].states + "',600,400)\" href=\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe642;</i></a>" +
+                                    "<a onclick=\"xadmin.open('修改密码','MemberPassword',600,400)\" title =\"修改密码\" href =\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe631;</i></a>" +
+                                    "<a title=\"删除\" onclick=\"member_del(this,'" + newdata.dataInfoList[i].id + "')\" href=\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe640;</i></a></td></tr>";
+                            }
+                            
                         }
                     }
                     //数据量小于一页时，直接显示
                     else if (newdata.dataInfoList.length != 0 && newdata.dataInfoList.length < everypage) {
                         for (var i = 0; i < newdata.dataInfoList.length; i++) {
-                            str += "<tr><td><input type=\"checkbox\" name=\"id\" data-del_id=\"" +
-                                newdata.dataInfoList[i].id +
-                                "\"  value=\"1\" lay-skin=\"primary\"/><div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\"><i class=\"layui-icon layui-icon-ok\"></i></div>" +
-                                "</td><td>" + newdata.dataInfoList[i].id +
-                                "</td><td>" + newdata.dataInfoList[i].username +
-                                "</td><td>" + newdata.dataInfoList[i].sex +
-                                "</td><td>" + newdata.dataInfoList[i].tel +
-                                "</td><td>" + newdata.dataInfoList[i].addr +
-                                "</td><td>" + newdata.dataInfoList[i].states +
-                                "</td><td style=\"text-align: left;\">" + "11" + "</td></tr>";
+                            if (newdata.dataInfoList[i].states == "已启用") {
+                                str += "<tr><td><input type=\"checkbox\" lay-filter=\"test\" name=\"id\" data-del_id=\"" +
+                                    newdata.dataInfoList[i].id +
+                                    "\" value=\"1\"  lay-skin=\"primary\"><div class=\"layui-unselect layui-form-checkbox \" lay-skin=\"primary\"><i class=\"layui-icon layui-icon-ok\"></i></div>" +
+                                    "</td><td>" + newdata.dataInfoList[i].id +
+                                    "</td><td>" + newdata.dataInfoList[i].username +
+                                    "</td><td>" + newdata.dataInfoList[i].sex +
+                                    "</td><td>" + newdata.dataInfoList[i].tel +
+                                    "</td><td>" + newdata.dataInfoList[i].addr +
+                                    "</td><td class=\"td-status\"><span class=\"layui-btn layui-btn-normal layui-btn-mini\">" + newdata.dataInfoList[i].states + "</span>" +
+                                    
+                                    "</td><td class=\"td-manage\">" +
+                                    "<a title=\"编辑\" onclick=\"xadmin.open('编辑','MemberEdit/id=1?ID=1&username=" +
+                                    newdata.dataInfoList[i].username +
+                                    "&sex=" + newdata.dataInfoList[i].sex +
+                                    "&tel=" + newdata.dataInfoList[i].tel +
+                                    "&addr=" + newdata.dataInfoList[i].addr +
+                                    "&states=" + newdata.dataInfoList[i].states + "',600,400)\" href=\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe642;</i></a>" +
+                                    "<a onclick=\"xadmin.open('修改密码','MemberPassword',600,400)\" title =\"修改密码\" href =\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe631;</i></a>" +
+                                    "<a title=\"删除\" onclick=\"member_del(this,'" + newdata.dataInfoList[i].id + "')\" href=\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe640;</i></a></td></tr>";
+                            }
+                            else {
+                                str += "<tr><td><input type=\"checkbox\" lay-filter=\"test\" name=\"id\" data-del_id=\"" +
+                                    newdata.dataInfoList[i].id +
+                                    "\" value=\"1\"  lay-skin=\"primary\"><div class=\"layui-unselect layui-form-checkbox \" lay-skin=\"primary\"><i class=\"layui-icon layui-icon-ok\"></i></div>" +
+                                    "</td><td>" + newdata.dataInfoList[i].id +
+                                    "</td><td>" + newdata.dataInfoList[i].username +
+                                    "</td><td>" + newdata.dataInfoList[i].sex +
+                                    "</td><td>" + newdata.dataInfoList[i].tel +
+                                    "</td><td>" + newdata.dataInfoList[i].addr +
+                                    "</td><td class=\"td-status\"><span class=\"layui-btn layui-btn-normal layui-btn-mini\" style=\"color: #C9C9C9; border: 1px solid #e6e6e6; background-color: #FBFBFB\">" + newdata.dataInfoList[i].states + "</span>" +
+                                    
+                                    "</td><td class=\"td-manage\">" +
+                                    "<a title=\"编辑\" onclick=\"xadmin.open('编辑','MemberEdit/id=1?ID=1&username=" +
+                                    newdata.dataInfoList[i].username +
+                                    "&sex=" + newdata.dataInfoList[i].sex +
+                                    "&tel=" + newdata.dataInfoList[i].tel +
+                                    "&addr=" + newdata.dataInfoList[i].addr +
+                                    "&states=" + newdata.dataInfoList[i].states + "',600,400)\" href=\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe642;</i></a>" +
+                                    "<a onclick=\"xadmin.open('修改密码','MemberPassword',600,400)\" title =\"修改密码\" href =\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe631;</i></a>" +
+                                    "<a title=\"删除\" onclick=\"member_del(this,'" + newdata.dataInfoList[i].id + "')\" href=\"javascript:;\">" +
+                                    "<i class=\"layui-icon\">&#xe640;</i></a></td></tr>";
+                            }
                         }
                     }
 
                     $("#tableText").html(str);
                     //总页数
                     //var pagenum = Math.ceil(newdata.dataInfoList.length / everypage);
-                    //ShowPageFloot("1", pagenum);
-                    layui.use([ 'form'], function () {
-                  
-                        var form = layui.form;
+                    //ShowPageFloot("1", pagenum)
 
-
-                        // 监听全选
-                        form.on('checkbox(checkall)', function (data) {
-
-                            if (data.elem.checked) {
-                                $('tbody input').prop('checked', true);
-                            } else {
-                                $('tbody input').prop('checked', false);
-                            }
-                            form.render('checkbox');
-                        });
-
-                    });
+                
                 }
             }
         });
 
+
+        //layui.use(['table'], function () {
+        //    var table = layui.table;
+        //    debugger
+
+
+
+        //    table.on('checkbox(test)', function (obj) {
+        //        debugger;
+        //        console.log(obj.checked); //当前是否选中状态
+        //        if (obj.elem.checked) {
+        //            $('tbody input').prop('checked', true);
+        //        } else {
+        //            $('tbody input').prop('checked', false);
+        //        }
+        //        table.render('checkbox');
+        //    });
+
+
+
+        //});
+
         return true;
     }
+
+
 
 </script>
