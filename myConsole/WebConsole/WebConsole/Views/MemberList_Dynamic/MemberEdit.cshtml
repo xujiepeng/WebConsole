@@ -134,13 +134,17 @@
                                     layer.alert("修改成功", { icon: 6 },
                                         function () {
                                             // 获得frame索引
-                                            //debugger
+                                            debugger
                                             var index = parent.layer.getFrameIndex(window.name);
                                             //关闭当前frame
                                             parent.layer.close(index);
                                             // 可以对父窗口进行刷新,注释掉则不刷新
                                             //parent.location.reload();
                                             //xadmin.father_reload();
+                                            // 局部刷线表格
+                                            parent.window.layui.table.reload('demo1');
+                                            
+                                            
                                      });
                                 }
                             }
