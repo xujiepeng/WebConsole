@@ -1,8 +1,8 @@
 ﻿namespace WebConsole.Models.Model
 {
-    public class MemberList_StaticStru
+    public class MemberList_DynamicStru
     {
-        public int ID
+        public int id
         {
             get;
             set;

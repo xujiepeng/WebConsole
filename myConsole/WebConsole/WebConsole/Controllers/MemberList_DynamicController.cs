@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using WebConsole.Models;
+using WebConsole.Models.Model;
+using WebConsole.Models.Model.Conf;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,10 +15,77 @@ namespace WebConsole.Controllers
 {
     public class MemberList_DynamicController : Controller
     {
+        private readonly CommConf _appConf;
+        public MemberList_DynamicController(IOptions<CommConf> options)        {            _appConf = options.Value;        }
         // GET: /<controller>/
         public IActionResult Index()
         {
             return View();
+        }
+
+        /// <summary>
+        /// 接收前端传递来的，待修改页面数据,原样返回
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="sex"></param>
+        /// <param name="tel"></param>
+        /// <param name="addr"></param>
+        /// <param name="Static"></param>
+        /// <returns></returns>
+        public IActionResult MemberEdit(string username, string sex, string tel, string addr, string states)
+        {
+            MemberList_DynamicStru MemberList_Dynamic = new MemberList_DynamicStru();
+            MemberList_Dynamic.username = username;
+            MemberList_Dynamic.sex = sex;
+            MemberList_Dynamic.tel = tel;
+            MemberList_Dynamic.addr = addr;
+            MemberList_Dynamic.states = states;
+            var resultModel = new MemberList_DynamicViewModel
+            {
+                memberlist_dynamic = MemberList_Dynamic
+            };
+            return View(resultModel);
+        }
+
+        public string GetJsonData(string page, string limit, string username, string sex, string tel, string addr, string states)
+        {
+            MemberList_DynamicViewModel viewModelData = new MemberList_DynamicViewModel();
+
+
+            var resultModel = new MemberList_DynamicViewModel
+            {
+                code = "0",
+                msg = "",
+                count = "16",
+                data = viewModelData.GetData(_appConf)
+            };
+            string jsonData = JsonConvert.SerializeObject(resultModel);
+            return jsonData;
+        }
+
+        /// <summary>
+        /// 修改数据，Edit/Update
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="sex"></param>
+        /// <param name="tel"></param>
+        /// <param name="addr"></param>
+        /// <param name="Static"></param>
+        /// <returns></returns>
+        public bool Update(string username, string sex, string tel, string addr, string states)
+        {
+            MemberList_DynamicStru MemberList_Dynamic = new MemberList_DynamicStru();
+            MemberList_Dynamic.username = username;
+            MemberList_Dynamic.sex = sex;
+            MemberList_Dynamic.tel = tel;
+            MemberList_Dynamic.addr = addr;
+            MemberList_Dynamic.states = states;
+            MemberList_DynamicViewModel dataInfo = new MemberList_DynamicViewModel();
+
+            if (dataInfo.UpdateData(_appConf, MemberList_Dynamic))
+                return true;
+            else
+                return false;
         }
 
         /// <summary>
