@@ -238,7 +238,8 @@
                     + "&addr=" + data.tel
                     + "&states=" + data.states;
                 if (layEvent === 'detail') { //查看
-                    xadmin.open('编辑', 'MemberEdit/?' + str, 600, 400)
+                    layer.alert('Hi，头部工具栏扩展的右侧图标。');
+                    //xadmin.open('编辑', 'MemberEdit/?' + str, 600, 400)
                 } else if (layEvent === 'del') { //删除
                     layer.confirm('真的删除行么', function (index) {
                         obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
@@ -246,7 +247,7 @@
                         //向服务端发送删除指令
                     });
                 } else if (layEvent === 'edit') { //编辑
-                    //xadmin.open('编辑', 'MemberEdit/?' + str, 600, 400)
+                    xadmin.open('编辑', 'MemberEdit/?' + str, 600, 400)
                     //同步更新缓存对应的值
                     obj.update({
                         username: data.username
@@ -298,7 +299,7 @@
         function () {
             var table = layui.table;
             debugger
-            //监听单元格编辑
+            //监听内容单元格编辑
             table.on('edit(test1)',
                 function (obj) {
                     var value = obj.value //得到修改后的值
@@ -332,8 +333,8 @@
     layui.use('table',
         function () {
             var table = layui.table;
-
-            //监听单元格编辑
+            debugger
+            //监听内容单元格编辑
             table.on('edit(test)',
                 function (obj) {
                     var value = obj.value //得到修改后的值
