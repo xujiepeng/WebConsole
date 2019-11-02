@@ -49,19 +49,28 @@ namespace WebConsole.Controllers
 
         public string GetJsonData(string page, string limit, string username, string sex, string tel, string addr, string states)
         {
+            Dictionary<string, string> para = new Dictionary<string, string>();
+            para.Add("page", page);
+            para.Add("limit", limit);
+            para.Add("username", username);
+            para.Add("sex", sex);
+            para.Add("tel", tel);
+            para.Add("addr", addr);
+            para.Add("states", states);
             MemberList_DynamicViewModel viewModelData = new MemberList_DynamicViewModel();
-
-
+            string count = "0";
             var resultModel = new MemberList_DynamicViewModel
             {
                 code = "0",
                 msg = "",
-                count = "16",
-                data = viewModelData.GetData(_appConf)
+                data = viewModelData.GetData(_appConf, para, ref count),
+                count = count
             };
             string jsonData = JsonConvert.SerializeObject(resultModel);
             return jsonData;
         }
+
+
 
         /// <summary>
         /// 修改数据，Edit/Update

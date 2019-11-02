@@ -121,7 +121,7 @@
     <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked': ''}}>
 </script>
 
-
+<!-- 展示 -->
 <script>
     var tableIns;
     layui.use(['form', 'layedit', 'laydate', 'element', 'jquery', 'table'], function () {
@@ -192,6 +192,74 @@
         });
     });
 </script>
+
+ @*搜索功能 
+<script>
+    var tableIns;
+    layui.use(['form', 'layedit', 'laydate', 'element', 'jquery', 'table'], function () {
+        var table = layui.table;
+
+        //第一个实例
+        tableIns = table.render({
+            elem: '#demo1'//对应表格的id标识
+            , url: '/MemberList_Dynamic/GetJsonDataSreach' //数据controller
+            , page: true //开启分页
+            , limit: 5
+            , toolbar: '#toolbarDemo'
+            , limits: [3, 5, 10]
+            , method: 'get'//默认get
+            , title: '测试表格'
+            , cols: [[ //表头
+                { type: 'numbers', fixed: 'left', title: '序号' }
+                , { type: 'checkbox', fixed: 'left' }
+                , { field: 'id', title: 'ID', sort: true, fixed: 'left' }
+                , { field: 'username', title: '用户名' }
+                , {
+                    field: 'sex', title: '性别', templet: function (d) {
+                        return d.sex == "男" ? "男人" : "女人";
+                    }
+                }
+                , { field: 'tel', title: '手机', sort: true }
+                , { field: 'addr', title: '地址' }
+                , { field: 'states', title: '状态', sort: true }
+                , { title: '操作', align: 'center', toolbar: '#barDemo1', width: 200 }
+            ]]
+            , done: function (res) {
+                //获取数据完成后执行的区域，如提示获取完成等
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+
+            }
+            , request: {
+                //原值为：?page=1&limit=30
+                //修改后分页请求参数为：?curr=1&nums=30
+                //pageName: 'curr' //页码的参数名称，默认为：page
+                //, limitName: 'nums' //每页数据量的参数名，默认为：limit
+            }
+        });
+
+    });
+
+    //ajax重新加载表格，外部调用法
+    //$('#refreshtable').on('click', function () {
+    //    tableIns.reload()
+    //});
+
+
+    // 搜索功能，ajax刷新表格
+    $('#sreach_s').on('click', function () {
+        tableIns.reload({
+            where: {
+                //搜索回传参数
+                username: $('#username_s').val(),
+                states: $('#states_s').val()
+            }
+            , page: {
+                curr: 1//刷新后要显示的页码,不定义参数刷新后则显示当前页
+            }
+        });
+    });
+</script>*@
 
 <!-- 定义头部 -->
 <script type="text/html" id="toolbarDemo">

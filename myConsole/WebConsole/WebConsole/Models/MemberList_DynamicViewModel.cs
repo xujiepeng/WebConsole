@@ -21,11 +21,25 @@ namespace WebConsole.Models
         /// 查询数据
         /// </summary>
         /// <returns></returns>
-        public List<MemberList_DynamicStru> GetData(CommConf options)
+        public List<MemberList_DynamicStru> GetData(CommConf options, Dictionary<string, string> Para, ref string count)
         {
             string errorMsg;
             SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
-            DataTable dt = conn.QueryDt("select * from MemberList_Dynamic order by ID", out errorMsg);
+            bool ispara = false;
+            //拼接sql查询条件
+            string strPara = " where 1=1 and ";
+            foreach (var item in Para)
+            {
+                if (!string.IsNullOrEmpty(item.Value) && item.Key != "page" && item.Key != "limit")
+                {
+                    strPara += item.Key + "='" + item.Value + "' and ";
+                    ispara = true;
+                }
+            }
+            strPara = strPara.Substring(0, strPara.Length - 4);
+            string strsql = string.Format(@"select * from(select * from (select * from MemberList_Dynamic {0} order by id asc limit {1})
+            order by id desc limit {2}) order by id asc", strPara, int.Parse(Para["page"]) * int.Parse(Para["limit"]), Para["limit"]);
+            DataTable dt = conn.QueryDt(strsql, out errorMsg);
             MemberList_DynamicStru obj = new MemberList_DynamicStru();
             List<MemberList_DynamicStru> DataList = new List<MemberList_DynamicStru>();
             foreach (DataRow item in dt.Rows)
@@ -39,7 +53,17 @@ namespace WebConsole.Models
                 obj.states = item["states"].ToString();
                 DataList.Add(obj);
             }
-
+            //是否是条件查询，统计条数
+            if (ispara == false)
+            {
+                strsql = "select count(*) from MemberList_Dynamic";
+            }
+            else
+            {
+                strsql = string.Format(@"select count(*) from MemberList_Dynamic {0}", strPara);
+            }
+            DataTable dtcount = conn.QueryDt(strsql, out errorMsg);
+            count = dtcount.Rows[0][0].ToString();
             return DataList;
         }
 
