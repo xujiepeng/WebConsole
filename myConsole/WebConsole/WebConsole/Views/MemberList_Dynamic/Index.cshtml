@@ -82,6 +82,10 @@
 
                     </div>
 
+                    <div class="layui-card-header">
+                        <button class="layui-btn" onclick="xadmin.open('添加用户','MemberAdd',600,400)"><i class="layui-icon"></i>添加</button>
+                    </div>
+
                     <!--表3，从script获取数据，适用于复杂表格，id是表格标识，lay-filter是监听器标识-->
                     <div class="layui-card-body ">
                         <table id="demo1" lay-filter="test1"></table>
@@ -265,7 +269,7 @@
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData"> 获取选中行数据 </button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">批量删除条数</button>
         <button class="layui-btn layui-btn-sm" lay-event="isAll"> 验证是否全选</button>
     </div>
 </script>
@@ -311,9 +315,28 @@
                 } else if (layEvent === 'del') { //删除
                     layer.confirm('真的删除行么', function (index) {
                         obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                        layer.close(index);
-                        debugger
+                        //layer.close(index);
+                        debugger;
                         //向服务端发送删除指令
+                            
+                        $.ajax({
+                            type: "get",
+                            url: "/MemberList_Dynamic/Delete",
+                            data: { "id": data.id },
+                            dataType: "text",
+                            success: function (data) {
+                                if (data == "false") {
+                                    layer.alert("删除失败或数据不存在", { icon: 5 })
+                                    return false;
+                                }
+                                else {
+                                    //界面样式:单条删除效果
+                                    $(obj).parents("tr").remove();
+                                    layer.msg('已删除!', { icon: 1, time: 1000 });
+                                }
+                            }
+                        });
+
                     });
                 } else if (layEvent === 'edit') { //编辑
                     xadmin.open('编辑', 'MemberEdit/?' + str, 600, 400)
@@ -380,6 +403,7 @@
             //头工具栏事件
             table.on('toolbar(test1)',
                 function (obj) {
+                    debugger;
                     var checkStatus = table.checkStatus(obj.config.id);
                     switch (obj.event) {
                         case 'getCheckData':
@@ -388,7 +412,12 @@
                             break;
                         case 'getCheckLength':
                             var data = checkStatus.data;
-                            layer.msg('选中了：' + data.length + ' 个');
+                            var checkid= "";
+                            for (i = 0; i < data.length; i++) {
+                                checkid = checkid + data[i].id + ",";
+                            }
+                            checkid = checkid.substr(0, checkid.length - 1);
+                            layer.msg('选中了：' + data.length + ' 个，id为：' + checkid);
                             break;
                         case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选' : '未全选');
@@ -432,3 +461,4 @@
                 });
         });
 </script>
+

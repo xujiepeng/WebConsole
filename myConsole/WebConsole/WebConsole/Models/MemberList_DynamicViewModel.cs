@@ -68,6 +68,26 @@ namespace WebConsole.Models
         }
 
         /// <summary>
+        /// 新增数据
+        /// </summary>
+        /// <returns></returns>
+        public bool AddData(CommConf options, MemberList_DynamicStru objstru)
+        {
+            string errorMsg;
+            SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
+            string str = string.Format("insert into MemberList_Dynamic (username,sex,tel,addr,states) values('{0}','{1}','{2}','{3}','{4}')", objstru.username, objstru.sex, objstru.tel, objstru.addr, objstru.states);
+            int count = conn.Execute(str, out errorMsg);
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 编辑数据
         /// </summary>
         /// <returns></returns>
@@ -76,6 +96,26 @@ namespace WebConsole.Models
             string errorMsg;
             SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
             string str = string.Format("update MemberList_Dynamic set sex = '{0}', tel = '{1}', addr = '{2}', states = '{3}' where username='{4}'", objstru.sex, objstru.tel, objstru.addr, objstru.states, objstru.username);
+            int count = conn.Execute(str, out errorMsg);
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <returns></returns>
+        public bool DeleteData(CommConf options, MemberList_DynamicStru objstru)
+        {
+            string errorMsg;
+            SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
+            string str = string.Format("delete from MemberList_Dynamic where id='{0}'", objstru.id);
             int count = conn.Execute(str, out errorMsg);
             if (count > 0)
             {

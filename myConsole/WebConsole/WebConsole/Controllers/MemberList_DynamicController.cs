@@ -23,6 +23,36 @@ namespace WebConsole.Controllers
             return View();
         }
 
+        public IActionResult MemberAdd()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 新增数据，add
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="sex"></param>
+        /// <param name="tel"></param>
+        /// <param name="addr"></param>
+        /// <param name="Static"></param>
+        /// <returns></returns>
+        public bool Add(string username, string sex, string tel, string addr, string states)
+        {
+            MemberList_DynamicStru MemberList_DynamicStru = new MemberList_DynamicStru();
+            MemberList_DynamicStru.username = username;
+            MemberList_DynamicStru.sex = sex;
+            MemberList_DynamicStru.tel = tel;
+            MemberList_DynamicStru.addr = addr;
+            MemberList_DynamicStru.states = states;
+            MemberList_DynamicViewModel dataInfo = new MemberList_DynamicViewModel();
+
+            if (dataInfo.AddData(_appConf, MemberList_DynamicStru))
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>
         /// 接收前端传递来的，待修改页面数据,原样返回
         /// </summary>
@@ -92,6 +122,25 @@ namespace WebConsole.Controllers
             MemberList_DynamicViewModel dataInfo = new MemberList_DynamicViewModel();
 
             if (dataInfo.UpdateData(_appConf, MemberList_Dynamic))
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// 删除数据，delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public bool Delete(string id, string username)
+        {
+            MemberList_DynamicStru MemberList_DynamicStru = new MemberList_DynamicStru();
+            MemberList_DynamicStru.id = Convert.ToInt32(id);
+            MemberList_DynamicStru.username = username;
+            MemberList_DynamicViewModel dataInfo = new MemberList_DynamicViewModel();
+
+            if (dataInfo.DeleteData(_appConf, MemberList_DynamicStru))
                 return true;
             else
                 return false;
