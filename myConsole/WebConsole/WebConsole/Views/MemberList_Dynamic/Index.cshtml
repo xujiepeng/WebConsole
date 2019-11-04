@@ -331,7 +331,6 @@
                                 }
                                 else {
                                     //界面样式:单条删除效果
-                                    $(obj).parents("tr").remove();
                                     layer.msg('已删除!', { icon: 1, time: 1000 });
                                 }
                             }
@@ -412,12 +411,31 @@
                             break;
                         case 'getCheckLength':
                             var data = checkStatus.data;
-                            var checkid= "";
+                            var ids = [];
                             for (i = 0; i < data.length; i++) {
-                                checkid = checkid + data[i].id + ",";
+                                ids.push(data[i].id);
                             }
-                            checkid = checkid.substr(0, checkid.length - 1);
-                            layer.msg('选中了：' + data.length + ' 个，id为：' + checkid);
+                            layer.msg('选中了：' + data.length + ' 个，id为：' + ids);
+                            layer.confirm('确认要删除吗？', function (index, obj) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/MemberList_Dynamic/DeleteAll",
+                                    data: { "ids": ids },
+                                    dataType: "text",
+                                    success: function (data) {
+                                        if (data == "false") {
+                                            layer.alert("删除失败或数据不存在", { icon: 5 })
+                                            return false;
+                                        }
+                                        else {
+                                            //界面样式:单条删除效果
+                                            layer.msg('已删除!', { icon: 1, time: 1000 });
+                                            table.reload('demo1')
+                                        }
+                                    }
+                                });
+
+                            });
                             break;
                         case 'isAll':
                             layer.msg(checkStatus.isAll ? '全选' : '未全选');

@@ -147,6 +147,22 @@ namespace WebConsole.Controllers
         }
 
         /// <summary>
+        /// 批量删除数据，delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public bool DeleteAll(string[] ids)
+        {
+            MemberList_DynamicViewModel dataInfo = new MemberList_DynamicViewModel();
+
+            if (dataInfo.DeleteDataAll(_appConf, ids))
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
         /// 后台构造json对象，数据传到前台自动显示
         /// </summary>
         /// <returns></returns>
