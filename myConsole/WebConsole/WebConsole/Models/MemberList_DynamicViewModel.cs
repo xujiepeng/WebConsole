@@ -11,7 +11,6 @@ namespace WebConsole.Models
     public class MemberList_DynamicViewModel
     {
         public List<MemberList_DynamicStru> data;
-        static string DBLink = "";
         public string code;
         public string msg;
         public string count;
