@@ -77,6 +77,17 @@ namespace WebConsole.Controllers
             return View(resultModel);
         }
 
+        /// <summary>
+        /// 刷新前端table数据，可接受参数，实现查询效果
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="limit"></param>
+        /// <param name="username"></param>
+        /// <param name="sex"></param>
+        /// <param name="tel"></param>
+        /// <param name="addr"></param>
+        /// <param name="states"></param>
+        /// <returns></returns>
         public string GetJsonData(string page, string limit, string username, string sex, string tel, string addr, string states)
         {
             Dictionary<string, string> para = new Dictionary<string, string>();
@@ -88,6 +99,7 @@ namespace WebConsole.Controllers
             para.Add("addr", addr);
             para.Add("states", states);
             MemberList_DynamicViewModel viewModelData = new MemberList_DynamicViewModel();
+            //前端指定返回代码
             string count = "0";
             var resultModel = new MemberList_DynamicViewModel
             {

@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>我的控制台</title>
+    <title>欢迎页面-X-admin2.2</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -45,7 +45,7 @@
                 <div class="layui-card">
                     <div class="layui-card-body ">
                         <!-- 提交表单搜索 -->
-                        <form class="layui-form layui-col-space5">
+                        @*<form class="layui-form layui-col-space5">
                             <div class="layui-inline layui-show-xs-block">
                                 <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start">
                             </div>
@@ -60,7 +60,7 @@
                                     <i class="layui-icon">&#xe615;</i>
                                 </button>
                             </div>
-                        </form>
+                        </form>*@
                         <!-- ajax搜索 -->
                         <div class="layui-inline layui-show-xs-block">
                             <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="begindate">
@@ -181,8 +181,9 @@
     //    tableIns.reload()
     //});
 
-
     // 搜索功能，ajax刷新表格
+    // 搜索功能其实是重新加载表格数据，使用的是前面定义的tableIns对象，调用的是action
+    // 在加载数据时，将参数传递到地址为/MemberList_Dynamic/GetJsonData方法，完成查询
     $('#sreach_s').on('click', function () {
         tableIns.reload({
             where: {
@@ -309,7 +310,7 @@
                     + "&tel=" + data.tel
                     + "&addr=" + data.addr
                     + "&states=" + data.states;
-                if (layEvent === 'detail') { //查看
+                if (layEvent === 'detail') { //查看按钮
                     layer.alert('Hi，头部工具栏扩展的右侧图标。');
                     //xadmin.open('编辑', 'MemberEdit/?' + str, 600, 400)
                 } else if (layEvent === 'del') { //删除
