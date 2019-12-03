@@ -13,5 +13,10 @@ namespace WebConsole.Controllers
         {
             return View();
         }
+
+        public string getdata()
+        {
+            return "";
+        }
     }
 }
