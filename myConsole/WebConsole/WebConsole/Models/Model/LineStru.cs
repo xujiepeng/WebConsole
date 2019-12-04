@@ -12,13 +12,23 @@ namespace WebConsole.Models.Model
             get;
             set;
         }
-        public int[] list
+        public string date
+        {
+            get;
+            set;
+        }
+        public string[] list_time
+        {
+            get;
+            set;
+        }
+        public int[] list_vol
         {
             get;
             set;
         }
 
-        public double[] list_d
+        public double[] list_price
         {
             get;
             set;
