@@ -19,22 +19,37 @@ namespace WebConsole.Controllers
 
         public string DrawLine(string id)
         {
+            List<int> list1 = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            int[] intList = list1.ToArray();
+
+
             HttpsGet httpget = new HttpsGet();
             string str = httpget.GetUrlResponse("http://data.gtimg.cn/flashdata/hushen/minute/sz000004.js?maxage=111").ToString();
-            string[] array0 = str.Split("\\n\\\n");
-            string[] arraynew = new string[array0.Length - 3];
-            for (int i = 2; i < array0.Length - 1; i++)
+            string[] array = str.Split("\\n\\\n");
+            //string[] arraynew = new string[array0.Length - 3];
+            List<double> list_double = new List<double>();
+            int count = 60 * 4;
+            for (int i = 2; i < count; i++)
             {
-                arraynew[i - 2] = array0[i].Split(' ')[1];
+                if (i < array.Length - 3)
+                {
+                    list_double.Add(double.Parse(array[i].Split(' ')[1]));
+                }
+                else
+                {
+                    list_double.Add(double.NaN);
+                }
+                
             }
-            double[] iNumsnew = Array.ConvertAll<string, double>(arraynew, double.Parse);
-            string resultModel = "43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175";
-            string[] array = resultModel.Split(',');
-            int[] iNums = Array.ConvertAll<string, int>(array, int.Parse);
+
+            //double[] iNumsnew = Array.ConvertAll<string, double>(arraynew, double.Parse);
+            //string resultModel = "43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175";
+            //string[] array = resultModel.Split(',');
+            //int[] iNums = Array.ConvertAll<string, int>(array, int.Parse);
             List<LineStru> ll = new List<LineStru>();
             LineStru lj = new LineStru();
-            lj.name = "Installation";
-            lj.list_d = iNumsnew;
+            lj.name = "Stock";
+            lj.list_d = list_double.ToArray();
             ll.Add(lj);
 
 

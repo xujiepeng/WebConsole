@@ -31,7 +31,7 @@
                         <!-- 为 Highcharts 准备一个具备大小（宽高）的 DOM -->
                         <div id="container0" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                        <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        @*<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>*@
                         <blockquote class="layui-elem-quote">
                             注意：本案例的HighCharts图表库由cdn引入，需要在线才能正常使用，如想离线，请至HighCharts官网下载。
                         </blockquote>
@@ -154,16 +154,16 @@
             Highcharts.chart('container0', {
 
                 title: {
-                    text: 'Solar Employment Growth by Sector, 2010-2016'
+                    text: '股票走势分时显示图'
                 },
 
                 subtitle: {
-                    text: 'Source: thesolarfoundation.com'
+                    text: '数据源: http://data.gtimg.cn/flashdata/hushen/minute/sz000002.js?maxage=111'
                 },
 
                 yAxis: {
                     title: {
-                        text: 'Number of Employees'
+                        text: '股票价格'
                     }
                 },
                 legend: {
