@@ -16,6 +16,12 @@
     @*<script src="~/js/echarts.js"></script>*@
     <script type="text/javascript" src="~/js/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
+
+
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
 </head>
 <body>
     <div class="layui-fluid">
@@ -26,12 +32,32 @@
                         <blockquote class="layui-elem-quote">
                             本页面使用了 HighCharts 和 ECharts 的图表组件的功能。
                         </blockquote>
+                        <!-- ajax搜索 -->
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="begindate">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="enddate">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" id="stockcode" name="username" placeholder="请输入股票代码" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" id="stockname" name="username" placeholder="请输入股票名称" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" id="sreach_s" lay-submit="" lay-filter="sreach">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
+                        </div>
+
+
                         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
                         @*<div id="main" style="width: 100%;height:400px;"></div>*@
                         <!-- 为 Highcharts 准备一个具备大小（宽高）的 DOM -->
                         <div id="container0" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                         @*<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>*@
-                        @*<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>*@
+                        <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                         <blockquote class="layui-elem-quote">
                             注意：本案例的HighCharts图表库由cdn引入，需要在线才能正常使用，如想离线，请至HighCharts官网下载。
                         </blockquote>
@@ -135,7 +161,7 @@
 
     <!-- 这是 HighCharts 的图表，对应上方的container0位置的 DOM -->
     <script type="text/javascript">
-        var list = new Array();
+        //从后台获取实时数据，并画图
         function Line() {
             $.ajax({
                 type: "POST",
@@ -192,15 +218,15 @@
                  //       name: data[1].name,
                  //       data: data[1].list_vol
                  //   }, {
-                    //    name: 'Sales & Distribution',
-                    //    data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-                    //}, {
-                    //    name: 'Project Development',
-                    //    data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-                    //    }, {
-                    //        name: data[1].name,
-                    //        data: data[1].list
-                    //        }
+                 //       name: 'Sales & Distribution',
+                 //       data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+                 //   }, {
+                //    name: 'Project Development',
+                //    data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+                //    }, {
+                //        name: data[1].name,
+                //        data: data[1].list
+                //        }
                 ],
 
                 responsive: {
@@ -209,7 +235,7 @@
                             maxWidth: 500
                         },
                         chartOptions: {
-                            legend: {
+                            legend: {   
                                 layout: 'horizontal',
                                 align: 'center',
                                 verticalAlign: 'bottom'
@@ -316,7 +342,61 @@
             });
         }
     </script>
+    
+    <script>
+        window.onload = function () {
+            Highcharts.getJSON('https://www.highcharts.com/samples/data/aapl-v.json', function (data) {
 
+                // create the chart
+                Highcharts.stockChart('container1', {
+                    chart: {
+                        alignTicks: false
+                    },
+
+                    rangeSelector: {
+                        selected: 1
+                    },
+
+                    title: {
+                        text: 'AAPL Stock Volume'
+                    },
+
+                    series: [{
+                        type: 'column',
+                        name: 'AAPL Stock Volume',
+                        data: data,
+                        dataGrouping: {
+                            units: [[
+                                'week', // unit name
+                                [1] // allowed multiples
+                            ], [
+                                'month',
+                                [1, 2, 3, 4, 6]
+                            ]]
+                        }
+                    }]
+                });
+            });
+        }
+    </script>
+
+    <script>
+        $('#sreach_s').on('click', function () {
+            var stockcode = $('#stockcode').val();
+            var stockname = $('#stockname').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Event/Sreach",
+                data: { "stockcode": stockcode, "stockname": stockname },
+                dataType: "json",
+                success: function (data) {
+                    DrawLine(data);
+
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
