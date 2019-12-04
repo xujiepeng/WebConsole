@@ -19,7 +19,8 @@ namespace WebConsole.Controllers
 
         public string DrawLine(string id)
         {
-            string str = HttpsGet.GetUrlResponse("http://data.gtimg.cn/flashdata/hushen/minute/sz000004.js?maxage=111").ToString();
+            HttpsGet httpget = new HttpsGet();
+            string str = httpget.GetUrlResponse("http://data.gtimg.cn/flashdata/hushen/minute/sz000004.js?maxage=111").ToString();
             string[] array0 = str.Split("\\n\\\n");
             string[] arraynew = new string[array0.Length - 3];
             for (int i = 2; i < array0.Length - 1; i++)

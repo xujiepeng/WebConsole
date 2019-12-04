@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="~/css/xadmin.css">
     <meta charset="utf-8">
     <!-- 引入 ECharts 文件 -->
-    <script src="~/js/echarts.js"></script>
+    @*<script src="~/js/echarts.js"></script>*@
     <script type="text/javascript" src="~/js/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
 </head>
@@ -24,21 +24,23 @@
                 <div class="layui-card">
                     <div class="layui-card-body ">
                         <blockquote class="layui-elem-quote">
-                            特别声明：ECharts，一个纯 Javascript 的图表库，可以流畅的运行在 PC 和移动设备上，兼容当前绝大部分浏览器（IE8/9/10/11，Chrome，Firefox，Safari等），底层依赖轻量级的 Canvas 类库 ZRender，提供直观，生动，可交互，可高度个性化定制的数据可视化图表。如需使用，详细了解可以访问官网 <a href="http://echarts.baidu.com/" style="color:red">ECharts</a>。 不承担任何版权问题。
+                            本页面使用了HighCharts和ECharts组件的功能。
                         </blockquote>
                         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
                         @*<div id="main" style="width: 100%;height:400px;"></div>*@
+                        <!-- 为 Highcharts 准备一个具备大小（宽高）的 DOM -->
                         <div id="container0" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                         <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                         <blockquote class="layui-elem-quote">
-                            注意：本案例的Echarts图表库由cdn引入，需要在线才能正常使用，如想离线，请至Echarts官网下载。
+                            注意：本案例的HighCharts图表库由cdn引入，需要在线才能正常使用，如想离线，请至HighCharts官网下载。
                         </blockquote>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 这是 ECharts 的图表，对应上方的main位置的 DOM -->
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
@@ -131,6 +133,7 @@
         myChart.setOption(option);
     </script>
 
+    <!-- 这是 HighCharts 的图表，对应上方的container0位置的 DOM -->
     <script type="text/javascript">
         var list = new Array();
         function Line() {
@@ -140,82 +143,82 @@
                 data: { "id": "1" },
                 dataType: "json",
                 success: function (data) {
-                    //var obj = eval('(' + data + ')');
                     DrawLine(data);
-                    
+
                 }
             });
         }
 
+        //画图表
         function DrawLine(data) {
             Highcharts.chart('container0', {
 
-            title: {
-                text: 'Solar Employment Growth by Sector, 2010-2016'
-            },
-
-            subtitle: {
-                text: 'Source: thesolarfoundation.com'
-            },
-
-            yAxis: {
                 title: {
-                    text: 'Number of Employees'
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
+                    text: 'Solar Employment Growth by Sector, 2010-2016'
+                },
 
-            plotOptions: {
-                series: {
-                    label: {
-                        connectorAllowed: false
-                    },
-                    pointStart: 2010
-                }
-            },
+                subtitle: {
+                    text: 'Source: thesolarfoundation.com'
+                },
 
-            series: [{
-                name: data[0].name,
-                data: data[0].list_d
-            }//, {
-            //    name: 'Manufacturing',
-            //    data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-            //}, {
-            //    name: 'Sales & Distribution',
-            //    data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-            //}, {
-            //    name: 'Project Development',
-            //    data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-            //    }, {
-            //        name: data[1].name,
-            //        data: data[1].list
-            //        }
+                yAxis: {
+                    title: {
+                        text: 'Number of Employees'
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+                        pointStart: 0
+                    }
+                },
+
+                series: [{
+                    name: data[0].name,
+                    data: data[0].list_d
+                }//, {
+                    //    name: 'Manufacturing',
+                    //    data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+                    //}, {
+                    //    name: 'Sales & Distribution',
+                    //    data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+                    //}, {
+                    //    name: 'Project Development',
+                    //    data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+                    //    }, {
+                    //        name: data[1].name,
+                    //        data: data[1].list
+                    //        }
                 ],
 
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
                         }
-                    }
-                }]
-            }
+                    }]
+                }
 
-        });
+            });
         }
         // 指定图表的配置项和数据
         Line();
-        
+
     </script>
 
 
@@ -310,104 +313,6 @@
         }
     </script>
 
-    <script type="text/javascript">
 
-        var container1 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        Highcharts.chart('container1', {
-            chart: {
-                zoomType: 'xy'
-            },
-            title: {
-                text: 'Average Monthly Temperature and Rainfall in Tokyo'
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
-            },
-            xAxis: [{
-                categories: container1,
-                crosshair: true
-            }],
-            yAxis: [{ // Primary yAxis
-                labels: {
-                    format: '{value}°C',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                },
-                title: {
-                    text: 'Temperature',
-                    style: {
-                        color: Highcharts.getOptions().colors[1]
-                    }
-                }
-            }, { // Secondary yAxis
-                title: {
-                    text: 'Rainfall',
-                    style: {
-                        color: Highcharts.getOptions().colors[0]
-                    }
-                },
-                labels: {
-                    format: '{value} mm',
-                    style: {
-                        color: Highcharts.getOptions().colors[0]
-                    }
-                },
-                opposite: true
-            }],
-            tooltip: {
-                shared: true
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'left',
-                x: 120,
-                verticalAlign: 'top',
-                y: 100,
-                floating: true,
-                backgroundColor:
-                    Highcharts.defaultOptions.legend.backgroundColor || // theme
-                    'rgba(255,255,255,0.25)'
-            },
-            series: [{
-                name: 'Rainfall',
-                type: 'column',
-                yAxis: 1,
-                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-                tooltip: {
-                    valueSuffix: ' mm'
-                }
-
-            }, {
-                name: 'Temperature',
-                type: 'spline',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
-                tooltip: {
-                    valueSuffix: '°C'
-                }
-            }]
-        });
-    </script>
-    <script>
-    /*批量删除功能*/
-        function Line(){
-            $.ajax({
-                type: "POST",
-                url: "/Event/index",
-                data: { "ids": ids },
-                dataType: "json",
-                success: function (data) {
-                    if (data == "false") {
-                        alert("删除失败或数据不存在")
-                        return false;
-                    }
-                    else {
-                        alert("删除失败或数据不存在")
-                    }
-                }
-            });
-        }
-    </script>
 </body>
 </html>
