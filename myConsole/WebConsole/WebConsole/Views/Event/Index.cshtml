@@ -161,7 +161,7 @@
 
     <!-- 这是 HighCharts 的图表，对应上方的container0位置的 DOM -->
     <script type="text/javascript">
-        //画图表
+        //画折线图
         function DrawLine(data) {
             Highcharts.chart('container0', {
 
@@ -219,7 +219,57 @@
             });
         }
 
-        //从后台获取实时数据，并画图
+        //画柱状图
+        function DrawVol(data) {
+            Highcharts.stockChart('container1', {
+                chart: {
+                    alignTicks: false
+                },
+                rangeSelector: {
+                    selected: 1
+                },
+                title: {
+                    text: '股票成交量'
+                },
+                series: [{
+                    type: 'column',
+                    name: '成交量',
+                    data: data
+                }]
+            });
+        }
+    </script>
+    
+    <script>
+        //画成交量柱状图
+        //function DrawVol(data1) {
+        //    var stockcode = $('#stockcode').val();
+        //    var stockname = $('#stockname').val();
+        //    var url = '/Event/DrawVol' + '?stockcode=' + stockcode + '&stockname=' + stockname;
+        //    Highcharts.getJSON(url, function (data) {
+        //        if (data1 != "") {
+        //            data = data1;
+        //        }
+        //        Highcharts.stockChart('container1', {
+        //            chart: {
+        //                alignTicks: false
+        //            },
+        //            rangeSelector: {
+        //                selected: 1
+        //            },
+        //            title: {
+        //                text: '股票成交量'
+        //            },
+        //            series: [{
+        //                type: 'column',
+        //                name: '成交量',
+        //                data: data
+        //            }]
+        //        });
+        //    });
+        //}
+
+        //从后台获取实时数据，画价格图
         function Line() {
             var stockcode = $('#stockcode').val();
             var stockname = $('#stockname').val();
@@ -234,46 +284,26 @@
             });
         }
 
-        
-
-    </script>
-    
-    <script>
-        //画成交量
-        function DrawVol(data1) {
+        //从后台获取实时数据，画成交量图
+        function Vol() {
             var stockcode = $('#stockcode').val();
             var stockname = $('#stockname').val();
-            var url = '/Event/DrawVol' + '?stockcode=' + stockcode + '&stockname=' + stockname;
-            Highcharts.getJSON(url, function (data) {
-                if (data1 != "") {
-                    data = data1;
+            $.ajax({
+                type: "POST",
+                url: "/Event/DrawVol",
+                data: { "stockcode": stockcode, "stockname": stockname },
+                dataType: "json",
+                success: function (data) {
+                    DrawVol(data);
                 }
-                Highcharts.stockChart('container1', {
-                    chart: {
-                        alignTicks: false
-                    },
-                    rangeSelector: {
-                        selected: 1
-                    },
-                    title: {
-                        text: '股票成交量'
-                    },
-                    series: [{
-                        type: 'column',
-                        name: '成交量',
-                        data: data
-                    }]
-                });
             });
         }
 
-        //DrawVol("");
-
-
         window.onload = function () {
-            // 指定图表的配置项和数据
+            //画折线图
             Line();
-            DrawVol("");
+            //画柱状图
+            Vol();
         }
     </script>
 
@@ -281,8 +311,7 @@
         //搜索功能
         $('#sreach_s').on('click', function () {
             Line();
-            DrawVol("");
-
+            DrawVol();
 
             //$.ajax({
             //    type: "POST",

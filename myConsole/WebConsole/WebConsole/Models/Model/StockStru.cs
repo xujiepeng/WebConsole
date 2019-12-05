@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebConsole.Models.Model
 {
-    public class LineStru
+    public class StockStru
     {
         /// <summary>
         /// 股票名称

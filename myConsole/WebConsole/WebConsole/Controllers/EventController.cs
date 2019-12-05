@@ -30,11 +30,11 @@ namespace WebConsole.Controllers
             HttpsGet httpget = new HttpsGet();
             string str = httpget.GetUrlResponse(stockLink).ToString();
             string[] array = str.Split("\\n\\\n");
-            //价格
+            //价格列表
             List<double> list_price = new List<double>();
-            //成交量
+            //成交量列表
             List<int> list_vol = new List<int>();
-            //时间
+            //时间列表
             List<string> list_time = new List<string>();
             //总时长240分钟
             int count = 60 * 4;
@@ -63,8 +63,8 @@ namespace WebConsole.Controllers
                 }
             }
             //股价数据列表
-            List<LineStru> LineList = new List<LineStru>();
-            LineStru l1 = new LineStru();
+            List<StockStru> LineList = new List<StockStru>();
+            StockStru l1 = new StockStru();
             l1.name = "Stock-Price";
             l1.date = array[1];
             l1.list_time = list_time;
@@ -72,7 +72,7 @@ namespace WebConsole.Controllers
             LineList.Add(l1);
 
             //成交量数据列表
-            LineStru l2 = new LineStru();
+            StockStru l2 = new StockStru();
             l2.name = "Stock-Vol";
             l2.list_vol = list_vol;
             LineList.Add(l2);
@@ -109,11 +109,11 @@ namespace WebConsole.Controllers
             HttpsGet httpget = new HttpsGet();
             string str = httpget.GetUrlResponse(stockLink).ToString();
             string[] array = str.Split("\\n\\\n");
-            //价格
+            //价格列表
             List<double> list_price = new List<double>();
-            //成交量
+            //成交量列表
             List<int> list_vol = new List<int>();
-            //时间
+            //时间列表
             List<string> list_time = new List<string>();
             //总时长240分钟
             int count = 60 * 4;
@@ -141,17 +141,18 @@ namespace WebConsole.Controllers
                 }
             }
 
-            LineStru result = new LineStru();
+            StockStru result = new StockStru();
             result.name = "成交量";
             //构建“时间-成交量”键值对，加入到list_vol_time列表
             for (int i = 0; i < list_vol.Count; i++)
             {
                 List<int> item = new List<int>();
+                //没有对应数据的时间，向后顺延一个单位
                 if (list_time[i] == ".")
                 {
                     if (i == 0)
                     {
-                        item.Add(929);
+                        item.Add(0);
                     }
                     else
                     {
