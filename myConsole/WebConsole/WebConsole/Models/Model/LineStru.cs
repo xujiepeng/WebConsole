@@ -7,31 +7,73 @@ namespace WebConsole.Models.Model
 {
     public class LineStru
     {
+        /// <summary>
+        /// 股票名称
+        /// </summary>
         public string name
         {
             get;
             set;
         }
+        /// <summary>
+        /// 股票日期
+        /// </summary>
         public string date
         {
             get;
             set;
         }
-        public string[] list_time
+        /// <summary>
+        /// 股票时间列表
+        /// </summary>
+        public List<string> list_time
         {
             get;
             set;
         }
-        public int[] list_vol
+        /// <summary>
+        /// 股票时间数组
+        /// </summary>
+        public string[] array_time
         {
             get;
             set;
         }
-
-        public double[] list_price
+        /// <summary>
+        /// 成交量列表
+        /// </summary>
+        public List<int> list_vol
         {
             get;
             set;
         }
+        /// <summary>
+        /// 成交量数组
+        /// </summary>
+        public int[] array_vol
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 股票价格列表
+        /// </summary>
+        public List<double> list_price
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 股票价格数组
+        /// </summary>
+        public double[] array_price
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 成交量-时间列表
+        /// </summary>
+        public List<List<int>> list_vol_time = new List<List<int>>();
     }
 }
