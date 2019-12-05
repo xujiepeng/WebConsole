@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="~/css/xadmin.css">
     <meta charset="utf-8">
     <!-- 引入 ECharts 文件 -->
-    @*<script src="~/js/echarts.js"></script>*@
+    <script src="~/js/echarts.js"></script>
     <script type="text/javascript" src="~/js/jquery.min.js"></script>
     @*<script src="https://code.highcharts.com/highcharts.src.js"></script>*@
 
@@ -57,7 +57,7 @@
                         <!-- 为 Highcharts 准备一个具备大小（宽高）的 DOM -->
                         <div id="container0" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                         @*<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>*@
-                        <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto;width:90%" ></div>
                         <blockquote class="layui-elem-quote">
                             注意：本案例的HighCharts图表库由cdn引入，需要在线才能正常使用，如想离线，请至HighCharts官网下载。
                         </blockquote>
@@ -161,20 +161,6 @@
 
     <!-- 这是 HighCharts 的图表，对应上方的container0位置的 DOM -->
     <script type="text/javascript">
-        //从后台获取实时数据，并画图
-        function Line() {
-            $.ajax({
-                type: "POST",
-                url: "/Event/DrawLine",
-                data: { "id": "1" },
-                dataType: "json",
-                success: function (data) {
-                    DrawLine(data);
-
-                }
-            });
-        }
-
         //画图表
         function DrawLine(data) {
             Highcharts.chart('container0', {
@@ -214,20 +200,7 @@
                 series: [{
                     name: data[0].name,
                     data: data[0].list_price
-                }//, {
-                 //       name: data[1].name,
-                 //       data: data[1].list_vol
-                 //   }, {
-                 //       name: 'Sales & Distribution',
-                 //       data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-                 //   }, {
-                //    name: 'Project Development',
-                //    data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-                //    }, {
-                //        name: data[1].name,
-                //        data: data[1].list
-                //        }
-                ],
+                }],
 
                 responsive: {
                     rules: [{
@@ -243,138 +216,38 @@
                         }
                     }]
                 }
-
             });
         }
-        // 指定图表的配置项和数据
-        Line();
 
-    </script>
-
-
-    <script>
-        var s = new Object();
-        s.name = 'Tokyo';
-        s.data = [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4];
-        var data = JSON.stringify(s);
-
-        var s1 = new Object();
-        s1.name = 'New York';
-        s1.data = [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3];
-        var data1 = JSON.stringify(s1);
-
-        var s2 = new Object();
-        s2.name = 'London';
-        s2.data = [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2];
-        var data2 = JSON.stringify(s2);
-
-        var list = new Array();
-        list.push(s);
-        list.push(s1);
-        list.push(s2);
-
-
-        window.onload = function () {
-            Highcharts.chart('container', {
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Monthly Average Rainfall'
-                },
-                subtitle: {
-                    text: 'Source: WorldClimate.com'
-                },
-                xAxis: {
-                    categories: [
-                        'Jan',
-                        'Feb',
-                        'Mar',
-                        'Apr',
-                        'May',
-                        'Jun',
-                        'Jul',
-                        'Aug',
-                        'Sep',
-                        'Oct',
-                        'Nov',
-                        'Dec'
-                    ],
-                    crosshair: true
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Rainfall (mm)'
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
-                },
-                plotOptions: {
-                    column: {
-                        pointPadding: 0.2,
-                        borderWidth: 0
-                    }
-                },
-                series: [{
-                    name: 'Tokyo',
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-
-                }, {
-                    name: 'New York',
-                    data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
-
-                }, {
-                    name: 'London',
-                    data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
-
-                }, {
-                    name: 'Berlin',
-                    data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
-
-                }]
+        //从后台获取实时数据，并画图
+        function Line() {
+            var stockcode = $('#stockcode').val();
+            var stockname = $('#stockname').val();
+            $.ajax({
+                type: "POST",
+                url: "/Event/DrawLine",
+                data: { "stockcode": stockcode, "stockname": stockname },
+                dataType: "json",
+                success: function (data) {
+                    DrawLine(data);
+                }
             });
         }
+
+        
+
     </script>
     
     <script>
-        //window.onload = function () {
-        //    Highcharts.getJSON('/Event/DrawVol', function (data) {
-        //        // Create the chart
-        //        Highcharts.stockChart('container1', {
-        //            chart: {
-        //                alignTicks: false
-        //            },
-        //            rangeSelector: {
-        //                selected: 1
-        //            },
-
-        //            title: {
-        //                text: 'AAPL Stock Price'
-        //            },
-
-        //            series: [{
-        //                type: 'column',
-        //                name: 'AAPL',
-        //                data: data
-        //            }]
-        //        });
-        //    });
-        //}
-
-
+        //画成交量
         function DrawVol(data1) {
-            Highcharts.getJSON('/Event/DrawVol', function (data) {
+            var stockcode = $('#stockcode').val();
+            var stockname = $('#stockname').val();
+            var url = '/Event/DrawVol' + '?stockcode=' + stockcode + '&stockname=' + stockname;
+            Highcharts.getJSON(url, function (data) {
                 if (data1 != "") {
                     data = data1;
                 }
-                // Create the chart
                 Highcharts.stockChart('container1', {
                     chart: {
                         alignTicks: false
@@ -382,47 +255,54 @@
                     rangeSelector: {
                         selected: 1
                     },
-
                     title: {
-                        text: 'AAPL Stock Price'
+                        text: '股票成交量'
                     },
-
                     series: [{
                         type: 'column',
-                        name: 'AAPL',
+                        name: '成交量',
                         data: data
                     }]
                 });
             });
         }
-        DrawVol("");
+
+        //DrawVol("");
+
+
+        window.onload = function () {
+            // 指定图表的配置项和数据
+            Line();
+            DrawVol("");
+        }
     </script>
 
     <script>
+        //搜索功能
         $('#sreach_s').on('click', function () {
-            var stockcode = $('#stockcode').val();
-            var stockname = $('#stockname').val();
+            Line();
+            DrawVol("");
 
-            $.ajax({
-                type: "POST",
-                url: "/Event/Sreach",
-                data: { "stockcode": stockcode, "stockname": stockname },
-                dataType: "json",
-                success: function (data) {
-                    DrawLine(data);
-                    DrawvVol();
-                }
-            });
 
-            $.ajax({
-                type: "POST",
-                url: "/Event/DrawVol_s",
-                data: { "stockcode": stockcode, "stockname": stockname },
-                dataType: "json",
-                success: function (data) {
-                    DrawVol(data);
-                }
-            });
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Event/DrawLine",
+            //    data: { "stockcode": stockcode, "stockname": stockname },
+            //    dataType: "json",
+            //    success: function (data) {
+            //        DrawLine(data);
+            //    }
+            //});
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Event/DrawVol",
+            //    data: { "stockcode": stockcode, "stockname": stockname },
+            //    dataType: "json",
+            //    success: function (data) {
+            //        DrawVol(data);
+            //    }
+            //});
         });
     </script>
 
