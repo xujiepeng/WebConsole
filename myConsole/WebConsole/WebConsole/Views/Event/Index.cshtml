@@ -15,7 +15,7 @@
     <!-- 引入 ECharts 文件 -->
     @*<script src="~/js/echarts.js"></script>*@
     <script type="text/javascript" src="~/js/jquery.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    @*<script src="https://code.highcharts.com/highcharts.src.js"></script>*@
 
 
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
@@ -184,7 +184,7 @@
                 },
 
                 subtitle: {
-                    text: '数据源: http://data.gtimg.cn/flashdata/hushen/minute/sz000004.js?maxage=111'
+                    text: '数据源: http://data.gtimg.cn/flashdata/hushen/minute/{0}.js?maxage=111'
                 },
 
                 yAxis: {
@@ -344,40 +344,58 @@
     </script>
     
     <script>
-        window.onload = function () {
-            Highcharts.getJSON('https://www.highcharts.com/samples/data/aapl-v.json', function (data) {
+        //window.onload = function () {
+        //    Highcharts.getJSON('/Event/DrawVol', function (data) {
+        //        // Create the chart
+        //        Highcharts.stockChart('container1', {
+        //            chart: {
+        //                alignTicks: false
+        //            },
+        //            rangeSelector: {
+        //                selected: 1
+        //            },
 
-                // create the chart
+        //            title: {
+        //                text: 'AAPL Stock Price'
+        //            },
+
+        //            series: [{
+        //                type: 'column',
+        //                name: 'AAPL',
+        //                data: data
+        //            }]
+        //        });
+        //    });
+        //}
+
+
+        function DrawVol(data1) {
+            Highcharts.getJSON('/Event/DrawVol', function (data) {
+                if (data1 != "") {
+                    data = data1;
+                }
+                // Create the chart
                 Highcharts.stockChart('container1', {
                     chart: {
                         alignTicks: false
                     },
-
                     rangeSelector: {
                         selected: 1
                     },
 
                     title: {
-                        text: 'AAPL Stock Volume'
+                        text: 'AAPL Stock Price'
                     },
 
                     series: [{
                         type: 'column',
-                        name: 'AAPL Stock Volume',
-                        data: data,
-                        dataGrouping: {
-                            units: [[
-                                'week', // unit name
-                                [1] // allowed multiples
-                            ], [
-                                'month',
-                                [1, 2, 3, 4, 6]
-                            ]]
-                        }
+                        name: 'AAPL',
+                        data: data
                     }]
                 });
             });
         }
+        DrawVol("");
     </script>
 
     <script>
@@ -392,7 +410,17 @@
                 dataType: "json",
                 success: function (data) {
                     DrawLine(data);
+                    DrawvVol();
+                }
+            });
 
+            $.ajax({
+                type: "POST",
+                url: "/Event/DrawVol_s",
+                data: { "stockcode": stockcode, "stockname": stockname },
+                dataType: "json",
+                success: function (data) {
+                    DrawVol(data);
                 }
             });
         });
