@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WebConsole.Models.Common.HttpHelper;
 using WebConsole.Models.Model;
 
@@ -56,7 +54,7 @@ namespace WebConsole.Models
             //股价数据列表
             List<StockStru> LineList = new List<StockStru>();
             StockStru l1 = new StockStru();
-            l1.name = "Stock-Price";
+            l1.name = stockcode;
             l1.date = array[1];
             l1.list_time = list_time;
             l1.list_price = list_price;

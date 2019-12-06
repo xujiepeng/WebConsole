@@ -81,7 +81,7 @@
             Highcharts.chart('container0', {
 
                 title: {
-                    text: '股票走势分时显示图'
+                    text: data[0].name + '走势分时显示图'
                 },
 
                 subtitle: {
@@ -176,7 +176,7 @@
             var stockname = $('#stockname').val();
             $.ajax({
                 type: "POST",
-                url: "/Event/DrawLine",
+                url: "/TimeIndex/DrawLine",
                 data: { "stockcode": stockcode, "stockname": stockname },
                 dataType: "json",
                 success: function (data) {
@@ -191,7 +191,7 @@
             var stockname = $('#stockname').val();
             $.ajax({
                 type: "POST",
-                url: "/Event/DrawVol",
+                url: "/TimeIndex/DrawVol",
                 data: { "stockcode": stockcode, "stockname": stockname },
                 dataType: "json",
                 success: function (data) {
@@ -214,7 +214,7 @@
 
             //$.ajax({
             //    type: "POST",
-            //    url: "/Event/DrawLine",
+            //    url: "/TimeIndex/DrawLine",
             //    data: { "stockcode": stockcode, "stockname": stockname },
             //    dataType: "json",
             //    success: function (data) {
@@ -224,7 +224,7 @@
 
             //$.ajax({
             //    type: "POST",
-            //    url: "/Event/DrawVol",
+            //    url: "/TimeIndex/DrawVol",
             //    data: { "stockcode": stockcode, "stockname": stockname },
             //    dataType: "json",
             //    success: function (data) {

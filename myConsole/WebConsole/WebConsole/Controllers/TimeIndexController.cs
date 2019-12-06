@@ -23,7 +23,8 @@ namespace WebConsole.Controllers
         /// 获取股票分时数据
         /// 回传前端 画价格分时折线图
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="stockcode"></param>
+        /// <param name="stockname"></param>
         /// <returns></returns>
         public string DrawLine(string stockcode, string stockname)
         {
