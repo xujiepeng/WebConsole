@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using WebConsole.Models.Model;
 using WebConsole.Models.Common.HttpHelper;
+using WebConsole.Models.Model;
+
+// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebConsole.Controllers
 {
-    public class EventController : Controller
+    public class TimeIndexController : Controller
     {
         public IActionResult Index()
         {
@@ -44,7 +48,7 @@ namespace WebConsole.Controllers
                 if (i < array.Length - 3)
                 {
                     list_price.Add(double.Parse(array[i].Split(' ')[1]));
-                    list_time.Add(array[i].Split(' ')[0].Insert(2,":"));
+                    list_time.Add(array[i].Split(' ')[0].Insert(2, ":"));
                     //累计值减去前一周期值，计算当前成交量
                     if (list_vol.Count > 0)
                     {
@@ -166,18 +170,10 @@ namespace WebConsole.Controllers
                 item.Add(list_vol[i]);
                 result.list_vol_time.Add(item);
             }
-            
+
 
             string jsonData = JsonConvert.SerializeObject(result.list_vol_time);
             return jsonData;
-        }
-
-        public string DrawCandle(string stockcode, string stockname)
-        {
-            //string stockLink = string.Format("http://data.gtimg.cn/flashdata/hushen/minute/{0}.js?maxage=111", stockcode);
-            HttpsGet httpget = new HttpsGet();
-            string str = httpget.GetUrlResponse("https://www.highcharts.com/samples/data/aapl-ohlcv.json").ToString();
-            return str;
         }
     }
 }

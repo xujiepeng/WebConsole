@@ -1,0 +1,240 @@
+﻿@{
+}
+<!doctype html>
+<html class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>我的控制台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="~/css/font.css">
+    <link rel="stylesheet" href="~/css/xadmin.css">
+    <meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="~/js/echarts.js"></script>
+    <script type="text/javascript" src="~/js/jquery.min.js"></script>
+    @*<script src="https://code.highcharts.com/highcharts.src.js"></script>*@
+
+
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+
+    <!-- 使用股票工具栏 -->
+    <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/stocktools/gui.css">
+    <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/annotations/popup.css">
+    <script src="https://code.highcharts.com/stock/indicators/indicators-all.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drag-panes.js"></script>
+    <script src="https://code.highcharts.com/modules/annotations-advanced.js"></script>
+    <script src="https://code.highcharts.com/modules/price-indicator.js"></script>
+    <script src="https://code.highcharts.com/modules/full-screen.js"></script>
+    <script src="https://code.highcharts.com/modules/stock-tools.js"></script>
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body ">
+                        <blockquote class="layui-elem-quote">
+                            本页面使用了 HighCharts 和 ECharts 的图表组件的功能。
+                        </blockquote>
+                        <!-- ajax搜索 -->
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="begindate">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="enddate">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" id="stockcode" name="username" placeholder="请输入股票代码" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" id="stockname" name="username" placeholder="请输入股票名称" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" id="sreach_s" lay-submit="" lay-filter="sreach">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
+                        </div>
+
+
+                        <!-- 为 Highcharts 准备一个具备大小（宽高）的 DOM -->
+                        <div id="container0" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        @*<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>*@
+                        <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto;width:90%"></div>
+                        <blockquote class="layui-elem-quote">
+                            注意：本案例的HighCharts图表库由cdn引入，需要在线才能正常使用，如想离线，请至HighCharts官网下载。
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 这是 HighCharts 的图表，对应上方的container0位置的 DOM -->
+    <script type="text/javascript">
+        //画折线图
+        function DrawLine(data) {
+            Highcharts.chart('container0', {
+
+                title: {
+                    text: '股票走势分时显示图'
+                },
+
+                subtitle: {
+                    text: '数据源: http://data.gtimg.cn/flashdata/hushen/minute/{0}.js?maxage=111'
+                },
+
+                yAxis: {
+                    title: {
+                        text: '股票价格'
+                    }
+                },
+                xAxis: {
+                    categories: data[0].list_time,
+                    crosshair: true
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+
+                plotOptions: {
+                    //series: {
+                    //    label: {
+                    //        connectorAllowed: false
+                    //    },
+                    //    pointStart: 0
+                    //}
+                },
+
+                series: [{
+                    name: data[0].name,
+                    data: data[0].list_price
+                }],
+
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                },
+                stockTools: {
+                    gui: {
+                        enabled: false
+                    }
+                }
+
+            });
+        }
+
+        //画柱状图
+        function DrawVol(data) {
+            Highcharts.stockChart('container1', {
+                chart: {
+                    alignTicks: false
+                },
+                rangeSelector: {
+                    selected: 1
+                },
+                title: {
+                    text: '股票成交量'
+                },
+                series: [{
+                    type: 'column',
+                    name: '成交量',
+                    data: data
+                }],
+                stockTools: {
+                    gui: {
+                        enabled: false
+                    }
+                }
+            });
+        }
+    </script>
+
+
+
+    <!-- 动态数据调用 -->
+    <script>
+        //从后台获取实时数据，画价格图
+        function Line() {
+            var stockcode = $('#stockcode').val();
+            var stockname = $('#stockname').val();
+            $.ajax({
+                type: "POST",
+                url: "/Event/DrawLine",
+                data: { "stockcode": stockcode, "stockname": stockname },
+                dataType: "json",
+                success: function (data) {
+                    DrawLine(data);
+                }
+            });
+        }
+
+        //从后台获取实时数据，画成交量图
+        function Vol() {
+            var stockcode = $('#stockcode').val();
+            var stockname = $('#stockname').val();
+            $.ajax({
+                type: "POST",
+                url: "/Event/DrawVol",
+                data: { "stockcode": stockcode, "stockname": stockname },
+                dataType: "json",
+                success: function (data) {
+                    DrawVol(data);
+                }
+            });
+        }
+
+        window.onload = function () {
+            //画折线图
+            Line();
+            //画柱状图
+            Vol();
+        }
+
+        //搜索功能
+        $('#sreach_s').on('click', function () {
+            Line();
+            DrawVol();
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Event/DrawLine",
+            //    data: { "stockcode": stockcode, "stockname": stockname },
+            //    dataType: "json",
+            //    success: function (data) {
+            //        DrawLine(data);
+            //    }
+            //});
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Event/DrawVol",
+            //    data: { "stockcode": stockcode, "stockname": stockname },
+            //    dataType: "json",
+            //    success: function (data) {
+            //        DrawVol(data);
+            //    }
+            //});
+        });
+    </script>
+
+
+</body>
+</html>
