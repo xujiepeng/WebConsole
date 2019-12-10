@@ -25,4 +25,12 @@
     <None Remove="Views\Shared\welcome1.html" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Plug-in\ace\ace.js" />
+    <None Include="wwwroot\Plug-in\ace\mode-html.js" />
+    <None Include="wwwroot\Plug-in\ace\snippets\html.js" />
+    <None Include="wwwroot\Plug-in\ace\theme-tomorrow.js" />
+    <None Include="wwwroot\Plug-in\ace\worker-html.js" />
+  </ItemGroup>
+
 </Project>
