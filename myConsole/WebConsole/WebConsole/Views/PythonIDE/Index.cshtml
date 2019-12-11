@@ -13,10 +13,7 @@
     <script src="~/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="~/js/xadmin.js"></script>
     <script type="text/javascript" src="~/js/jquery.min.js"></script>
-
-
     <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
-    @*<script src="~/lib/layui/layui.js"></script>*@
     <script src="~/Plug-in/ace/ace.js"></script>
 </head>
 <body>
@@ -40,11 +37,13 @@
 
 
                     <blockquote class="layui-elem-quote">
-                        <p style="color:red;font-size:14px;">目前不支持自定义函数，每行代码之间请用分号“;”结尾。复制以下示例可直接运行:</p>
-                        a = 1; b = 2;
+                        <p style="color:red;font-size:14px;">PythonIDE目前不支持自定义函数，每行代码之间请用分号“;”结尾。复制以下Python示例可直接运行:</p>
+                        <p style="color:forestgreen;font-size:14px;">示例1.计算</p>
+                        a = 1; b = 2;<br />
                         c = a + b;<br />
-                        print('输出计算机结果如下：');<br />
-                        print('reslut='+str(c));
+                        print('运算结果 = '+str(c));<br />
+                        <p style="color:forestgreen;font-size:14px;">示例2.循环</p>
+                        for letter in 'Python':print ('当前字母 :'+ letter);
                     </blockquote>
 
                     <div class="layui-card-header">
@@ -120,7 +119,7 @@
                 , height: '100%'
             });
             var ieditor = layedit.build('layeditDemo');
-            //ieditor_data = ieditor;
+
 
             $("#RunCode").on('click', function () {
                 //alert(layedit.getContent(ieditor));
@@ -143,9 +142,7 @@
             })
 
         })
-
-
-
+        
 
         /** 获取文本数据 **/
         function getContent() {
