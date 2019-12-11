@@ -21,11 +21,10 @@ namespace WebConsole.Controllers
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        public string Run(string code)
+        public string Run(string code, string para)
         {
             PythonIDEViewModel p = new PythonIDEViewModel();
-            //return "123456";
-            return JsonConvert.SerializeObject(p.RunCode(code, ""));
+            return JsonConvert.SerializeObject(p.RunCode(code, para));
         }
     }
 }
