@@ -9,8 +9,6 @@ using WebConsole.Models;
 using WebConsole.Models.Model;
 using WebConsole.Models.Model.Conf;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebConsole.Controllers
 {
     public class MemberList_DynamicController : Controller

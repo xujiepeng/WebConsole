@@ -49,7 +49,7 @@
                     <div class="layui-card-header">
 
 
-                        <button id="SaveContent" class="layui-btn" onclick="alert('暂不支持代码保存')"><i class="layui-icon">&#xe654;</i>保存</button>
+                        <button id="SaveContent" class="layui-btn"><i class="layui-icon">&#xe654;</i>保存</button>
                         <button id="RunText" class="layui-btn layui-btn-danger"><i class="layui-icon">&#xe642;</i>运行</button>
                         <button id="RunScript" class="layui-btn layui-btn-danger"><i class="layui-icon">&#xe642;</i>运行脚本</button>
                     </div>
@@ -138,15 +138,14 @@
 
             //获取带格式的文本
             $("#SaveContent").on('click', function () {
-                //alert(layedit.getContent(ieditor));
                 code = layedit.getContent(ieditor);
                 $.ajax({
                     type: "POST",
                     url: "/PythonIDE/RunContent",
-                    data: { "code": code, },
+                    data: { "code": "" },
                     dataType: "json",
                     success: function (data) {
-                        alert(code);
+                        alert("暂不支持代码保存，内容如下：" + code);
                         //alert('执行完成，结果已返回。');
                         //$("#layeditDemo1").val(data);
                     }
@@ -155,7 +154,6 @@
 
             //运行后台模板脚本
             $("#RunScript").on('click', function () {
-                //alert(layedit.getContent(ieditor));
                 code = layedit.getText(ieditor);
                 $.ajax({
                     type: "POST",
