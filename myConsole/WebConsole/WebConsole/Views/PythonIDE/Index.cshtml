@@ -49,8 +49,9 @@
                     <div class="layui-card-header">
 
 
-                        <button class="layui-btn" onclick="alert('暂不支持代码保存')"><i class="layui-icon">&#xe654;</i>保存</button>
-                        <button id="RunCode" class="layui-btn layui-btn-danger"><i class="layui-icon">&#xe642;</i>运行</button>
+                        <button id="SaveContent" class="layui-btn" onclick="alert('暂不支持代码保存')"><i class="layui-icon">&#xe654;</i>保存</button>
+                        <button id="RunText" class="layui-btn layui-btn-danger"><i class="layui-icon">&#xe642;</i>运行</button>
+                        <button id="RunScript" class="layui-btn layui-btn-danger"><i class="layui-icon">&#xe642;</i>运行脚本</button>
                     </div>
 
 
@@ -77,7 +78,6 @@
 
 
     <script>
-        //ieditor_data;
         layui.use(['layedit', 'layer', 'jquery'], function () {
             var $ = layui.jquery;
             var layedit = layui.layedit;
@@ -120,35 +120,56 @@
             });
             var ieditor = layedit.build('layeditDemo');
 
-
-            $("#RunCode").on('click', function () {
+            //获取纯文本
+            $("#RunText").on('click', function () {
                 //alert(layedit.getContent(ieditor));
                 code = layedit.getText(ieditor);
                 $.ajax({
                     type: "POST",
-                    url: "/PythonIDE/Run",
+                    url: "/PythonIDE/RunText",
                     data: { "code": code, },
                     dataType: "json",
                     success: function (data) {
-                        //$("#layeditDemo1")
-                        debugger;
+                        alert('执行完成，结果已返回。');
                         $("#layeditDemo1").val(data);
                     }
                 });
+            });
 
+            //获取带格式的文本
+            $("#SaveContent").on('click', function () {
+                //alert(layedit.getContent(ieditor));
+                code = layedit.getContent(ieditor);
+                $.ajax({
+                    type: "POST",
+                    url: "/PythonIDE/RunContent",
+                    data: { "code": code, },
+                    dataType: "json",
+                    success: function (data) {
+                        alert(code);
+                        //alert('执行完成，结果已返回。');
+                        //$("#layeditDemo1").val(data);
+                    }
+                });
+            });
 
-
-
-            })
+            //运行后台模板脚本
+            $("#RunScript").on('click', function () {
+                //alert(layedit.getContent(ieditor));
+                code = layedit.getText(ieditor);
+                $.ajax({
+                    type: "POST",
+                    url: "/PythonIDE/RunScript",
+                    data: { "code": code, },
+                    dataType: "json",
+                    success: function (data) {
+                        alert('执行完成，结果已返回。');
+                        $("#layeditDemo1").val(data);
+                    }
+                });
+            });
 
         })
-        
-
-        /** 获取文本数据 **/
-        function getContent() {
-            debugger;
-            layedit.getContent(ieditor_data);
-        }
 
 
     </script>

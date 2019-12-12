@@ -21,10 +21,36 @@ namespace WebConsole.Controllers
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        public string Run(string code, string para)
+        public string RunText(string code, string para)
         {
             PythonIDEViewModel p = new PythonIDEViewModel();
             return JsonConvert.SerializeObject(p.RunCode(code, para));
+        }
+
+        /// <summary>
+        /// 运行程序
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public string RunContent(string code, string para)
+        {
+            PythonIDEViewModel p = new PythonIDEViewModel();
+            return JsonConvert.SerializeObject(p.RunCode(code, para));
+        }
+
+        /// <summary>
+        /// 运行程序
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public string RunScript(string code, string para)
+        {
+            string path = @"E:\MyGit\WebConsole\myConsole\WebConsole\WebConsole\wwwroot\old\Document\Script\test2.py";
+            string para1 = "\"Form C#:\"";
+            string para2 = "\"Form C++++:\"";
+            string strcmd = string.Format("{0} {1} {2}", path, para1, para2);
+            string cmdresult = PythonIDEViewModel.run_cmd("python.exe", strcmd);
+            return JsonConvert.SerializeObject(cmdresult);
         }
     }
 }

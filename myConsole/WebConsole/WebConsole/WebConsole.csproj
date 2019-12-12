@@ -33,4 +33,8 @@
     <None Include="wwwroot\Plug-in\ace\worker-html.js" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\old\Document\Data\" />
+  </ItemGroup>
+
 </Project>
