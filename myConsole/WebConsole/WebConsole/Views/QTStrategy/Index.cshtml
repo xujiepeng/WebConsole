@@ -43,24 +43,7 @@
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-body ">
-                        <!-- 提交表单搜索 -->
-                        @*<form class="layui-form layui-col-space5">
-                                <div class="layui-inline layui-show-xs-block">
-                                    <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start">
-                                </div>
-                                <div class="layui-inline layui-show-xs-block">
-                                    <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end">
-                                </div>
-                                <div class="layui-inline layui-show-xs-block">
-                                    <input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-inline layui-show-xs-block">
-                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
-                                        <i class="layui-icon">&#xe615;</i>
-                                    </button>
-                                </div>
-                            </form>*@
-                        <!-- ajax搜索 -->
+
                         <div class="layui-inline layui-show-xs-block">
                             <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="begindate">
                         </div>
@@ -133,7 +116,7 @@
         //第一个实例
         tableIns = table.render({
             elem: '#demo1'//对应表格的id标识
-            , url: '/MemberList_Dynamic/GetJsonData' //数据controller
+            , url: '/QTStrategy/GetJsonData' //数据controller
             , page: true //开启分页
             , limit: 5
             , toolbar: '#toolbarDemo'
@@ -144,16 +127,19 @@
                 { type: 'numbers', fixed: 'left', title: '序号' }
                 , { type: 'checkbox', fixed: 'left' }
                 , { field: 'id', title: 'ID', sort: true, fixed: 'left',width:100 }
-                , { field: 'username', title: '用户名',width:100 }
+                , { field: 'strategyname', title: '策略名',width:100 }
                 , {
-                    field: 'sex', title: '性别', templet: function (d) {
-                        return d.sex == "男" ? "男人" : "女人";
+                    field: '状态', title: '启用否', templet: function (d) {
+                        return d.states == "启用" ? "启用" : "停用";
                     }, width: 100
                 }
-                , { field: 'tel', title: '手机', sort: true, width: 100 }
-                , { field: 'addr', title: '地址', width: 100 }
-                , { field: 'states', title: '状态', sort: true, width: 105 }
-                , { title: '操作', align: 'center', toolbar: '#barDemo1', width: 200 }
+                , { field: 'strategypath', title: '策略路径', sort: true, width: 100 }
+                , { field: 'creattime', title: '创建时间', width: 100 }
+                , { field: 'describe', title: '策略描述', width: 100 }
+                , { field: 'isrun', title: '运行否', width: 100 }
+                , { field: 'remark', title: '备注', width: 100 }
+                , { field: 'states', title: '策略状态', sort: true, width: 105 }
+                , { title: '操作', align: 'center', toolbar: '#barDemo1', fixed: 'right', width: 200 }
             ]]
             , done: function (res) {
                 //获取数据完成后执行的区域，如提示获取完成等
@@ -197,73 +183,14 @@
     });
 </script>
 
-@*搜索功能
-    <script>
-        var tableIns;
-        layui.use(['form', 'layedit', 'laydate', 'element', 'jquery', 'table'], function () {
-            var table = layui.table;
-
-            //第一个实例
-            tableIns = table.render({
-                elem: '#demo1'//对应表格的id标识
-                , url: '/MemberList_Dynamic/GetJsonDataSreach' //数据controller
-                , page: true //开启分页
-                , limit: 5
-                , toolbar: '#toolbarDemo'
-                , limits: [3, 5, 10]
-                , method: 'get'//默认get
-                , title: '测试表格'
-                , cols: [[ //表头
-                    { type: 'numbers', fixed: 'left', title: '序号' }
-                    , { type: 'checkbox', fixed: 'left' }
-                    , { field: 'id', title: 'ID', sort: true, fixed: 'left' }
-                    , { field: 'username', title: '用户名' }
-                    , {
-                        field: 'sex', title: '性别', templet: function (d) {
-                            return d.sex == "男" ? "男人" : "女人";
-                        }
-                    }
-                    , { field: 'tel', title: '手机', sort: true }
-                    , { field: 'addr', title: '地址' }
-                    , { field: 'states', title: '状态', sort: true }
-                    , { title: '操作', align: 'center', toolbar: '#barDemo1', width: 200 }
-                ]]
-                , done: function (res) {
-                    //获取数据完成后执行的区域，如提示获取完成等
-                    //如果是异步请求数据方式，res即为你接口返回的信息。
-                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-
-                }
-                , request: {
-                    //原值为：?page=1&limit=30
-                    //修改后分页请求参数为：?curr=1&nums=30
-                    //pageName: 'curr' //页码的参数名称，默认为：page
-                    //, limitName: 'nums' //每页数据量的参数名，默认为：limit
-                }
-            });
-
-        });
-
-        //ajax重新加载表格，外部调用法
-        //$('#refreshtable').on('click', function () {
-        //    tableIns.reload()
-        //});
 
 
-        // 搜索功能，ajax刷新表格
-        $('#sreach_s').on('click', function () {
-            tableIns.reload({
-                where: {
-                    //搜索回传参数
-                    username: $('#username_s').val(),
-                    states: $('#states_s').val()
-                }
-                , page: {
-                    curr: 1//刷新后要显示的页码,不定义参数刷新后则显示当前页
-                }
-            });
-        });
-    </script>*@
+
+
+
+
+
+
 
 <!-- 定义头部 -->
 <script type="text/html" id="toolbarDemo">
@@ -281,15 +208,6 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 
-    @*<a title="编辑" onclick="xadmin.open('编辑','MemberEdit/id=1?ID=1&username=1',600,400)" href="javascript:;">
-            <i class="layui-icon">&#xe642;</i>
-        </a>
-        <a onclick="xadmin.open('修改密码','MemberPassword',600,400)" title="修改密码" href="javascript:;">
-            <i class="layui-icon">&#xe631;</i>
-        </a>
-        <a title="删除" onclick="member_del(this,'1')" href="javascript:;">
-            <i class="layui-icon">&#xe640;</i>
-        </a>*@
 </script>
 
 <!-- 监听工具条 -->

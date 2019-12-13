@@ -36,17 +36,17 @@ namespace WebConsole.Controllers
         /// <returns></returns>
         public bool Add(string username, string sex, string tel, string addr, string states)
         {
-            QTStrategyStru QTStrategyStru = new QTStrategyStru();
-            QTStrategyStru.username = username;
-            QTStrategyStru.sex = sex;
-            QTStrategyStru.tel = tel;
-            QTStrategyStru.addr = addr;
-            QTStrategyStru.states = states;
-            QTStrategyStru dataInfo = new MemberList_DynamicViewModel();
+            //QTStrategyStru QTStrategyStru = new QTStrategyStru();
+            //QTStrategyStru.strategyname = username;
+            //QTStrategyStru.strategynumber = sex;
+            //QTStrategyStru.strategypath = tel;
+            //QTStrategyStru.states = addr;
+            //QTStrategyStru.isrun = states;
+            //MemberList_DynamicStru dataInfo = new QTStrategyViewModel();
 
-            if (dataInfo.AddData(_appConf, MemberList_DynamicStru))
-                return true;
-            else
+            //if (dataInfo.AddData(_appConf, MemberList_DynamicStru))
+            //    return true;
+            //else
                 return false;
         }
 
@@ -61,15 +61,15 @@ namespace WebConsole.Controllers
         /// <returns></returns>
         public IActionResult MemberEdit(string username, string sex, string tel, string addr, string states)
         {
-            MemberList_DynamicStru MemberList_Dynamic = new MemberList_DynamicStru();
-            MemberList_Dynamic.username = username;
-            MemberList_Dynamic.sex = sex;
-            MemberList_Dynamic.tel = tel;
-            MemberList_Dynamic.addr = addr;
-            MemberList_Dynamic.states = states;
-            var resultModel = new MemberList_DynamicViewModel
+            QTStrategyStru QTStrategyStru = new QTStrategyStru();
+            QTStrategyStru.strategyname = username;
+            QTStrategyStru.strategynumber = sex;
+            QTStrategyStru.strategypath = tel;
+            QTStrategyStru.states = addr;
+            QTStrategyStru.isrun = states;
+            var resultModel = new QTStrategyViewModel
             {
-                memberlist_dynamic = MemberList_Dynamic
+                qtstrategy = QTStrategyStru
             };
             return View(resultModel);
         }
@@ -95,10 +95,10 @@ namespace WebConsole.Controllers
             para.Add("tel", tel);
             para.Add("addr", addr);
             para.Add("states", states);
-            MemberList_DynamicViewModel viewModelData = new MemberList_DynamicViewModel();
+            QTStrategyViewModel viewModelData = new QTStrategyViewModel();
             //前端指定返回代码
             string count = "0";
-            var resultModel = new MemberList_DynamicViewModel
+            var resultModel = new QTStrategyViewModel
             {
                 code = "0",
                 msg = "",
@@ -120,17 +120,21 @@ namespace WebConsole.Controllers
         /// <param name="addr"></param>
         /// <param name="Static"></param>
         /// <returns></returns>
-        public bool Update(string username, string sex, string tel, string addr, string states)
+        public bool Update(string id, string strategyname, string strategynumber, string strategypath, string creattime, string states)
         {
-            MemberList_DynamicStru MemberList_Dynamic = new MemberList_DynamicStru();
-            MemberList_Dynamic.username = username;
-            MemberList_Dynamic.sex = sex;
-            MemberList_Dynamic.tel = tel;
-            MemberList_Dynamic.addr = addr;
-            MemberList_Dynamic.states = states;
-            MemberList_DynamicViewModel dataInfo = new MemberList_DynamicViewModel();
+            QTStrategyStru QTStrategy = new QTStrategyStru();
+            QTStrategy.strategyname = strategyname;
+            QTStrategy.strategynumber = strategynumber;
+            QTStrategy.strategypath = strategypath;
+            QTStrategy.creattime = creattime;
+            QTStrategy.states = states;
+            QTStrategy.states = states;
+            QTStrategy.states = states;
+            QTStrategy.states = states;
+            QTStrategy.states = states;
+            QTStrategyViewModel dataInfo = new QTStrategyViewModel();
 
-            if (dataInfo.UpdateData(_appConf, MemberList_Dynamic))
+            if (dataInfo.UpdateData(_appConf, QTStrategy))
                 return true;
             else
                 return false;
@@ -142,14 +146,14 @@ namespace WebConsole.Controllers
         /// <param name="id"></param>
         /// <param name="username"></param>
         /// <returns></returns>
-        public bool Delete(string id, string username)
+        public bool Delete(string id, string strategyname)
         {
-            MemberList_DynamicStru MemberList_DynamicStru = new MemberList_DynamicStru();
-            MemberList_DynamicStru.id = Convert.ToInt32(id);
-            MemberList_DynamicStru.username = username;
-            MemberList_DynamicViewModel dataInfo = new MemberList_DynamicViewModel();
+            QTStrategyStru QTStrategyStru = new QTStrategyStru();
+            QTStrategyStru.id = Convert.ToInt32(id);
+            QTStrategyStru.strategyname = strategyname;
+            QTStrategyViewModel dataInfo = new QTStrategyViewModel();
 
-            if (dataInfo.DeleteData(_appConf, MemberList_DynamicStru))
+            if (dataInfo.DeleteData(_appConf, QTStrategyStru))
                 return true;
             else
                 return false;
@@ -163,7 +167,7 @@ namespace WebConsole.Controllers
         /// <returns></returns>
         public bool DeleteAll(string[] ids)
         {
-            MemberList_DynamicViewModel dataInfo = new MemberList_DynamicViewModel();
+            QTStrategyViewModel dataInfo = new QTStrategyViewModel();
 
             if (dataInfo.DeleteDataAll(_appConf, ids))
                 return true;
