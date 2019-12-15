@@ -139,6 +139,7 @@
                 , { field: 'isrun', title: '运行否', width: 100 }
                 , { field: 'remark', title: '备注', width: 100 }
                 , { field: 'states', title: '策略状态', sort: true, width: 105 }
+                , { field: 'strategytype', title: '策略类型', sort: true, width: 105 }
                 , { title: '操作', align: 'center', toolbar: '#barDemo1', fixed: 'right', width: 200 }
             ]]
             , done: function (res) {
@@ -168,7 +169,7 @@
 
     // 搜索功能，ajax刷新表格
     // 搜索功能其实是重新加载表格数据，使用的是前面定义的tableIns对象，调用的是action
-    // 在加载数据时，将参数传递到地址为/MemberList_Dynamic/GetJsonData方法，完成查询
+    // 在加载数据时，将参数传递到地址为/QTStrategy/GetJsonData方法，完成查询
     $('#sreach_s').on('click', function () {
         tableIns.reload({
             where: {
@@ -239,7 +240,7 @@
 
                         $.ajax({
                             type: "get",
-                            url: "/MemberList_Dynamic/Delete",
+                            url: "/QTStrategy/Delete",
                             data: { "id": data.id },
                             dataType: "text",
                             success: function (data) {
@@ -337,7 +338,7 @@
                             layer.confirm('确认要删除吗？', function (index, obj) {
                                 $.ajax({
                                     type: "POST",
-                                    url: "/MemberList_Dynamic/DeleteAll",
+                                    url: "/QTStrategy/DeleteAll",
                                     data: { "ids": ids },
                                     dataType: "text",
                                     success: function (data) {

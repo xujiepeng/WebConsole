@@ -52,6 +52,7 @@ namespace WebConsole.Models.Model
                 obj.remark = item["remark"].ToString();
                 obj.states = item["states"].ToString();
                 obj.isrun = item["isrun"].ToString();
+                obj.strategytype = item["strategytype"].ToString(); 
                 DataList.Add(obj);
             }
             //是否是条件查询，统计条数
@@ -72,11 +73,12 @@ namespace WebConsole.Models.Model
         /// 新增数据
         /// </summary>
         /// <returns></returns>
-        public bool AddData(CommConf options, MemberList_DynamicStru objstru)
+        public bool AddData(CommConf options, QTStrategyStru objstru)
         {
             string errorMsg;
             SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
-            string str = string.Format("insert into MemberList_Dynamic (username,sex,tel,addr,states) values('{0}','{1}','{2}','{3}','{4}')", objstru.username, objstru.sex, objstru.tel, objstru.addr, objstru.states);
+            string str = string.Format("insert into MemberList_Dynamic (strategyname,describe,states,remark,creattime) values('{0}','{1}','{2}','{3}','{4}')", 
+                objstru.strategyname, objstru.describe, objstru.states, objstru.remark, objstru.creattime);
             int count = conn.Execute(str, out errorMsg);
             if (count > 0)
             {
@@ -96,7 +98,8 @@ namespace WebConsole.Models.Model
         {
             string errorMsg;
             SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
-            string str = string.Format("update QTStrategy set strategyname = '{0}', describe = '{1}', states = '{2}', remark = '{3}' where id='{4}'", objstru.strategyname, objstru.describe, objstru.states, objstru.remark, objstru.id);
+            string str = string.Format("update QTStrategy set strategyname = '{0}', describe = '{1}', states = '{2}', remark = '{3}' where id='{4}'", 
+                objstru.strategyname, objstru.describe, objstru.states, objstru.remark, objstru.id);
             int count = conn.Execute(str, out errorMsg);
             if (count > 0)
             {

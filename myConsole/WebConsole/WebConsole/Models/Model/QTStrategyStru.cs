@@ -76,5 +76,13 @@ namespace WebConsole.Models.Model
             get;
             set;
         }
+        /// <summary>
+        /// 策略类型
+        /// </summary>
+        public string strategytype
+        {
+            get;
+            set;
+        }
     }
 }

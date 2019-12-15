@@ -59,14 +59,13 @@ namespace WebConsole.Controllers
         /// <param name="addr"></param>
         /// <param name="Static"></param>
         /// <returns></returns>
-        public IActionResult MemberEdit(string username, string sex, string tel, string addr, string states)
+        public IActionResult MemberEdit(string id, string strategyname, string strategynumber, string strategypath, string creattime, string states)
         {
             QTStrategyStru QTStrategyStru = new QTStrategyStru();
-            QTStrategyStru.strategyname = username;
-            QTStrategyStru.strategynumber = sex;
-            QTStrategyStru.strategypath = tel;
-            QTStrategyStru.states = addr;
-            QTStrategyStru.isrun = states;
+            QTStrategyStru.strategyname = strategyname;
+            QTStrategyStru.strategynumber = strategynumber;
+            QTStrategyStru.strategypath = strategypath;
+            QTStrategyStru.states = states;
             var resultModel = new QTStrategyViewModel
             {
                 qtstrategy = QTStrategyStru
@@ -85,15 +84,15 @@ namespace WebConsole.Controllers
         /// <param name="addr"></param>
         /// <param name="states"></param>
         /// <returns></returns>
-        public string GetJsonData(string page, string limit, string username, string sex, string tel, string addr, string states)
+        public string GetJsonData(string page, string limit, string strategyname, string strategynumber, string strategypath, string creattime, string states)
         {
             Dictionary<string, string> para = new Dictionary<string, string>();
             para.Add("page", page);
             para.Add("limit", limit);
-            para.Add("username", username);
-            para.Add("sex", sex);
-            para.Add("tel", tel);
-            para.Add("addr", addr);
+            para.Add("strategyname", strategyname);
+            para.Add("strategynumber", strategynumber);
+            para.Add("strategypath", strategypath);
+            para.Add("creattime", creattime);
             para.Add("states", states);
             QTStrategyViewModel viewModelData = new QTStrategyViewModel();
             //前端指定返回代码
@@ -127,9 +126,6 @@ namespace WebConsole.Controllers
             QTStrategy.strategynumber = strategynumber;
             QTStrategy.strategypath = strategypath;
             QTStrategy.creattime = creattime;
-            QTStrategy.states = states;
-            QTStrategy.states = states;
-            QTStrategy.states = states;
             QTStrategy.states = states;
             QTStrategy.states = states;
             QTStrategyViewModel dataInfo = new QTStrategyViewModel();
