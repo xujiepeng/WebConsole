@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -20,55 +21,81 @@ namespace WebConsole.Controllers
             return View();
         }
 
-        public IActionResult MemberAdd()
+        /// <summary>
+        /// 展示空白添加页面
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult QTStrategyAdd()
         {
             return View();
         }
 
         /// <summary>
-        /// 新增数据，add
+        /// 触发新增数据function，add
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="sex"></param>
-        /// <param name="tel"></param>
-        /// <param name="addr"></param>
-        /// <param name="Static"></param>
+        /// <param name="id"></param>
+        /// <param name="strategyname"></param>
+        /// <param name="strategynumber"></param>
+        /// <param name="strategypath"></param>
+        /// <param name="strategyinfo"></param>
+        /// <param name="strategytype"></param>
+        /// <param name="creattime"></param>
+        /// <param name="states"></param>
+        /// <param name="remark"></param>
+        /// <param name="describe"></param>
+        /// <param name="isrun"></param>
         /// <returns></returns>
-        public bool Add(string username, string sex, string tel, string addr, string states)
+        public bool Add(string strategyname, string strategynumber, string strategyinfo, string strategytype, string states, string remark, string describe, string isrun)
         {
-            //QTStrategyStru QTStrategyStru = new QTStrategyStru();
-            //QTStrategyStru.strategyname = username;
-            //QTStrategyStru.strategynumber = sex;
-            //QTStrategyStru.strategypath = tel;
-            //QTStrategyStru.states = addr;
-            //QTStrategyStru.isrun = states;
-            //MemberList_DynamicStru dataInfo = new QTStrategyViewModel();
+            QTStrategyStru QTStrategy = new QTStrategyStru();
+            QTStrategy.strategyname = strategyname;
+            QTStrategy.strategynumber = Guid.NewGuid().ToString();
+            QTStrategy.strategypath = Path.Combine(DateTime.Now.ToString("yyyyMMdd"), QTStrategy.strategynumber);
+            QTStrategy.strategyinfo = strategyinfo;
+            QTStrategy.strategytype = strategytype;
+            QTStrategy.creattime = DateTime.Now.ToString();
+            QTStrategy.states = states;
+            QTStrategy.remark = remark;
+            QTStrategy.describe = describe;
+            QTStrategy.isrun = isrun;
+            QTStrategyViewModel dataInfo = new QTStrategyViewModel();
 
-            //if (dataInfo.AddData(_appConf, MemberList_DynamicStru))
-            //    return true;
-            //else
+            if (dataInfo.AddData(_appConf, QTStrategy))
+                return true;
+            else
                 return false;
         }
 
         /// <summary>
         /// 接收前端传递来的，待修改页面数据,原样返回
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="sex"></param>
-        /// <param name="tel"></param>
-        /// <param name="addr"></param>
-        /// <param name="Static"></param>
+        /// <param name="id"></param>
+        /// <param name="strategyname"></param>
+        /// <param name="strategynumber"></param>
+        /// <param name="strategypath"></param>
+        /// <param name="strategytype"></param>
+        /// <param name="creattime"></param>
+        /// <param name="states"></param>
+        /// <param name="remark"></param>
+        /// <param name="describe"></param>
+        /// <param name="isrun"></param>
         /// <returns></returns>
-        public IActionResult MemberEdit(string id, string strategyname, string strategynumber, string strategypath, string creattime, string states)
+        public IActionResult StrategyEdit(string id, string strategyname, string strategynumber, string strategypath, string strategyinfo, string strategytype, string states, string remark, string describe, string isrun)
         {
-            QTStrategyStru QTStrategyStru = new QTStrategyStru();
-            QTStrategyStru.strategyname = strategyname;
-            QTStrategyStru.strategynumber = strategynumber;
-            QTStrategyStru.strategypath = strategypath;
-            QTStrategyStru.states = states;
+            QTStrategyStru QTStrategy = new QTStrategyStru();
+            QTStrategy.strategyname = strategyname;
+            QTStrategy.strategynumber = strategynumber;
+            QTStrategy.strategypath = strategypath;
+            QTStrategy.strategytype = strategytype;
+            QTStrategy.states = states;
+            QTStrategy.remark = remark;
+            QTStrategy.describe = describe;
+            QTStrategy.isrun = isrun;
+            QTStrategy.states = states;
+            QTStrategy.strategyinfo = strategyinfo;
             var resultModel = new QTStrategyViewModel
             {
-                qtstrategy = QTStrategyStru
+                qtstrategy = QTStrategy
             };
             return View(resultModel);
         }
@@ -78,10 +105,10 @@ namespace WebConsole.Controllers
         /// </summary>
         /// <param name="page"></param>
         /// <param name="limit"></param>
-        /// <param name="username"></param>
-        /// <param name="sex"></param>
-        /// <param name="tel"></param>
-        /// <param name="addr"></param>
+        /// <param name="strategyname"></param>
+        /// <param name="strategynumber"></param>
+        /// <param name="strategypath"></param>
+        /// <param name="creattime"></param>
         /// <param name="states"></param>
         /// <returns></returns>
         public string GetJsonData(string page, string limit, string strategyname, string strategynumber, string strategypath, string creattime, string states)
@@ -109,25 +136,34 @@ namespace WebConsole.Controllers
         }
 
 
-
         /// <summary>
-        /// 修改数据，Edit/Update
+        /// 触发修改数据function，Edit/Update
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="sex"></param>
-        /// <param name="tel"></param>
-        /// <param name="addr"></param>
-        /// <param name="Static"></param>
+        /// <param name="id"></param>
+        /// <param name="strategyname"></param>
+        /// <param name="strategynumber"></param>
+        /// <param name="strategypath"></param>
+        /// <param name="strategytype"></param>
+        /// <param name="strategyinfo"></param>
+        /// <param name="creattime"></param>
+        /// <param name="states"></param>
+        /// <param name="remark"></param>
+        /// <param name="describe"></param>
+        /// <param name="isrun"></param>
         /// <returns></returns>
-        public bool Update(string id, string strategyname, string strategynumber, string strategypath, string creattime, string states)
+        public bool Update(string id, string strategyname, string strategynumber, string strategypath, string strategytype, string strategyinfo, string states, string remark, string describe, string isrun)
         {
             QTStrategyStru QTStrategy = new QTStrategyStru();
             QTStrategy.strategyname = strategyname;
             QTStrategy.strategynumber = strategynumber;
             QTStrategy.strategypath = strategypath;
-            QTStrategy.creattime = creattime;
+            QTStrategy.strategytype = strategytype;
             QTStrategy.states = states;
+            QTStrategy.remark = remark;
+            QTStrategy.describe = describe;
+            QTStrategy.isrun = isrun;
             QTStrategy.states = states;
+            QTStrategy.strategyinfo = strategyinfo;
             QTStrategyViewModel dataInfo = new QTStrategyViewModel();
 
             if (dataInfo.UpdateData(_appConf, QTStrategy))
@@ -137,7 +173,7 @@ namespace WebConsole.Controllers
         }
 
         /// <summary>
-        /// 删除数据，delete
+        /// 触发删除数据function，delete
         /// </summary>
         /// <param name="id"></param>
         /// <param name="username"></param>
@@ -156,7 +192,7 @@ namespace WebConsole.Controllers
         }
 
         /// <summary>
-        /// 批量删除数据，delete
+        /// 触发批量删除数据function，delete
         /// </summary>
         /// <param name="id"></param>
         /// <param name="username"></param>

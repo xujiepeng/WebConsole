@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using WebConsole.Models.Model;
 using WebConsole.Models.Model.Conf;
 
-namespace WebConsole.Models.Model
+namespace WebConsole.Models
 {
     public class QTStrategyViewModel
     {
@@ -52,6 +53,7 @@ namespace WebConsole.Models.Model
                 obj.remark = item["remark"].ToString();
                 obj.states = item["states"].ToString();
                 obj.isrun = item["isrun"].ToString();
+                obj.strategyinfo = item["strategyinfo"].ToString();
                 obj.strategytype = item["strategytype"].ToString(); 
                 DataList.Add(obj);
             }
@@ -71,14 +73,15 @@ namespace WebConsole.Models.Model
 
         /// <summary>
         /// 新增数据
+        /// 第一次新增时确定创建时间和路径，今后不可修改
         /// </summary>
         /// <returns></returns>
         public bool AddData(CommConf options, QTStrategyStru objstru)
         {
             string errorMsg;
             SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
-            string str = string.Format("insert into MemberList_Dynamic (strategyname,describe,states,remark,creattime) values('{0}','{1}','{2}','{3}','{4}')", 
-                objstru.strategyname, objstru.describe, objstru.states, objstru.remark, objstru.creattime);
+            string str = string.Format("insert into QTStrategy (strategyname,strategynumber,strategyinfo,strategytype,strategypath,describe,states,remark,creattime,isrun) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')", 
+                objstru.strategyname, objstru.strategynumber, objstru.strategyinfo, objstru.strategytype, objstru.strategypath, objstru.describe, objstru.states, objstru.remark, objstru.creattime, objstru.isrun);
             int count = conn.Execute(str, out errorMsg);
             if (count > 0)
             {
@@ -92,14 +95,15 @@ namespace WebConsole.Models.Model
 
         /// <summary>
         /// 编辑数据
+        /// 不允许编辑创建时间和路径
         /// </summary>
         /// <returns></returns>
         public bool UpdateData(CommConf options, QTStrategyStru objstru)
         {
             string errorMsg;
             SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
-            string str = string.Format("update QTStrategy set strategyname = '{0}', describe = '{1}', states = '{2}', remark = '{3}' where id='{4}'", 
-                objstru.strategyname, objstru.describe, objstru.states, objstru.remark, objstru.id);
+            string str = string.Format("update QTStrategy set strategyname = '{0}', describe = '{1}', states = '{2}', remark = '{3}', strategyinfo = '{4}', strategytype = '{5}', isrun = '{6}' where strategynumber='{7}'", 
+                objstru.strategyname, objstru.describe, objstru.states, objstru.remark, objstru.strategyinfo, objstru.strategytype, objstru.isrun, objstru.strategynumber);
             int count = conn.Execute(str, out errorMsg);
             if (count > 0)
             {

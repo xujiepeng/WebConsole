@@ -84,5 +84,13 @@ namespace WebConsole.Models.Model
             get;
             set;
         }
+        /// <summary>
+        /// 策略内容
+        /// </summary>
+        public string strategyinfo
+        {
+            get;
+            set;
+        }
     }
 }

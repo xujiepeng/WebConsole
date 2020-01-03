@@ -25,18 +25,12 @@
     <div class="layui-fluid">
         <div class="layui-row">
             <form class="layui-form">
-                <input type="hidden" id="strategynumber" name="strategynumber" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="@Model.qtstrategy.strategynumber">
-                <input type="hidden" id="id" name="id" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="@Model.qtstrategy.id">
-                <input type="hidden" id="id" name="id" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="@Model.qtstrategy.strategypath">
                 <div class="layui-form-item">
                     <label for="L_email" class="layui-form-label">
                         <span class="x-red">*</span>策略名
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="strategyname" name="strategyname" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="@Model.qtstrategy.strategyname">
-                    </div>
-                    <div class="layui-form-mid layui-word-aux">
-                        <span class="x-red">*</span>将会成为您唯一的登入名
+                        <input type="text" id="strategyname" name="strategyname" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -44,7 +38,7 @@
                         <span class="x-red">*</span>策略类型
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="strategytype" name="strategytype" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="@Model.qtstrategy.strategytype">
+                        <input type="text" id="strategytype" name="strategytype" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -52,7 +46,7 @@
                         <span class="x-red">*</span>策略描述
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="describe" name="describe" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="@Model.qtstrategy.describe">
+                        <input type="text" id="describe" name="describe" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -60,14 +54,14 @@
                         <span class="x-red">*</span>策略备注
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" id="remark" name="remark" required="" lay-verify="pass" autocomplete="off" class="layui-input" value="@Model.qtstrategy.remark">
+                        <input type="text" id="remark" name="remark" required="" lay-verify="pass" autocomplete="off" class="layui-input" value="">
                     </div>
                     <div class="layui-form-mid layui-word-aux">6到16个字符</div>
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <label for="desc" class="layui-form-label">策略内容</label>
                     <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" id="strategyinfo" name="strategyinfo" class="layui-textarea" style="height:300px">@Model.qtstrategy.strategyinfo</textarea>
+                        <textarea placeholder="请输入内容" id="strategyinfo" name="strategyinfo" class="layui-textarea" style="height:300px !important"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -76,16 +70,8 @@
                     </label>
                     <div class="layui-input-inline">
                         <select name="states" id="states" class="form-control mb-3">
-                            @if (@Model.qtstrategy.states.ToString() == "已启用")
-                            {
-                                <option value="已启用">已启用</option>
-                                <option value="已停用">已停用</option>
-                            }
-                            else
-                            {
-                                <option value="已启用">已启用</option>
-                                <option value="已停用" selected="selected">已停用</option>
-                            }
+                            <option value="已启用">已启用</option>
+                            <option value="已停用" selected="selected">已停用</option>
                         </select>
                     </div>
                 </div>
@@ -95,16 +81,8 @@
                     </label>
                     <div class="layui-input-inline">
                         <select name="isrun" id="isrun" class="form-control mb-3">
-                            @if (@Model.qtstrategy.isrun.ToString() == "运行")
-                            {
-                                <option value="运行">运行</option>
-                                <option value="停止">停止</option>
-                            }
-                            else
-                            {
-                                <option value="运行">运行</option>
-                                <option value="停止" selected="selected">停止</option>
-                            }
+                            <option value="运行">运行</option>
+                            <option value="停止" selected="selected">停止</option>
                         </select>
                     </div>
                 </div>
@@ -112,6 +90,7 @@
                     <label for="L_repass" class="layui-form-label"></label>
                     <button class="layui-btn" lay-filter="add" lay-submit="">保存</button>
                 </div>
+
             </form>
         </div>
     </div>
@@ -121,26 +100,38 @@
                 $ = layui.jquery;
                 var form = layui.form,
                     layer = layui.layer;
-                
+
+                //自定义验证规则
+                //form.verify({
+                //    nikename: function (value) {
+                //        if (value.length < 1) {
+                //            return '昵称至少得5个字符啊';
+                //        }
+                //    },
+                //    pass: [/(.+){1,12}$/, '密码必须6到12位'],
+                //    repass: function (value) {
+                //        if ($('#L_pass').val() == $('#L_repass').val()) {
+                //            return '两次密码不一致';
+                //        }
+                //    }
+                //});
 
                 //监听提交
                 form.on('submit(add)',
                     function (data) {
                         console.log(data);
-                        var id = $("input[name='id']").val()
                         var strategynumber = $("input[name='strategynumber']").val()
                         var strategyname = $("input[name='strategyname']").val()
                         var strategytype = $("input[name='strategytype']").val()
                         var strategyinfo = $("textarea[name='strategyinfo']").val()
-                        var strategypath = $("input[name='strategypath']").val()
                         var describe = $("input[name='describe']").val()
                         var remark = $("input[name='remark']").val()
                         var states = $("select[name='states']").val()
                         var isrun = $("select[name='isrun']").val()
                         $.ajax({
                             type: "POST",
-                            url: "/QTStrategy/Update",
-                            data: { "strategynumber": strategynumber, "strategyname": strategyname, "strategytype": strategytype, "strategypath": strategypath, "describe": describe, "remark": remark, "states": states, "isrun": isrun, "strategyinfo": strategyinfo },
+                            url: "/QTStrategy/Add",
+                            data: { "strategynumber": strategynumber, "strategyname": strategyname, "strategytype": strategytype, "describe": describe, "remark": remark, "states": states, "isrun": isrun, "strategyinfo": strategyinfo },
                             dataType: "text",
                             success: function (data) {
                                 if (data == "false") {
