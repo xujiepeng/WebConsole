@@ -165,12 +165,12 @@ namespace WebConsole.Controllers
             QTStrategy.states = states;
             QTStrategy.strategyinfo = strategyinfo;
             QTStrategyViewModel dataInfo = new QTStrategyViewModel();
-
             if (dataInfo.UpdateData(_appConf, QTStrategy))
                 return true;
             else
                 return false;
         }
+        
 
         /// <summary>
         /// 触发删除数据function，delete

@@ -53,7 +53,7 @@ namespace WebConsole.Models
                 obj.remark = item["remark"].ToString();
                 obj.states = item["states"].ToString();
                 obj.isrun = item["isrun"].ToString();
-                obj.strategyinfo = item["strategyinfo"].ToString();
+                obj.strategyinfo = item["strategyinfo"].ToString().Replace("<br>", "\n");
                 obj.strategytype = item["strategytype"].ToString(); 
                 DataList.Add(obj);
             }
@@ -81,7 +81,7 @@ namespace WebConsole.Models
             string errorMsg;
             SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
             string str = string.Format("insert into QTStrategy (strategyname,strategynumber,strategyinfo,strategytype,strategypath,describe,states,remark,creattime,isrun) values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')", 
-                objstru.strategyname, objstru.strategynumber, objstru.strategyinfo, objstru.strategytype, objstru.strategypath, objstru.describe, objstru.states, objstru.remark, objstru.creattime, objstru.isrun);
+                objstru.strategyname, objstru.strategynumber, Common.Verify.Verify.txt_html_n(objstru.strategyinfo), objstru.strategytype, objstru.strategypath, objstru.describe, objstru.states, objstru.remark, objstru.creattime, objstru.isrun);
             int count = conn.Execute(str, out errorMsg);
             if (count > 0)
             {
@@ -102,8 +102,8 @@ namespace WebConsole.Models
         {
             string errorMsg;
             SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
-            string str = string.Format("update QTStrategy set strategyname = '{0}', describe = '{1}', states = '{2}', remark = '{3}', strategyinfo = '{4}', strategytype = '{5}', isrun = '{6}' where strategynumber='{7}'", 
-                objstru.strategyname, objstru.describe, objstru.states, objstru.remark, objstru.strategyinfo, objstru.strategytype, objstru.isrun, objstru.strategynumber);
+            string str = string.Format("update QTStrategy set strategyname = '{0}', describe = '{1}', states = '{2}', remark = '{3}', strategyinfo = '{4}', strategytype = '{5}', isrun = '{6}' where strategynumber='{7}'",
+                objstru.strategyname, objstru.describe, objstru.states, objstru.remark, objstru.strategyinfo.Replace("\n", "<br>"), objstru.strategytype, objstru.isrun, objstru.strategynumber);
             int count = conn.Execute(str, out errorMsg);
             if (count > 0)
             {

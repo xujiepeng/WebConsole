@@ -142,7 +142,7 @@
                 $.ajax({
                     type: "POST",
                     url: "/PythonIDE/RunContent",
-                    data: { "code": "" },
+                    data: { "code": code },
                     dataType: "json",
                     success: function (data) {
                         alert("暂不支持代码保存，内容如下：" + code);
