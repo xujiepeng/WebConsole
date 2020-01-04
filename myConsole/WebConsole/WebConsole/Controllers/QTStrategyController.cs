@@ -92,7 +92,7 @@ namespace WebConsole.Controllers
             QTStrategy.describe = describe;
             QTStrategy.isrun = isrun;
             QTStrategy.states = states;
-            QTStrategy.strategyinfo = strategyinfo;
+            QTStrategy.strategyinfo = Models.Common.Verify.html_txt_n(strategyinfo);
             var resultModel = new QTStrategyViewModel
             {
                 qtstrategy = QTStrategy
@@ -206,6 +206,19 @@ namespace WebConsole.Controllers
             else
                 return false;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool RunScript()
+        {
+            Models.Common.CallPython.RunStr("print(\"test\")");
+            return true;
+        }
+
+
+
 
         /// <summary>
         /// 后台构造json对象，数据传到前台自动显示
