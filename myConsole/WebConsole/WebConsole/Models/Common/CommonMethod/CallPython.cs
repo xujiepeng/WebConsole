@@ -38,7 +38,7 @@ namespace WebConsole.Models.Common
         }
 
 
-        public static string RunFile1(string path, Dictionary<string,string> paralist)
+        public static string RunFilePara(string path, Dictionary<string,string> paralist)
         {
             path = "E:\\MyGit\\TEST\\CSharpCallPython\\bin\\Debug\\test3.py";
             string para1 = "\"Form C#:\"";

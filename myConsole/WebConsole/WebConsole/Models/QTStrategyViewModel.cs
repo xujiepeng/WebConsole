@@ -16,6 +16,7 @@ namespace WebConsole.Models
         public string msg;
         public string count;
         public QTStrategyStru qtstrategy = new QTStrategyStru();
+        static object Lock = new object();
 
         /// <summary>
         /// 查询数据
@@ -178,40 +179,37 @@ namespace WebConsole.Models
         /// <returns></returns>
         public string RunScript(CommConf options, string wwwrootpath, string id)
         {
-            //获取文件名，获取生成路径
-            //获取正文，转义换行符
-            //生成文件，判断是否成功
-            //执行文件
-            string errorMsg;
-            SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
-            string strsql = string.Format(@"select * from QTStrategy where id = {0}", id);
-            DataTable dt = conn.QueryDt(strsql, out errorMsg);
-            QTStrategyStru obj = new QTStrategyStru();
-            foreach (DataRow item in dt.Rows)
+            try
             {
-                obj.strategyname = item["strategyname"].ToString();
-                obj.strategynumber = item["strategynumber"].ToString();
-                obj.strategypath = item["strategypath"].ToString();
-                obj.strategyinfo = item["strategyinfo"].ToString();
-            }
-            
-            Dictionary<string, string> paralist = new Dictionary<string, string>();
-            string context = Common.Verify.html_txt_n(obj.strategyinfo);
-            //脚本路径
-            string scriptpath = "";// Path.Combine(wwwrootpath, options.AttriList.FirstOrDefault(o => o.key == "ScriptPath").value, obj.strategypath);
-            scriptpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, options.AttriList.FirstOrDefault(o => o.key == "ScriptPath").value, obj.strategypath);
-            //完整路径
-            string path = Path.Combine(scriptpath, obj.strategyname) + ".py";
-            Common.FileHelper.TxtHelper.Write_txt(scriptpath, obj.strategyname + ".py", context);
-            string reslut = path;
-            try {
-                reslut = Common.CallPython.RunFile(path, paralist);
+                string errorMsg;
+                SqliteAccess conn = new SqliteAccess(options.AttriList.FirstOrDefault(o => o.key == "DBLink").value);
+                string strsql = string.Format(@"select * from QTStrategy where id = {0}", id);
+                DataTable dt = conn.QueryDt(strsql, out errorMsg);
+                QTStrategyStru obj = new QTStrategyStru();
+                foreach (DataRow item in dt.Rows)
+                {
+                    obj.strategyname = item["strategyname"].ToString();
+                    obj.strategynumber = item["strategynumber"].ToString();
+                    obj.strategypath = item["strategypath"].ToString();
+                    obj.strategyinfo = item["strategyinfo"].ToString();
+                }
+
+                Dictionary<string, string> paralist = new Dictionary<string, string>();
+                string context = Common.Verify.html_txt_n(obj.strategyinfo);
+                //所在文件夹路径
+                string scriptpath = Path.Combine(wwwrootpath, options.AttriList.FirstOrDefault(o => o.key == "ScriptPath").value, obj.strategypath);
+                //脚本完整路径
+                string path = Path.Combine(scriptpath, obj.strategyname) + ".py";
+                lock (Lock)
+                {
+                    Common.FileHelper.TxtHelper.Write_txt(scriptpath, obj.strategyname + ".py", context);
+                    return Common.CallPython.RunFile(path, paralist);
+                }
             }
             catch(Exception e)
             {
-                reslut += e.ToString();
+                return e.ToString();
             }
-            return reslut;
         }
     }
 }
