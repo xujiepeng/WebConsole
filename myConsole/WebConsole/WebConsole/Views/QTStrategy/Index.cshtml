@@ -129,12 +129,11 @@
                 , { field: 'creattime', title: '创建时间', width: 100 }
                 , { field: 'describe', title: '策略描述' }
                 , { field: 'remark', title: '备注', width: 100 }
-                //, { field: 'states', title: '策略状态', sort: true, width: 105 }
                 , { field: 'isrun', title: '运行否', width: 100 }
                 , { field: 'strategytype', title: '策略类型', sort: true }
                 , {
                     field: '状态', title: '启用否', templet: function (d) {
-                        return d.states == "启用" ? "启用" : "停用";
+                        return d.states == "已启用" ? "已启用" : "已停用";
                     }, width: 100
                 }
                 , { title: '操作', align: 'center', toolbar: '#barDemo1', fixed: 'right', width: 200 }
@@ -235,7 +234,12 @@
                         $.ajax({
                             type: "post",
                             url: "/QTStrategy/RunScript",
-                            data: { "id": data.id, "strategyname": data.strategyname, "strategypath": data.strategypath, "strategyinfo": data.strategyinfo },
+                            data: {
+                                "id": data.id, 
+                                "strategyname": data.strategyname,
+                                "strategypath": data.strategypath,
+                                "strategyinfo": data.strategyinfo
+                            },
                             dataType: "text",
                             success: function (data) {
                                 if (data == "false") {
@@ -244,7 +248,7 @@
                                 }
                                 else {
                                     //界面样式:单条删除效果
-                                    layer.msg(data, { icon: 1, time: 100000 });
+                                    layer.alert(data);
                                 }
                             }
                         });

@@ -512,8 +512,9 @@ table th, table td {
     padding: 0 18px;
     font-size: 14px;
 }
-.x-admin-sm .layui-layer-title,.x-admin-sm .layui-layer-dialog .layui-layer-content{
+.x-admin-sm .layui-layer-title, .x-admin-sm .layui-layer-dialog .layui-layer-content {
     font-size: 12px;
+    white-space: pre-wrap;
 }
 .x-admin-sm .layui-input,.x-admin-sm .layui-select,.x-admin-sm .layui-textarea{
     height: 30px;

@@ -1,2 +1,2 @@
-import sys:
+import sys
 print("110")

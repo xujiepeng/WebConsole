@@ -30,8 +30,6 @@ namespace WebConsole.Models.Common
 
         public static string RunFile(string path, Dictionary<string, string> paralist)
         {
-            string para1 = "\"Form C#:\"";
-            string para2 = "\"Form C++++:\"";
             string strcmd = string.Format("{0}", path);
             string cmdresult = CallCmd.run_cmd("python.exe", strcmd);
             return cmdresult;
@@ -47,6 +45,9 @@ namespace WebConsole.Models.Common
             string cmdresult = CallCmd.run_cmd("python.exe", strcmd);
             return cmdresult;
         }
+
+
         
+
     }
 }

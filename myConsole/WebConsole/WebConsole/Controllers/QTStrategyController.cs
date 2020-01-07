@@ -224,14 +224,7 @@ namespace WebConsole.Controllers
             QTStrategyViewModel dataInfo = new QTStrategyViewModel();
             string reslut = dataInfo.RunScript(_appConf, _webHostEnvironment.WebRootPath, id);
             return Content(reslut);
-            //if (dataInfo.RunScript(_appConf, _webHostEnvironment.WebRootPath, id))
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return true;
-            //}
+
         }
 
 

@@ -131,7 +131,16 @@
                         $.ajax({
                             type: "POST",
                             url: "/QTStrategy/Add",
-                            data: { "strategynumber": strategynumber, "strategyname": strategyname, "strategytype": strategytype, "describe": describe, "remark": remark, "states": states, "isrun": isrun, "strategyinfo": strategyinfo },
+                            data: {
+                                "strategynumber": strategynumber,
+                                "strategyname": strategyname,
+                                "strategytype": strategytype,
+                                "describe": describe,
+                                "remark": remark,
+                                "states": states,
+                                "isrun": isrun,
+                                "strategyinfo": strategyinfo
+                            },
                             dataType: "text",
                             success: function (data) {
                                 if (data == "false") {

@@ -140,7 +140,17 @@
                         $.ajax({
                             type: "POST",
                             url: "/QTStrategy/Update",
-                            data: { "strategynumber": strategynumber, "strategyname": strategyname, "strategytype": strategytype, "strategypath": strategypath, "describe": describe, "remark": remark, "states": states, "isrun": isrun, "strategyinfo": strategyinfo },
+                            data: {
+                                "strategynumber": strategynumber,
+                                "strategyname": strategyname,
+                                "strategytype": strategytype,
+                                "strategypath": strategypath,
+                                "describe": describe,
+                                "remark": remark,
+                                "states": states,
+                                "isrun": isrun,
+                                "strategyinfo": strategyinfo
+                            },
                             dataType: "text",
                             success: function (data) {
                                 if (data == "false") {
@@ -160,15 +170,13 @@
                                             //xadmin.father_reload();
                                             // 局部刷线表格
                                             parent.window.layui.table.reload('demo1');
-
-
                                      });
                                 }
                             }
                         });
                         return false;
                     });
-            });</script>
-
+            });
+    </script>
 </body>
 </html>
