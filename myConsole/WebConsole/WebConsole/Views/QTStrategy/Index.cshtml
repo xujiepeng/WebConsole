@@ -74,24 +74,24 @@
                     </div>
 
                     <!--表1，从controller获取数据，适用于简单表格-->
-                    <div class="layui-card-body ">
-                        <table class="layui-table" lay-data="{url:'/MemberList_Dynamic/GetData',page:true,toolbar: '#toolbarDemo',id:'test',limit:10,}" lay-filter="test">
-                            <thead>
-                                <tr>
-                                    <th lay-data="{type:'checkbox'}">123</th>
-                                    <th lay-data="{field:'id', width:80, sort: true}">ID</th>
-                                    <th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>
-                                    <th lay-data="{field:'sex',  minWidth: 150,templet: '#switchTpl'}">性别</th>
-                                    <th lay-data="{field:'city', width:80,edit: 'text',}">城市</th>
-                                    <th lay-data="{field:'sign', edit: 'text', minWidth: 100}">签名</th>
-                                    <th lay-data="{field:'experience', sort: true, edit: 'text'}">积分</th>
-                                    <th lay-data="{field:'score', sort: true, edit: 'text'}">评分</th>
-                                    <th lay-data="{field:'classify', sort: true, edit: 'text'}">职业</th>
-                                    <th lay-data="{field:'wealth', sort: true, edit: 'text'}">财产</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                    @*<div class="layui-card-body ">
+                            <table class="layui-table" lay-data="{url:'/MemberList_Dynamic/GetData',page:true,toolbar: '#toolbarDemo',id:'test',limit:10,}" lay-filter="test">
+                                <thead>
+                                    <tr>
+                                        <th lay-data="{type:'checkbox'}">123</th>
+                                        <th lay-data="{field:'id', width:80, sort: true}">ID</th>
+                                        <th lay-data="{field:'username', width:120, sort: true, edit: 'text'}">用户名</th>
+                                        <th lay-data="{field:'sex',  minWidth: 150,templet: '#switchTpl'}">性别</th>
+                                        <th lay-data="{field:'city', width:80,edit: 'text',}">城市</th>
+                                        <th lay-data="{field:'sign', edit: 'text', minWidth: 100}">签名</th>
+                                        <th lay-data="{field:'experience', sort: true, edit: 'text'}">积分</th>
+                                        <th lay-data="{field:'score', sort: true, edit: 'text'}">评分</th>
+                                        <th lay-data="{field:'classify', sort: true, edit: 'text'}">职业</th>
+                                        <th lay-data="{field:'wealth', sort: true, edit: 'text'}">财产</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>*@
 
                 </div>
             </div>
@@ -102,10 +102,7 @@
 
 
 
-<script type="text/html" id="switchTpl">
-    <!-- 这里的checked的状态只是演示 -->
-    <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked': ''}}>
-</script>
+
 
 <!-- 展示 -->
 <script>
@@ -126,7 +123,7 @@
             , cols: [[ //表头
                 //{ type: 'numbers', fixed: 'left', title: '序号' },
                 { type: 'checkbox', fixed: 'left' }
-                , { field: 'id', title: 'ID', sort: true, fixed: 'left'}
+                , { field: 'id', title: 'ID', sort: true, fixed: 'left' }
                 , { field: 'strategyname', title: '策略名' }
                 , { field: 'strategypath', title: '策略路径', sort: true, width: 100 }
                 , { field: 'creattime', title: '创建时间', width: 100 }
@@ -213,6 +210,7 @@
             var table = layui.table;
             //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             table.on('tool(test1)', function (obj) {
+                debugger;                
                 var data = obj.data; //获得当前行数据
                 var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
                 var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
@@ -221,7 +219,7 @@
                     + "&strategyname=" + data.strategyname
                     + "&strategypath=" + data.strategypath
                     + "&strategynumber=" + data.strategynumber
-                    + "&strategyinfo=" + data.strategyinfo
+                    + "&strategyinfo=" + encodeURIComponent(data.strategyinfo)
                     + "&creattime=" + data.creattime
                     + "&describe=" + data.describe
                     + "&isrun=" + data.isrun
@@ -229,10 +227,29 @@
                     + "&describe=" + data.describe
                     + "&strategytype=" + data.strategytype
                     + "&states=" + data.states;
-                if (layEvent === 'run') { //查看按钮
-
-
+                if (layEvent === 'run') { //运行按钮
                     layer.alert('开始运行');
+                    layer.confirm('真的运行么', function (index) {
+
+                        //向服务端发送删除指令
+                        $.ajax({
+                            type: "post",
+                            url: "/QTStrategy/RunScript",
+                            data: { "id": data.id, "strategyname": data.strategyname, "strategypath": data.strategypath, "strategyinfo": data.strategyinfo },
+                            dataType: "text",
+                            success: function (data) {
+                                if (data == "false") {
+                                    layer.alert("删除失败或数据不存在", { icon: 5 })
+                                    return false;
+                                }
+                                else {
+                                    //界面样式:单条删除效果
+                                    layer.msg(data, { icon: 1, time: 100000 });
+                                }
+                            }
+                        });
+
+                    });
 
 
                     //xadmin.open('编辑', 'MemberEdit/?' + str, 600, 400)
@@ -240,7 +257,6 @@
                     layer.confirm('真的删除行么', function (index) {
                         obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                         //layer.close(index);
-                        debugger;
                         //向服务端发送删除指令
 
                         $.ajax({
@@ -374,7 +390,7 @@
         });
 </script>
 
-<script>
+@*<script>
     layui.use('table',
         function () {
             var table = layui.table;
@@ -407,4 +423,11 @@
                     };
                 });
         });
-</script>
+</script>*@
+
+
+
+@*<script type="text/html" id="switchTpl">
+        这里的checked的状态只是演示
+    <input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id == 10003 ? 'checked': ''}}>
+</script>*@

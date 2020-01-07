@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+/// <summary>
+/// 数据验证方法
+/// </summary>
 namespace WebConsole.Models.Common
 {
     public class Verify
@@ -14,17 +17,31 @@ namespace WebConsole.Models.Common
         /// <returns></returns>
         public static string html_txt_rn(string txt)
         {
-            return txt.Replace("<br>", "\r\n");
+            if (string.IsNullOrEmpty(txt))
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return txt.Replace("<br>", "\r\n");
+            }
         }
 
         /// <summary>
-        /// \n转换成<br>
+        /// 文本中的\n转换成<br>
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
         public static string txt_html_n(string txt)
         {
-            return txt.Replace("\n", "<br>");
+            if (string.IsNullOrEmpty(txt))
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return txt.Replace("\n", "<br>");
+            }
         }
 
         /// <summary>
@@ -34,17 +51,32 @@ namespace WebConsole.Models.Common
         /// <returns></returns>
         public static string txt_html_rn(string txt)
         {
-            return txt.Replace("\r\n", "<br>");
+            if (string.IsNullOrEmpty(txt))
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return txt.Replace("\r\n", "<br>");
+            }
         }
 
         /// <summary>
-        /// \r\n转换成<br>
+        /// 文本中的<br>转换成\n
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
         public static string html_txt_n(string txt)
         {
-            return txt.Replace("<br>", "\n");
+            if (string.IsNullOrEmpty(txt))
+            {
+                return string.Empty;
+            }
+            else
+            {
+                return txt.Replace("<br>", "\n");
+            }
         }
+        
     }
 }

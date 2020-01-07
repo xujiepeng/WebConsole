@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+/// <summary>
+/// 执行Cmd方法
+/// </summary>
 namespace WebConsole.Models.Common
 {
     public class CallCmd

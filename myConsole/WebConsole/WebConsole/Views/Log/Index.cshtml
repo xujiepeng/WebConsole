@@ -44,9 +44,13 @@
                                 <div class="layui-timeline-content layui-text">
                                     <h3 class="layui-timeline-title">2019-03-30</h3>
                                     <p>
-                                        修改 x_admin_show 弹出窗口实现最大化，默认窗口非最大化，如果需要弹出窗口最大化，在最后一个参数传 true <br>
-                                        修复x_admin_add_to_tab 函数bug，在多个页面切换过程的报错。<br>
-                                        x_admin_show(title,url,w,h,full=false)
+                                        `1.可以查看策略，策略存储在数据库字段中，使用相对路径<br>
+                                        `2.策略保存路径规则  创建时间/策略编号（guid）  路径，编号一次生成不再变化<br>
+                                        `3.编辑：策略名称，备注，描述，类型，启用<br>
+                                        `4.不可编辑：路径，策略编号，创建时间<br>
+                                        5.添加策略：单独跳转页面添加策略<br>
+                                        6.每次运行时，从数据库取出文本，生成一个guid-py文件（路径在数据库中），执行这个py文件<br>
+                                        7.文件生成在固定的文件夹中，文件生成路径在数据库中，每次先删掉历史文件，再新建
                                     </p>
                                 </div>
                             </li>
@@ -65,16 +69,23 @@
                             <li class="layui-timeline-item">
                                 <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                                 <div class="layui-timeline-content layui-text">
-                                    <h3 class="layui-timeline-title">2019-03-07</h3>
+                                    <h3 class="layui-timeline-title">2020-01-06</h3>
                                     <p>
-                                        是否开启刷新记忆tab功能, 通过index 页面增加 var is_remember = false;不增加默认开启
+                                        `1.可以查看策略，策略存储在数据库字段中，使用相对路径<br>
+                                        `2.策略保存路径规则  创建时间/策略编号（guid）  路径，编号一次生成不再变化<br>
+                                        `3.编辑：策略名称，备注，描述，类型，启用<br>
+                                        `4.不可编辑：路径，策略编号，创建时间<br>
+                                        5.添加策略：单独跳转页面添加策略<br>
+                                        6.每次运行时，从数据库取出文本，生成一个guid-py文件（路径在数据库中），执行这个py文件<br>
+                                        7.文件生成在固定的文件夹中，文件生成路径在数据库中，每次先删掉历史文件，再新建<br>
+                                        页面地址：http://47.102.119.31:5000/QTStrategy/index
                                     </p>
                                 </div>
                             </li>
                             <li class="layui-timeline-item">
                                 <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                                 <div class="layui-timeline-content layui-text">
-                                    <h3 class="layui-timeline-title">2019-03-07</h3>
+                                    <h3 class="layui-timeline-title">2019-12-07</h3>
                                     <p>
                                         上线PythonIDE页面，可以在页面编程<br>
                                         包含两种执行方式：<br>
@@ -86,7 +97,7 @@
                             <li class="layui-timeline-item">
                                 <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                                 <div class="layui-timeline-content layui-text">
-                                    <h3 class="layui-timeline-title">2019-03-07</h3>
+                                    <h3 class="layui-timeline-title">2019-11-020</h3>
                                     <p>
                                         上线股票分时图页面<br>
                                         测试地址：http://47.102.119.31:5000/Event/Index <br>点解链接可以进行测试<br>

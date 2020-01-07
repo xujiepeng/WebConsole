@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+/// <summary>
+/// 调用Python方法
+/// </summary>
 namespace WebConsole.Models.Common
 {
     public class CallPython
@@ -25,10 +28,19 @@ namespace WebConsole.Models.Common
             return result;
         }
 
-
-        public static string RunFile()
+        public static string RunFile(string path, Dictionary<string, string> paralist)
         {
-            string path = "E:\\MyGit\\TEST\\CSharpCallPython\\bin\\Debug\\test3.py";
+            string para1 = "\"Form C#:\"";
+            string para2 = "\"Form C++++:\"";
+            string strcmd = string.Format("{0}", path);
+            string cmdresult = CallCmd.run_cmd("python.exe", strcmd);
+            return cmdresult;
+        }
+
+
+        public static string RunFile1(string path, Dictionary<string,string> paralist)
+        {
+            path = "E:\\MyGit\\TEST\\CSharpCallPython\\bin\\Debug\\test3.py";
             string para1 = "\"Form C#:\"";
             string para2 = "\"Form C++++:\"";
             string strcmd = string.Format("{0} {1} {2}", path, para1, para2);

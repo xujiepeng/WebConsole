@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -14,7 +16,8 @@ namespace WebConsole.Controllers
     {
 
         private readonly CommConf _appConf;
-        public QTStrategyController(IOptions<CommConf> options)        {            _appConf = options.Value;        }
+        private readonly IHostingEnvironment _webHostEnvironment;
+        public QTStrategyController(IOptions<CommConf> options, IHostingEnvironment webHostEnvironment)        {            _appConf = options.Value;            _webHostEnvironment = webHostEnvironment;        }
 
         public IActionResult Index()
         {
@@ -111,7 +114,7 @@ namespace WebConsole.Controllers
         /// <param name="creattime"></param>
         /// <param name="states"></param>
         /// <returns></returns>
-        public string GetJsonData(string page, string limit, string strategyname, string strategynumber, string strategypath, string creattime, string states)
+        public IActionResult GetJsonData(string page, string limit, string strategyname, string strategynumber, string strategypath, string creattime, string states)
         {
             Dictionary<string, string> para = new Dictionary<string, string>();
             para.Add("page", page);
@@ -132,7 +135,12 @@ namespace WebConsole.Controllers
                 count = count
             };
             string jsonData = JsonConvert.SerializeObject(resultModel);
-            return jsonData;
+            return Content(jsonData);
+            //return BadRequest();
+            //StatusCode(401);
+            //return Ok();
+            //PartialView();
+            //return jsonData;
         }
 
 
@@ -206,15 +214,24 @@ namespace WebConsole.Controllers
             else
                 return false;
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool RunScript()
+        public IActionResult RunScript(string id, string strategyname, string strategynumber, string strategypath, string strategytype, string strategyinfo, string states, string remark, string describe, string isrun)
         {
-            Models.Common.CallPython.RunStr("print(\"test\")");
-            return true;
+            QTStrategyViewModel dataInfo = new QTStrategyViewModel();
+            string reslut = dataInfo.RunScript(_appConf, _webHostEnvironment.WebRootPath, id);
+            return Content(reslut);
+            //if (dataInfo.RunScript(_appConf, _webHostEnvironment.WebRootPath, id))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return true;
+            //}
         }
 
 
