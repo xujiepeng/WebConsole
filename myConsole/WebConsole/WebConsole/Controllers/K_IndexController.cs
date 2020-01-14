@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WebConsole.Models;
 using WebConsole.Models.Common.HttpHelper;
 
@@ -19,6 +20,12 @@ namespace WebConsole.Controllers
         {
             K_IndexViewModel dataInfo = new K_IndexViewModel();
             return dataInfo.GetData(stockcode, stockname);
+        }
+
+        public IActionResult DrawEchart_K()
+        {
+            K_IndexViewModel dataInfo = new K_IndexViewModel();
+            return Content(JsonConvert.SerializeObject(dataInfo.GetSingleStock()));
         }
     }
 }

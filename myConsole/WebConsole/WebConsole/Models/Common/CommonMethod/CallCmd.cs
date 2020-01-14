@@ -41,72 +41,8 @@ namespace WebConsole.Models.Common
             }
         }
 
-        /// <summary>
-        /// 调用cmd命令
-        /// </summary>
-        /// <param name="program"></param>
-        /// <param name="cmd"></param>
-        /// <returns></returns>
-        public static string run_cmd1(string program, string cmd)
-        {
-            Process p = new Process();
-            string output = string.Empty;
-            try
-            {
-                p.StartInfo.FileName = "python"; //这样来调用python，需要将python加入Path环境变量内
-                p.StartInfo.Arguments = "tmp.py";
-                p.StartInfo.UseShellExecute = false;        //是否使用操作系统shell启动
-                p.StartInfo.RedirectStandardInput = true;   //接受来自调用程序的输入信息
-                p.StartInfo.RedirectStandardOutput = true;  //由调用程序获取输出信息
-                p.StartInfo.RedirectStandardError = true;   //重定向标准错误输出
-                p.StartInfo.CreateNoWindow = true;          //不显示程序窗口
-                p.Start();//启动程序
-                p.StandardInput.AutoFlush = true;
-                //获取输出信息
-                output = p.StandardOutput.ReadToEnd();
-                p.WaitForExit();//等待程序执行完退出进程
-                return output;
-            }
-            catch(Exception e)
-            {
-                return e.ToString();
-            }
-            finally
-            {
-                p.Close();
-            }
-        }
+      
 
-        public static void RunPythonScript(string name, List<string> args)
-        {
-            name = "CallPythonExam.py";
-            List<string> param = new List<string>() { "3", "5", "1" };
-
-            Process p = new Process();
-            // .py文件的绝对路径
-            string path = @"D:\PythonPrograms\VelocityProfile\VelocityProfile\" + name;
-            string arguments = path;
-            // 添加参数
-            foreach (var item in args)
-                arguments += " " + item;
-            // python安装路径
-            p.StartInfo.FileName = @"C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64\python.exe";
-
-            
-            p.StartInfo.Arguments = arguments;
-            // 不启用shell启动进程
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.RedirectStandardOutput = true;
-            p.StartInfo.RedirectStandardInput = true;
-            p.StartInfo.RedirectStandardError = true;
-            // 不创建新窗口
-            p.StartInfo.CreateNoWindow = true;
-            p.Start();
-            StreamReader sr = p.StandardOutput;
-            while (!sr.EndOfStream)
-                Console.WriteLine(sr.ReadLine());
-            Console.ReadLine();
-            p.WaitForExit();
-        }
+        
     }
 }
