@@ -1,0 +1,363 @@
+﻿@{
+}
+<!doctype html>
+<html class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>我的控制台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="~/css/font.css">
+    <link rel="stylesheet" href="~/css/xadmin.css">
+    <meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script src="~/js/echarts.js"></script>
+    <script type="text/javascript" src="~/js/jquery.min.js"></script>
+
+
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body ">
+                        <blockquote class="layui-elem-quote">
+                            本页面使用了 HighCharts 和 ECharts 的图表组件的功能。
+                        </blockquote>
+                        <!-- ajax搜索 -->
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="begindate">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="enddate">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" id="stockcode" name="stockcode" placeholder="请输入股票代码" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <input type="text" id="stockname" name="stockname" placeholder="请输入股票名称" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            <button class="layui-btn" id="sreach_btn" lay-submit="" lay-filter="sreach">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
+                        </div>
+
+
+                        <!-- 为 Highcharts 准备一个具备大小（宽高）的 DOM -->
+                        <div id="main1" style="width: 100%;height:600px;"></div>
+                        <div id="main3" style="width: 100%;height:200px;"></div>
+                        <blockquote class="layui-elem-quote">
+                            注意：本案例的HighCharts图表库由cdn引入，需要在线才能正常使用，如想离线，请至HighCharts官网下载。
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //刷新页面初始化
+        window.onload = function () {
+            //画折线图
+            K_Line();
+            //画BLJJ
+            BLJJ();
+        }
+
+        //点击搜索搜索功能
+        $('#sreach_btn').on('click', function () {
+            K_Line();
+            BLJJ();
+
+        });
+
+        //从后台获取实时数据，画价格图
+        function K_Line() {
+            var stockcode = $('#stockcode').val();
+            var stockname = $('#stockname').val();
+            $.ajax({
+                type: "POST",
+                url: "/K_Stock/DrawEchart_K",
+                data: { "stockcode": stockcode, "stockname": stockname },
+                dataType: "json",
+                success: function (data) {
+                    DrawK(data);
+                }
+            });
+        }
+
+        //从后台获取实时数据，画成交量图
+        function BLJJ() {
+            var stockcode = $('#stockcode').val();
+            var stockname = $('#stockname').val();
+            $.ajax({
+                type: "POST",
+                url: "/K_Stock/getdata",
+                data: { "stockcode": stockcode, "stockname": stockname },
+                dataType: "json",
+                success: function (data) {
+                    DrawBLJJ(data);
+                }
+            });
+        }
+    </script>
+    <script>
+        function DrawK(data) {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main1'));
+
+            // 指定图表的配置项和数据
+            var data0 = splitData(data);
+            // 数据：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
+            //var data0 = splitData([
+            //    ['2013/1/24', '2320.26', '2320.26', '2287.3', '2362.94'],
+            //    ['2013/6/13', '2190.1', '2148.35', '2126.22', '2190.1']
+            //]);
+            function splitData(rawData) {
+                var categoryData = [];
+                var values = []
+                for (var i = 0; i < rawData.length; i++) {
+                    categoryData.push(rawData[i].splice(0, 1)[0]);
+                    values.push(rawData[i])
+                }
+                return {
+                    categoryData: categoryData,
+                    values: values
+                };
+            }
+
+            function calculateMA(dayCount) {
+                var result = [];
+                for (var i = 0, len = data0.values.length; i < len; i++) {
+                    if (i < dayCount) {
+                        result.push('-');
+                        continue;
+                    }
+                    var sum = 0;
+                    for (var j = 0; j < dayCount; j++) {
+                        sum += parseFloat(data0.values[i - j][1]);
+                    }
+                    result.push(sum / dayCount);
+                }
+                return result;
+            }
+
+            option = {
+                title: {
+                    text: '上证指数',
+                    left: 0
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'line'
+                    }
+                },
+                legend: {
+                    data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
+                },
+                grid: {
+                    left: '5%',
+                    right: '10%',
+                    bottom: '15%'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: data0.categoryData,
+                    scale: true,
+                    boundaryGap: false,
+                    axisLine: { onZero: false },
+                    splitLine: { show: false },
+                    splitNumber: 20,
+                    min: 'dataMin',
+                    max: 'dataMax'
+                },
+                yAxis: {
+                    scale: true,
+                    splitArea: {
+                        show: true
+                    }
+                },
+                dataZoom: [//数据起始位置
+                    {
+                        type: 'inside',
+                        start: 0,//数据起始位置
+                        end: 100
+                    },
+                    {
+                        show: true,
+                        type: 'slider',
+                        y: '90%',
+                        start: 50,
+                        end: 100
+                    }
+                ],
+                series: [
+                    {
+                        name: '日K',
+                        type: 'candlestick',
+                        data: data0.values,
+                        markPoint: {
+                            label: {
+                                normal: {
+                                    formatter: function (param) {
+                                        return param != null ? Math.round(param.value) : '';
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                formatter: function (param) {
+                                    return param.name + '<br>' + (param.data.coord || '');
+                                }
+                            }
+                        },
+                        markLine: {
+                            symbol: ['none', 'none'],
+                            data: [
+                                [
+                                    {
+                                        name: 'from lowest to highest',
+                                        type: 'min',
+                                        valueDim: 'lowest',
+                                        symbol: 'circle',
+                                        symbolSize: 10,
+                                        label: {
+                                            normal: { show: false },
+                                            emphasis: { show: false }
+                                        }
+                                    },
+                                    {
+                                        type: 'max',
+                                        valueDim: 'highest',
+                                        symbol: 'circle',
+                                        symbolSize: 10,
+                                        label: {
+                                            normal: { show: false },
+                                            emphasis: { show: false }
+                                        }
+                                    }
+                                ],
+                                {
+                                    name: 'min line on close',
+                                    type: 'min',
+                                    valueDim: 'close'
+                                },
+                                {
+                                    name: 'max line on close',
+                                    type: 'max',
+                                    valueDim: 'close'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'MA5',
+                        type: 'line',
+                        data: calculateMA(5),
+                        smooth: true,
+                        lineStyle: {
+                            normal: { opacity: 0.5 }
+                        }
+                    },
+                    {
+                        name: 'MA10',
+                        type: 'line',
+                        data: calculateMA(10),
+                        smooth: true,
+                        lineStyle: {
+                            normal: { opacity: 0.5 }
+                        }
+                    },
+                    {
+                        name: 'MA20',
+                        type: 'line',
+                        data: calculateMA(20),
+                        smooth: true,
+                        lineStyle: {
+                            normal: { opacity: 0.5 }
+                        }
+                    },
+                    {
+                        name: 'MA30',
+                        type: 'line',
+                        data: calculateMA(30),
+                        smooth: true,
+                        lineStyle: {
+                            normal: { opacity: 0.5 }
+                        }
+                    },
+
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+
+        }
+
+    </script>
+        
+
+
+    <!-- 用Echart画捕捞季节 -->
+    <script type="text/javascript">
+        
+        function DrawBLJJ(data) {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main3'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: '捕捞季节'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: ['D', 'K']
+                },
+                grid: {
+                    left: '5%',
+                    right: '10%',
+                    bottom: '1%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: data[2]
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: 'D',
+                        type: 'line',
+                        data: data[0]
+                    },
+                    {
+                        name: 'K',
+                        type: 'line',
+                        data: data[1]
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+
+
+
+    </script>
+</body>
+</html>

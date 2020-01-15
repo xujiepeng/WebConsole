@@ -50,10 +50,10 @@
                             <input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="enddate">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
-                            <input type="text" id="stockcode" name="username" placeholder="请输入股票代码" autocomplete="off" class="layui-input">
+                            <input type="text" id="stockcode" name="stockcode" placeholder="请输入股票代码" autocomplete="off" class="layui-input">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
-                            <input type="text" id="stockname" name="username" placeholder="请输入股票名称" autocomplete="off" class="layui-input">
+                            <input type="text" id="stockname" name="stockname" placeholder="请输入股票名称" autocomplete="off" class="layui-input">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
                             <button class="layui-btn" id="sreach_s" lay-submit="" lay-filter="sreach">
@@ -66,7 +66,7 @@
                         <div id="container2" style="min-width: 310px; height: 800px; margin: 0 auto"></div>
                         <div id="main1" style="width: 100%;height:600px;"></div>
                         <div id="main2" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
-                        <div id="main3" style="width: 100%;height:300px;"></div>
+                        <div id="main3" style="width: 100%;height:200px;"></div>
                         <blockquote class="layui-elem-quote">
                             注意：本案例的HighCharts图表库由cdn引入，需要在线才能正常使用，如想离线，请至HighCharts官网下载。
                         </blockquote>
@@ -453,7 +453,7 @@
                             data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
                         },
                         grid: {
-                            left: '10%',
+                            left: '5%',
                             right: '10%',
                             bottom: '15%'
                         },
@@ -474,10 +474,10 @@
                                 show: true
                             }
                         },
-                        dataZoom: [
+                        dataZoom: [//数据起始位置
                             {
                                 type: 'inside',
-                                start: 0,
+                                start: 0,//数据起始位置
                                 end: 100
                             },
                             {
@@ -501,31 +501,31 @@
                                             }
                                         }
                                     },
-                                    data: [
-                                        {
-                                            name: 'XX标点',
-                                            coord: ['2013/5/31', 2300],
-                                            value: 2300,
-                                            itemStyle: {
-                                                normal: { color: 'rgb(41,60,85)' }
-                                            }
-                                        },
-                                        {
-                                            name: 'highest value',
-                                            type: 'max',
-                                            valueDim: 'highest'
-                                        },
-                                        {
-                                            name: 'lowest value',
-                                            type: 'min',
-                                            valueDim: 'lowest'
-                                        },
-                                        {
-                                            name: 'average value on close',
-                                            type: 'average',
-                                            valueDim: 'close'
-                                        }
-                                    ],
+                                    //data: [
+                                    //    {
+                                    //        name: 'XX标点',
+                                    //        coord: ['2013/5/31', 2300],
+                                    //        value: 2300,
+                                    //        itemStyle: {
+                                    //            normal: { color: 'rgb(41,60,85)' }
+                                    //        }
+                                    //    },
+                                    //    {
+                                    //        name: 'highest value',
+                                    //        type: 'max',
+                                    //        valueDim: 'highest'
+                                    //    },
+                                    //    {
+                                    //        name: 'lowest value',
+                                    //        type: 'min',
+                                    //        valueDim: 'lowest'
+                                    //    },
+                                    //    {
+                                    //        name: 'average value on close',
+                                    //        type: 'average',
+                                    //        valueDim: 'close'
+                                    //    }
+                                    //],
                                     tooltip: {
                                         formatter: function (param) {
                                             return param.name + '<br>' + (param.data.coord || '');
@@ -666,9 +666,6 @@
                             {
                                 name: 'efghi',
                                 data: data[1]
-                            }, {
-                                name: 'Sales & Distribution',
-                                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                             }
                         ],
 
@@ -727,9 +724,9 @@
                     data: ['D', 'K']
                 },
                 grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
+                    left: '5%',
+                    right: '10%',
+                    bottom: '1%',
                     containLabel: true
                 },
                 toolbox: {

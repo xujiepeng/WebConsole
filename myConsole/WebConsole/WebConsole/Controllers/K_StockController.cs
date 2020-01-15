@@ -10,7 +10,7 @@ using WebConsole.Models.Model;
 
 namespace WebConsole.Controllers
 {
-    public class K_IndexController : Controller
+    public class K_StockController : Controller
     {
         public IActionResult Index()
         {
@@ -69,7 +69,7 @@ namespace WebConsole.Controllers
             {
                 testValues.Add((2 * item.Value.close + item.Value.high + item.Value.low) / 3);
             }
-            
+
             //J: (VAR2 - REF(VAR2, 1)) / REF(VAR2, 1) * 100
             List<decimal> pre_ema_list = StockFunction.EMA(StockFunction.EMA(StockFunction.EMA(testValues, 3), 3), 3);
             List<decimal> DList = new List<decimal>();
@@ -83,7 +83,7 @@ namespace WebConsole.Controllers
                     decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
                     DList.Add((J1 + J2) / 2);
                     KList.Add(J1);
-                    TList.Add(Convert.ToDecimal(stocklist.Keys.ToList<string>()[stocklist.Count-i-1]));
+                    TList.Add(Convert.ToDecimal(stocklist.Keys.ToList<string>()[stocklist.Count - i - 1]));
                 }
             }
             else
