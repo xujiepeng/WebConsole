@@ -32,7 +32,8 @@
         </div>
     </div>
     <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
-    <script type="text/javascript">// 基于准备好的dom，初始化echarts实例
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
 
         // 指定图表的配置项和数据
@@ -47,10 +48,10 @@
                 subtext: 'From ExcelHome',
                 sublink: 'http://e.weibo.com/1341556070/AjwF2AgQm'
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'axis',
-                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                 }
             },
             grid: {
@@ -58,22 +59,22 @@
                 bottom: 30
             },
             xAxis: {
-                type : 'value',
+                type: 'value',
                 position: 'top',
-                splitLine: {lineStyle:{type:'dashed'}},
+                splitLine: { lineStyle: { type: 'dashed' } },
             },
             yAxis: {
-                type : 'category',
-                axisLine: {show: false},
-                axisLabel: {show: false},
-                axisTick: {show: false},
-                splitLine: {show: false},
-                data : ['ten', 'nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two', 'one']
+                type: 'category',
+                axisLine: { show: false },
+                axisLabel: { show: false },
+                axisTick: { show: false },
+                splitLine: { show: false },
+                data: ['ten', 'nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two', 'one']
             },
-            series : [
+            series: [
                 {
-                    name:'生活费',
-                    type:'bar',
+                    name: '生活费',
+                    type: 'bar',
                     stack: '总量',
                     label: {
                         normal: {
@@ -81,15 +82,15 @@
                             formatter: '{b}'
                         }
                     },
-                    data:[
-                        {value: -0.07, label: labelRight},
-                        {value: -0.09, label: labelRight},
+                    data: [
+                        { value: -0.07, label: labelRight },
+                        { value: -0.09, label: labelRight },
                         0.2, 0.44,
-                        {value: -0.23, label: labelRight},
+                        { value: -0.23, label: labelRight },
                         0.08,
-                        {value: -0.17, label: labelRight},
+                        { value: -0.17, label: labelRight },
                         0.47,
-                        {value: -0.36, label: labelRight},
+                        { value: -0.36, label: labelRight },
                         0.18
                     ]
                 }
@@ -100,12 +101,16 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);</script>
-    <script>var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(hm, s);
-        })();</script>
+
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?680230a4fc50287eddd3846f63d8ecbc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
 </body>
 </html>

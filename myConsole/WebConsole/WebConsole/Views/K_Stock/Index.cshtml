@@ -27,6 +27,7 @@
                         <blockquote class="layui-elem-quote">
                             本页面使用了 HighCharts 和 ECharts 的图表组件的功能。
                         </blockquote>
+
                         <!-- ajax搜索 -->
                         <div class="layui-inline layui-show-xs-block">
                             <input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="begindate">
@@ -40,18 +41,35 @@
                         <div class="layui-inline layui-show-xs-block">
                             <input type="text" id="stockname" name="stockname" placeholder="请输入股票名称" autocomplete="off" class="layui-input">
                         </div>
+                        <div class="layui-inline">
+                            周期：
+                            <select name="optionEvent" id="period" class="form-control mb-3">
+                                <option value="15">最近15天</option>
+                                <option value="30" selected="selected">最近30天</option>
+                                <option value="60">最近60天</option>
+                                <option value="120">最近120天</option>
+                                <option value="250">最近250天</option>
+                            </select>
+                        </div>
+                        <div class="layui-inline layui-show-xs-block">
+                            级别：
+                            <select name="optionEvent" placeholder="级别" id="type" class="form-control mb-3">
+                                <option value="1d" selected="selected">日线</option>
+                                <option value="1w">周线</option>
+                                <option value="1M">月线</option>
+                            </select>
+                        </div>
                         <div class="layui-inline layui-show-xs-block">
                             <button class="layui-btn" id="sreach_btn" lay-submit="" lay-filter="sreach">
                                 <i class="layui-icon">&#xe615;</i>
                             </button>
                         </div>
 
-
                         <!-- 为 Highcharts 准备一个具备大小（宽高）的 DOM -->
                         <div id="main1" style="width: 100%;height:600px;"></div>
-                        <div id="main3" style="width: 100%;height:200px;"></div>
+                        <div id="main3" style="width: 100%;height:300px;"></div>
                         <blockquote class="layui-elem-quote">
-                            注意：本案例的HighCharts图表库由cdn引入，需要在线才能正常使用，如想离线，请至HighCharts官网下载。
+                            注意：本案例的ECharts图表库由cdn引入，需要在线才能正常使用，如想离线，请至HighCharts官网下载。
                         </blockquote>
                     </div>
                 </div>
@@ -59,30 +77,31 @@
         </div>
     </div>
 
-    <script>
+    <script type="text/javascript">
         //刷新页面初始化
         window.onload = function () {
             //画折线图
-            K_Line();
+            KLine();
             //画BLJJ
             BLJJ();
         }
 
-        //点击搜索搜索功能
+        //点击搜索
         $('#sreach_btn').on('click', function () {
-            K_Line();
+            KLine();
             BLJJ();
-
         });
 
         //从后台获取实时数据，画价格图
-        function K_Line() {
+        function KLine() {
             var stockcode = $('#stockcode').val();
             var stockname = $('#stockname').val();
+            var type = $('#type').val();
+            var period = $('#period').val();
             $.ajax({
                 type: "POST",
-                url: "/K_Stock/DrawEchart_K",
-                data: { "stockcode": stockcode, "stockname": stockname },
+                url: "/K_Stock/Draw_KLine",
+                data: { "stockcode": stockcode, "stockname": stockname, "type": type, "period": period },
                 dataType: "json",
                 success: function (data) {
                     DrawK(data);
@@ -94,10 +113,12 @@
         function BLJJ() {
             var stockcode = $('#stockcode').val();
             var stockname = $('#stockname').val();
+            var type = $('#type').val();
+            var period = $('#period').val();
             $.ajax({
                 type: "POST",
-                url: "/K_Stock/getdata",
-                data: { "stockcode": stockcode, "stockname": stockname },
+                url: "/K_Stock/DrawBLJJ",
+                data: { "stockcode": stockcode, "stockname": stockname, "type": type, "period": period },
                 dataType: "json",
                 success: function (data) {
                     DrawBLJJ(data);
@@ -105,7 +126,9 @@
             });
         }
     </script>
-    <script>
+
+    <!-- 画K -->
+    <script type="text/javascript">
         function DrawK(data) {
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('main1'));
@@ -297,14 +320,11 @@
             myChart.setOption(option);
 
         }
-
     </script>
-        
 
 
-    <!-- 用Echart画捕捞季节 -->
+    <!-- 画捕捞季节 -->
     <script type="text/javascript">
-        
         function DrawBLJJ(data) {
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('main3'));
@@ -355,9 +375,16 @@
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
         }
+    </script>
 
-
-
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?680230a4fc50287eddd3846f63d8ecbc";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
     </script>
 </body>
 </html>

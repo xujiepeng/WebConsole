@@ -57,11 +57,11 @@
                             <li class="layui-timeline-item">
                                 <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                                 <div class="layui-timeline-content layui-text">
-                                    <h3 class="layui-timeline-title">2019-03-19</h3>
+                                    <h3 class="layui-timeline-title">2020-01-15</h3>
                                     <p>
-                                        增加非菜单打开tab函数 x_admin_add_to_tab(title,url,is_refresh) titel为tab标题,url为打开页面地址,is_refresh 可选参数，重复点击是否刷新，默认为false不刷新,true为重复点击刷新页面<br>
-                                        用法:<br>
-                                        index.html 中直接 x_admin_add_to_tab('在tab打开','http://www.baidu.com',true)<br>
+                                        增加了一个个股查询页面<br>
+                                        可以查看个股的一些指标<br>
+                                        可以按照条件筛选股票，如展示时间周期<br>
                                         iframe页面中  用 parent.x_admin_add_to_tab('在tab打开','http://www.163.com',true)
                                     </p>
                                 </div>
@@ -71,10 +71,10 @@
                                 <div class="layui-timeline-content layui-text">
                                     <h3 class="layui-timeline-title">2020-01-06</h3>
                                     <p>
-                                        `1.可以查看策略，策略存储在数据库字段中，使用相对路径<br>
-                                        `2.策略保存路径规则  创建时间/策略编号（guid）  路径，编号一次生成不再变化<br>
-                                        `3.编辑：策略名称，备注，描述，类型，启用<br>
-                                        `4.不可编辑：路径，策略编号，创建时间<br>
+                                        1.可以查看策略，策略存储在数据库字段中，使用相对路径<br>
+                                        2.策略保存路径规则  创建时间/策略编号（guid）  路径，编号一次生成不再变化<br>
+                                        3.编辑：策略名称，备注，描述，类型，启用<br>
+                                        4.不可编辑：路径，策略编号，创建时间<br>
                                         5.添加策略：单独跳转页面添加策略<br>
                                         6.每次运行时，从数据库取出文本，生成一个guid-py文件（路径在数据库中），执行这个py文件<br>
                                         7.文件生成在固定的文件夹中，文件生成路径在数据库中，每次先删掉历史文件，再新建<br>
