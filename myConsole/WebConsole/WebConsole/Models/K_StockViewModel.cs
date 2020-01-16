@@ -19,7 +19,7 @@ namespace WebConsole.Models
         /// <param name="type">周期类型</param>
         /// <param name="date">获取某天之前的数据</param>
         /// <returns></returns>
-        public List<List<string>> GetSingleStock(string code = null, string period = null, string type = null, string date = null)
+        public List<List<string>> GetSingleStock(string code = null, string exchange = null, string period = null, string type = null, string date = null)
         {
             string EndDate = date == null ? DateTime.Now.ToString("yyyy-MM-dd") : Convert.ToDateTime(date).ToString("yyyy-MM-dd");
             if (date == null && Convert.ToUInt32(DateTime.Now.ToString("HHmm")) < 930)
@@ -30,9 +30,10 @@ namespace WebConsole.Models
             code = code == null ? "300083" : code;
             type = type == null ? "1d" : type;
             period = period == null ? "30" : period;
+            exchange = exchange == null ? ".XSHG" : exchange;
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic.Add("code", code + ".XSHG");
+            dic.Add("code", code + exchange.ToUpper());
             dic.Add("unit", type);
             dic.Add("date", BeginDate);
             dic.Add("end_date", EndDate);
@@ -85,7 +86,7 @@ namespace WebConsole.Models
         /// D: MA(J, 2);
         /// K: MA(J, 1);
         /// </summary>
-        public string BLJJ(string code = null, string period = null, string type = null, string date = null)
+        public string BLJJ(string code = null, string exchange = null, string period = null, string type = null, string date = null)
         {
             string EndDate = date == null ? DateTime.Now.ToString("yyyy-MM-dd") : Convert.ToDateTime(date).ToString("yyyy-MM-dd");
             if (date == null && Convert.ToUInt32(DateTime.Now.ToString("HHmm")) < 930)
@@ -96,9 +97,10 @@ namespace WebConsole.Models
             code = code == null ? "300083" : code;
             type = type == null ? "1d" : type;
             period = period == null ? "30" : period;
+            exchange = exchange == null ? ".XSHG" : exchange;
 
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            dic.Add("code", code + ".XSHG");
+            dic.Add("code", code + exchange.ToUpper());
             dic.Add("unit", type);
             dic.Add("date", BeginDate);
             dic.Add("end_date", EndDate);
@@ -117,6 +119,7 @@ namespace WebConsole.Models
             List<decimal> DList = new List<decimal>();//d值线列表
             List<decimal> KList = new List<decimal>();//k值线列表
             List<decimal> TList = new List<decimal>();//x轴时间列表
+            List<List<decimal>> DataList = new List<List<decimal>>();//数据集合
             //根据给定显示周期，截取数据：D、J、Time
             if (pre_ema_list.Count > Convert.ToInt32(period))
             {
@@ -140,14 +143,14 @@ namespace WebConsole.Models
                     TList.Add(Convert.ToDecimal(stocklist.Keys.ToList<string>()[stocklist.Count - i - 1]));
                 }
             }
-            List<List<decimal>> ll = new List<List<decimal>>();
+            
             DList.Reverse();
             KList.Reverse();
             TList.Reverse();
-            ll.Add(DList);
-            ll.Add(KList);
-            ll.Add(TList);
-            return JsonConvert.SerializeObject(ll);
+            DataList.Add(DList);
+            DataList.Add(KList);
+            DataList.Add(TList);
+            return JsonConvert.SerializeObject(DataList);
 
         }
     }
