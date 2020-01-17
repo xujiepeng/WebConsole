@@ -16,6 +16,14 @@ namespace WebConsole.Models.Model
             set;
         }
         /// <summary>
+        /// 股票名称
+        /// </summary>
+        public string code
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 股票日期
         /// </summary>
         public string date
@@ -75,5 +83,10 @@ namespace WebConsole.Models.Model
         /// 成交量-时间列表
         /// </summary>
         public List<List<int>> list_vol_time = new List<List<int>>();
+
+        /// <summary>
+        /// list集合
+        /// </summary>
+        public List<List<decimal>> list_list_data = new List<List<decimal>>();
     }
 }

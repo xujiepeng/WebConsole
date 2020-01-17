@@ -15,7 +15,6 @@ namespace WebConsole.Models.Model
             get;
             set;
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -24,7 +23,6 @@ namespace WebConsole.Models.Model
             get;
             set;
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -33,7 +31,6 @@ namespace WebConsole.Models.Model
             get;
             set;
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -42,7 +39,6 @@ namespace WebConsole.Models.Model
             get;
             set;
         }
-
         /// <summary>
         /// 代码
         /// </summary>

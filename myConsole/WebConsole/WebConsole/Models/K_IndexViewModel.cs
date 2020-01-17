@@ -38,7 +38,7 @@ namespace WebConsole.Models
         {
             string EndDate = date == null ? DateTime.Now.ToString("yyyy-MM-dd") : Convert.ToDateTime(date).ToString("yyyy-MM-dd");
             string BeginDate = Convert.ToDateTime(EndDate).AddDays(-1450).ToString("yyyy-MM-dd");
-            code = code == null ? "300083" : code;
+            code = code == null ? DefaultCode : code;
             type = type == null ? "1d" : type;
             period = period == null ? "120" : period;
 
@@ -107,7 +107,7 @@ namespace WebConsole.Models
                 EndDate = date == null ? DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") : Convert.ToDateTime(date).ToString("yyyy-MM-dd");
             }
             string BeginDate = Convert.ToDateTime(EndDate).AddDays(-1450).ToString("yyyy-MM-dd");
-            code = code == null ? "300083" : code;
+            code = code == null ? DefaultCode : code;
             type = type == null ? "1d" : type;
             period = period == null ? "30" : period;
 
