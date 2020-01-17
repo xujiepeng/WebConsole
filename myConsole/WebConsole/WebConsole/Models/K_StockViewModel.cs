@@ -15,9 +15,11 @@ namespace WebConsole.Models
     {
         public static string JQUserName = string.Empty;
         public static string JQPassWord = string.Empty;
+        public static string DefaultCode = string.Empty;
         public K_StockViewModel(CommConf options)
         {
             JQUserName = options.AttriList.FirstOrDefault(o => o.key == "JQUserName").value;            JQPassWord = options.AttriList.FirstOrDefault(o => o.key == "JQPassWord").value;
+            DefaultCode = options.AttriList.FirstOrDefault(o => o.key == "DefaultCode").value;
         }
         /// <summary>
         /// 获取单只股票数据
@@ -35,7 +37,7 @@ namespace WebConsole.Models
                 EndDate = date == null ? DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd") : Convert.ToDateTime(date).ToString("yyyy-MM-dd");
             }
             string BeginDate = Convert.ToDateTime(EndDate).AddDays(-1450).ToString("yyyy-MM-dd");
-            code = code == null ? "300083" : code;
+            code = code == null ? DefaultCode : code;
             type = type == null ? "1d" : type;
             period = period == null ? "30" : period;
             exchange = exchange == null ? ".XSHG" : exchange;

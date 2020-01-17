@@ -44,7 +44,7 @@ namespace WebConsole.Models.Model
         }
 
         /// <summary>
-        /// 
+        /// 代码
         /// </summary>
         public decimal code
         {
@@ -68,7 +68,7 @@ namespace WebConsole.Models.Model
             set;
         }
         /// <summary>
-        /// 
+        /// 类型
         /// </summary>
         public decimal type
         {
