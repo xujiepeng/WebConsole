@@ -17,7 +17,8 @@ namespace WebConsole.Controllers
         {
             return View();
         }
-        
+
+        [LoginFilter]
         public ActionResult Index2()
         {
             return View();

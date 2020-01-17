@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,18 @@ using System.Threading.Tasks;
 using WebConsole.Models.Common;
 using WebConsole.Models.Common.HttpHelper;
 using WebConsole.Models.Model;
+using WebConsole.Models.Model.Conf;
 
 namespace WebConsole.Models
 {
     public class K_StockViewModel
     {
+        public static string JQUserName = string.Empty;
+        public static string JQPassWord = string.Empty;
+        public K_StockViewModel(CommConf options)
+        {
+            JQUserName = options.AttriList.FirstOrDefault(o => o.key == "JQUserName").value;            JQPassWord = options.AttriList.FirstOrDefault(o => o.key == "JQPassWord").value;
+        }
         /// <summary>
         /// 获取单只股票数据
         /// </summary>
@@ -38,6 +46,8 @@ namespace WebConsole.Models
             dic.Add("date", BeginDate);
             dic.Add("end_date", EndDate);
             dic.Add("fq_ref_date", EndDate);
+            dic.Add("JQUserName", JQUserName);
+            dic.Add("JQPassWord", JQPassWord);
             SortedList<string, SingleStockStru> stocklist = GetJQData.get_price_period(dic);
 
             List<string> stock = new List<string>();
@@ -105,6 +115,8 @@ namespace WebConsole.Models
             dic.Add("date", BeginDate);
             dic.Add("end_date", EndDate);
             dic.Add("fq_ref_date", EndDate);
+            dic.Add("JQUserName", JQUserName);
+            dic.Add("JQPassWord", JQPassWord);
             SortedList<string, SingleStockStru> stocklist = GetJQData.get_price_period(dic);
             List<decimal> testValues = new List<decimal>();
             

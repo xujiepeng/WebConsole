@@ -4,14 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-/// <summary>
-/// 访问量统计，只统计刷新次数
-/// </summary>
 namespace WebConsole.Models.Common
 {
-    public class CountFilter : ActionFilterAttribute
+    public class LoginFilter : ActionFilterAttribute
     {
-        public CountFilter(int Order = 0)
+        public LoginFilter(int Order = 0)
         {
         }
 

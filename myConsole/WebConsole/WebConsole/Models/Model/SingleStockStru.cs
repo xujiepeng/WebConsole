@@ -42,5 +42,38 @@ namespace WebConsole.Models.Model
             get;
             set;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal code
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 中文名称
+        /// </summary>
+        public decimal display_name
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 缩写
+        /// </summary>
+        public decimal name
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public decimal type
+        {
+            get;
+            set;
+        }
     }
 }
