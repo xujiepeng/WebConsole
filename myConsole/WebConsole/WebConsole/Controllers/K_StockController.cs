@@ -19,15 +19,31 @@ namespace WebConsole.Controllers
 
         public IActionResult Draw_KLine(string stockcode, string exchange, string period, string type, string enddate)
         {
-            K_StockViewModel dataInfo = new K_StockViewModel();
-            return Content(JsonConvert.SerializeObject(dataInfo.GetSingleStock(stockcode, exchange, period, type, enddate)));
+            try
+            {
+                K_StockViewModel dataInfo = new K_StockViewModel();
+                return Content(JsonConvert.SerializeObject(dataInfo.GetSingleStock(stockcode, exchange, period, type, enddate)));
+            }
+            catch
+            {
+                return Content("false");
+            }
         }
 
 
         public IActionResult DrawBLJJ(string stockcode,string exchange, string period, string type, string enddate)
         {
-            K_StockViewModel dataInfo = new K_StockViewModel();
-            return Content(dataInfo.BLJJ(stockcode, exchange, period, type, enddate));
+            
+            try
+            {
+                K_StockViewModel dataInfo = new K_StockViewModel();
+                return Content(dataInfo.BLJJ(stockcode, exchange, period, type, enddate));
+            }
+            catch
+            {
+                return Content("false");
+            }
+            
         }
 
         

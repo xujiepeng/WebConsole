@@ -5,22 +5,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebConsole.Models;
+using WebConsole.Models.Common;
 
 namespace WebConsole.Controllers
 {
+    
     public class HomeController : Controller
     {
+        [CountFilter]
         public IActionResult Index()
+        {
+            return View();
+        }
+        
+        public ActionResult Index2()
         {
             return View();
         }
 
         public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult Index1()
         {
             return View();
         }
