@@ -11,6 +11,7 @@ namespace WebConsole.Models.Common
         /// <summary>
         /// Calculates Williams %R indicator
         /// 威廉姆%R WR指标，用于判断超买超卖
+        /// 该指标表示的含义是当天的收盘价在过去一段日子的全部价格范围内所处的相对位置
         /// </summary>
         /// <param name="highs">Signal representing price highs</param>
         /// <param name="lows">Signal representing price lows</param>

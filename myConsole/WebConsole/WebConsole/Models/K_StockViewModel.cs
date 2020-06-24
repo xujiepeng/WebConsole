@@ -98,6 +98,12 @@ namespace WebConsole.Models
         /// D: MA(J, 2);
         /// K: MA(J, 1);
         /// </summary>
+        /// <param name="code">代码</param>
+        /// <param name="exchange">市场</param>
+        /// <param name="period">所要显示的周期</param>
+        /// <param name="type">数据类型，日线，周线，月线</param>
+        /// <param name="date">获取数据的起始时间</param>
+        /// <returns></returns>
         public string BLJJ(string code = null, string exchange = null, string period = null, string type = null, string date = null)
         {
             string EndDate = date == null ? DateTime.Now.ToString("yyyy-MM-dd") : Convert.ToDateTime(date).ToString("yyyy-MM-dd");

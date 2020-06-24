@@ -28,23 +28,23 @@ namespace WebConsole.Models.Common
             List<double> middleBand = null;
             List<double> bandwidth = null;
             List<double> percentB = null;
-
+            //是否计算布林带宽度
             if (calculateBandwidth)
             {
                 bandwidth = new List<double>();
             }
-
+            //是否计算价格在布林带中位置
             if (calculatePercentB)
             {
                 percentB = new List<double>();
             }
-
+            //20天简单移动均线作为布林带中线
             var middleBandSMA = SMA(input, periods);
             middleBand = middleBandSMA.Values;
-            
+
             var stdevList = new List<double>();
             var inputHelperList = input.ToList();
-
+            //计算过去20天 的标准差
             for (int i = 0; i < input.Count() - periods + 1; i++)
             {
                 stdevList.Add(Helpers.StandardDeviation(inputHelperList.GetRange(i, periods)));
@@ -54,17 +54,18 @@ namespace WebConsole.Models.Common
             {
                 var middleValue = middleBand.ElementAt(i);
                 var stdev = stdevList.ElementAt(i);
-
+                //上轨 = 20天简单移动均值 + standardDeviations倍的标准差
                 var upperBandValue = middleValue + stdev * standardDeviations;
+                //上轨 = 20天简单移动均值 - standardDeviations倍的标准差
                 var lowerBandValue = middleValue - stdev * standardDeviations;
                 upperBand.Add(upperBandValue);
                 lowerBand.Add(lowerBandValue);
-
+                //布林带带宽
                 if (bandwidth != null)
                 {
                     bandwidth.Add(upperBandValue - lowerBandValue);
                 }
-
+                //价格在布林带中位置
                 if (percentB != null)
                 {
                     var price = input.ElementAt(i + periods - 1);
