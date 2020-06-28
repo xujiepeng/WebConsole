@@ -52,7 +52,9 @@ namespace WebConsole.Models.Common
 
             for (int i = 0; i < middleBand.Count; i++)
             {
+                //获取当天布林带中线的值
                 var middleValue = middleBand.ElementAt(i);
+                //获取当天的标准差
                 var stdev = stdevList.ElementAt(i);
                 //上轨 = 20天简单移动均值 + standardDeviations倍的标准差
                 var upperBandValue = middleValue + stdev * standardDeviations;
@@ -60,12 +62,12 @@ namespace WebConsole.Models.Common
                 var lowerBandValue = middleValue - stdev * standardDeviations;
                 upperBand.Add(upperBandValue);
                 lowerBand.Add(lowerBandValue);
-                //布林带带宽
+                //计算布林带带宽
                 if (bandwidth != null)
                 {
                     bandwidth.Add(upperBandValue - lowerBandValue);
                 }
-                //价格在布林带中位置
+                //计算价格在布林带中位置
                 if (percentB != null)
                 {
                     var price = input.ElementAt(i + periods - 1);
