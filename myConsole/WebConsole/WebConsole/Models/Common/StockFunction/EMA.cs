@@ -43,7 +43,7 @@ namespace WebConsole.Models.Common
         }
 
         /// <summary>
-        /// Calculates Exponential Moving Average (EMA) indicator
+        /// 移动平均指数
         /// </summary>
         /// <param name="input">Input signal</param>
         /// <param name="period">Number of periods</param>
