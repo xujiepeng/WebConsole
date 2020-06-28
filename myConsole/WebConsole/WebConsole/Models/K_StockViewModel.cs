@@ -126,52 +126,52 @@ namespace WebConsole.Models
             dic.Add("JQUserName", JQUserName);
             dic.Add("JQPassWord", JQPassWord);
             SortedList<string, SingleStockStru> stocklist = GetJQData.get_price_period(dic);
-            List<decimal> testValues = new List<decimal>();
-            
-            //(2*CLOSE+HIGH+LOW)/3
-            foreach (var item in stocklist)
-            {
-                testValues.Add((2 * item.Value.close + item.Value.high + item.Value.low) / 3);
-            }
+            return JsonConvert.SerializeObject(AnalysisEngine.BLJJ(stocklist, period));
 
-            //J: (VAR2 - REF(VAR2, 1)) / REF(VAR2, 1) * 100
-            List<decimal> pre_ema_list = StockFunction.EMA(StockFunction.EMA(StockFunction.EMA(testValues, 3), 3), 3);
-            List<decimal> DList = new List<decimal>();//d值线列表
-            List<decimal> KList = new List<decimal>();//k值线列表
-            List<decimal> TList = new List<decimal>();//x轴时间列表
-            List<List<decimal>> DataList = new List<List<decimal>>();//数据集合
-            //根据给定显示周期，截取数据：D、J、Time
-            if (pre_ema_list.Count > Convert.ToInt32(period))
-            {
-                for (int i = 0; i < Convert.ToInt32(period); i++)
-                {
-                    decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
-                    decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
-                    DList.Add((J1 + J2) / 2);
-                    KList.Add(J1);
-                    TList.Add(Convert.ToDecimal(stocklist.Keys.ToList<string>()[stocklist.Count - i - 1]));
-                }
-            }
-            else
-            {
-                for (int i = 0; i < pre_ema_list.Count; i++)
-                {
-                    decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
-                    decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
-                    DList.Add(J1 + J2);
-                    KList.Add(J1);
-                    TList.Add(Convert.ToDecimal(stocklist.Keys.ToList<string>()[stocklist.Count - i - 1]));
-                }
-            }
-            
-            DList.Reverse();
-            KList.Reverse();
-            TList.Reverse();
-            DataList.Add(DList);
-            DataList.Add(KList);
-            DataList.Add(TList);
-            return JsonConvert.SerializeObject(DataList);
+            //List<decimal> testValues = new List<decimal>();
+            ////(2*CLOSE+HIGH+LOW)/3
+            //foreach (var item in stocklist)
+            //{
+            //    testValues.Add((2 * item.Value.close + item.Value.high + item.Value.low) / 3);
+            //}
 
+            ////J: (VAR2 - REF(VAR2, 1)) / REF(VAR2, 1) * 100
+            //List<decimal> pre_ema_list = StockFunction.EMA(StockFunction.EMA(StockFunction.EMA(testValues, 3), 3), 3);
+            //List<decimal> DList = new List<decimal>();//d值线列表
+            //List<decimal> KList = new List<decimal>();//k值线列表
+            //List<decimal> TList = new List<decimal>();//x轴时间列表
+            //List<List<decimal>> DataList = new List<List<decimal>>();//数据集合
+            ////根据给定显示周期，截取数据：D、J、Time
+            //if (pre_ema_list.Count > Convert.ToInt32(period))
+            //{
+            //    for (int i = 0; i < Convert.ToInt32(period); i++)
+            //    {
+            //        decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
+            //        decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
+            //        DList.Add((J1 + J2) / 2);
+            //        KList.Add(J1);
+            //        TList.Add(Convert.ToDecimal(stocklist.Keys.ToList<string>()[stocklist.Count - i - 1]));
+            //    }
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < pre_ema_list.Count; i++)
+            //    {
+            //        decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
+            //        decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
+            //        DList.Add(J1 + J2);
+            //        KList.Add(J1);
+            //        TList.Add(Convert.ToDecimal(stocklist.Keys.ToList<string>()[stocklist.Count - i - 1]));
+            //    }
+            //}
+            
+            //DList.Reverse();
+            //KList.Reverse();
+            //TList.Reverse();
+            //DataList.Add(DList);
+            //DataList.Add(KList);
+            //DataList.Add(TList);
+            //return JsonConvert.SerializeObject(DataList);
         }
     }
 }

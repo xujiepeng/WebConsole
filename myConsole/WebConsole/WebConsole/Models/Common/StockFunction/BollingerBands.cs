@@ -47,7 +47,7 @@ namespace WebConsole.Models.Common
             //计算过去20天 的标准差
             for (int i = 0; i < input.Count() - periods + 1; i++)
             {
-                stdevList.Add(Helpers.StandardDeviation(inputHelperList.GetRange(i, periods)));
+                stdevList.Add(AnalysisEngine.StandardDeviation(inputHelperList.GetRange(i, periods)));
             }
 
             for (int i = 0; i < middleBand.Count; i++)

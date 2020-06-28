@@ -30,7 +30,7 @@ namespace WebConsole.Models.Common
             }
 
             //J: (VAR2 - REF(VAR2, 1)) / REF(VAR2, 1) * 100
-            List<decimal> pre_ema_list = StockFunction.EMA(StockFunction.EMA(StockFunction.EMA(testValues, 3), 3), 3);
+            List<decimal> pre_ema_list = AnalysisEngine.EMA(AnalysisEngine.EMA(AnalysisEngine.EMA(testValues, 3), 3), 3);
             List<decimal> DList = new List<decimal>();
             List<decimal> KList = new List<decimal>();
             List<List<decimal>> ll = new List<List<decimal>>();
@@ -39,8 +39,8 @@ namespace WebConsole.Models.Common
             {
                 for (int i = 0; i < Convert.ToInt32(period); i++)
                 {
-                    decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
-                    decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
+                    decimal J1 = (AnalysisEngine.REF(pre_ema_list, i) - AnalysisEngine.REF(pre_ema_list, i + 1)) / AnalysisEngine.REF(pre_ema_list, i + 1) * 100;
+                    decimal J2 = (AnalysisEngine.REF(pre_ema_list, i + 1) - AnalysisEngine.REF(pre_ema_list, i + 2)) / AnalysisEngine.REF(pre_ema_list, i + 2) * 100;
                     DList.Add((J1 + J2) / 2);
                     KList.Add(J1);
                     TList.Add(Convert.ToDecimal(stocklist.Keys.ToList<string>()[stocklist.Count - i - 1]));
@@ -50,8 +50,8 @@ namespace WebConsole.Models.Common
             {
                 for (int i = 0; i < pre_ema_list.Count; i++)
                 {
-                    decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
-                    decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
+                    decimal J1 = (AnalysisEngine.REF(pre_ema_list, i) - AnalysisEngine.REF(pre_ema_list, i + 1)) / AnalysisEngine.REF(pre_ema_list, i + 1) * 100;
+                    decimal J2 = (AnalysisEngine.REF(pre_ema_list, i + 1) - AnalysisEngine.REF(pre_ema_list, i + 2)) / AnalysisEngine.REF(pre_ema_list, i + 2) * 100;
                     DList.Add(J1 + J2);
                     KList.Add(J1);
                     TList.Add(Convert.ToDecimal(stocklist.Keys.ToList<string>()[stocklist.Count - i - 1]));

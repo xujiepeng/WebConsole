@@ -35,11 +35,11 @@ namespace WebConsole.Models.Common
                 //POST请求并等待结果
                 var result = client.PostAsync(url, content).Result;
                 //读取返回的TOKEN
-                string token1 = result.Content.ReadAsStringAsync().Result;
+                string tokenback = result.Content.ReadAsStringAsync().Result;
                 string body = JsonConvert.SerializeObject(new
                 {
                     method = "get_price_period",
-                    token = token1,
+                    token = tokenback,
                     code = dic["code"],
                     unit = dic["unit"],
                     date = dic["date"],
@@ -70,6 +70,11 @@ namespace WebConsole.Models.Common
             return stocklist;
         }
 
+        /// <summary>
+        /// 获取证券信息
+        /// </summary>
+        /// <param name="dic"></param>
+        /// <returns></returns>
         public static SingleStockStru get_security_info(Dictionary<string, string> dic)
         {
             var url = "https://dataapi.joinquant.com/apis";
@@ -88,11 +93,11 @@ namespace WebConsole.Models.Common
                 //POST请求并等待结果
                 var result = client.PostAsync(url, content).Result;
                 //读取返回的TOKEN
-                string token1 = result.Content.ReadAsStringAsync().Result;
+                string tokenback = result.Content.ReadAsStringAsync().Result;
                 string body = JsonConvert.SerializeObject(new
                 {
                     method = "get_security_info",
-                    token = token1,
+                    token = tokenback,
                     code = dic["code"]
                 }
                 );

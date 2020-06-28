@@ -50,42 +50,43 @@ namespace WebConsole.Controllers
             dic.Add("JQUserName", "13052089963");
             dic.Add("JQPassWord", "yangyanan");
             SortedList<string, SingleStockStru> stocklist = GetJQData.get_price_period(dic);
-            List<decimal> testValues = new List<decimal>();
-            //(2*CLOSE+HIGH+LOW)/3
-            foreach (var item in stocklist)
-            {
-                testValues.Add((2 * item.Value.close + item.Value.high + item.Value.low) / 3);
-            }
-            //J: (VAR2 - REF(VAR2, 1)) / REF(VAR2, 1) * 100
-            List<decimal> pre_ema_list = StockFunction.EMA(StockFunction.EMA(StockFunction.EMA(testValues, 3), 3), 3);
-            List<decimal> DList = new List<decimal>();
-            List<decimal> KList = new List<decimal>();
-            if (pre_ema_list.Count > Convert.ToInt32(period))
-            {
-                for (int i = 0; i < Convert.ToInt32(period); i++)
-                {
-                    decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
-                    decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
-                    DList.Add((J1 + J2) / 2);
-                    KList.Add(J1);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < pre_ema_list.Count; i++)
-                {
-                    decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
-                    decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
-                    DList.Add(J1 + J2);
-                    KList.Add(J1);
-                }
-            }
-            List<List<decimal>> ll = new List<List<decimal>>();
-            DList.Reverse();
-            KList.Reverse();
-            ll.Add(DList);
-            ll.Add(KList);
-            return JsonConvert.SerializeObject(ll);
+            return JsonConvert.SerializeObject(AnalysisEngine.BLJJ(stocklist, period));
+            //List<decimal> testValues = new List<decimal>();
+            ////(2*CLOSE+HIGH+LOW)/3
+            //foreach (var item in stocklist)
+            //{
+            //    testValues.Add((2 * item.Value.close + item.Value.high + item.Value.low) / 3);
+            //}
+            ////J: (VAR2 - REF(VAR2, 1)) / REF(VAR2, 1) * 100
+            //List<decimal> pre_ema_list = AnalysisEngine.EMA(AnalysisEngine.EMA(AnalysisEngine.EMA(testValues, 3), 3), 3);
+            //List<decimal> DList = new List<decimal>();
+            //List<decimal> KList = new List<decimal>();
+            //if (pre_ema_list.Count > Convert.ToInt32(period))
+            //{
+            //    for (int i = 0; i < Convert.ToInt32(period); i++)
+            //    {
+            //        decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
+            //        decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
+            //        DList.Add((J1 + J2) / 2);
+            //        KList.Add(J1);
+            //    }
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < pre_ema_list.Count; i++)
+            //    {
+            //        decimal J1 = (StockFunction.REF(pre_ema_list, i) - StockFunction.REF(pre_ema_list, i + 1)) / StockFunction.REF(pre_ema_list, i + 1) * 100;
+            //        decimal J2 = (StockFunction.REF(pre_ema_list, i + 1) - StockFunction.REF(pre_ema_list, i + 2)) / StockFunction.REF(pre_ema_list, i + 2) * 100;
+            //        DList.Add(J1 + J2);
+            //        KList.Add(J1);
+            //    }
+            //}
+            //List<List<decimal>> ll = new List<List<decimal>>();
+            //DList.Reverse();
+            //KList.Reverse();
+            //ll.Add(DList);
+            //ll.Add(KList);
+            //return JsonConvert.SerializeObject(ll);
 
         }
     }

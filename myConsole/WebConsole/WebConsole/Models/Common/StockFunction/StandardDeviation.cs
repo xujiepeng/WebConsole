@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebConsole.Models.Common
 {
-    public sealed partial class Helpers
+    public sealed partial class AnalysisEngine
     {
         /// <summary>
         /// 标准差
